@@ -8,6 +8,6 @@ import com.softwaremosaic.river.Repository;
 /**
  *
  */
-public interface GISIndexStore<T> extends IndexStore<T> {
-    public PagedCollection<T> scan( Repository callingRepository, LatLon centrePoint, long distanceInMeters, Predicate<T> filter, int maxPageCount, Object previousEntityId );
+public interface GISIndexStore<K,T> extends IndexStore<T> {
+    public PagedCollection<T> scan( Repository<K,T> callingRepository, LatLon centrePoint, long distanceInMeters, Predicate<T> filter, int maxPageCount, K previousEntityId );
 }

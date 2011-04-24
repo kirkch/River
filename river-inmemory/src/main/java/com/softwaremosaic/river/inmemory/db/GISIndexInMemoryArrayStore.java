@@ -16,10 +16,10 @@ import java.util.TreeMap;
  *
  */
 @SuppressWarnings({"unchecked"})
-public class GISIndexInMemoryArrayStore<T> implements GISIndexStore<T> {
+public class GISIndexInMemoryArrayStore<K,T> implements GISIndexStore<K,T> {
     private IndexMeta indexMeta;
     
-    private Deque<Node> nodes = new LinkedList<Node>();
+    private Deque<Node<K,T>> nodes = new LinkedList<Node<K,T>>();
 
 
     public GISIndexInMemoryArrayStore( IndexMeta<T> indexMeta ) {
@@ -53,7 +53,7 @@ public class GISIndexInMemoryArrayStore<T> implements GISIndexStore<T> {
     public void entityRemoved( T entity ) {
         Object id = indexMeta.getIdFor( entity );
 
-        Iterator<Node> it = nodes.iterator();
+        Iterator<Node<K,T>> it = nodes.iterator();
         while ( it.hasNext() ) {
             Node node = it.next();
 
@@ -70,10 +70,10 @@ public class GISIndexInMemoryArrayStore<T> implements GISIndexStore<T> {
     }
 
     @Override
-    public synchronized PagedCollection<T> scan( Repository callingRepository, LatLon centrePoint, long distanceInMeters, Predicate<T> filter, int maxPageCount, Object previousEntityId ) {
-        TreeMap<Double,Object> orderedMatches = new TreeMap<Double, Object>();
+    public synchronized PagedCollection<T> scan( Repository<K,T> callingRepository, LatLon centrePoint, long distanceInMeters, Predicate<T> filter, int maxPageCount, K previousEntityId ) {
+        TreeMap<Double,K> orderedMatches = new TreeMap<Double, K>();
 
-        for ( Node node : nodes ) {
+        for ( Node<K,T> node : nodes ) {
             if ( node.hasLocation() ) {
                 double d = node.getDistanceTo( centrePoint );
                 if ( d <= distanceInMeters ) {
@@ -84,8 +84,8 @@ public class GISIndexInMemoryArrayStore<T> implements GISIndexStore<T> {
 
         Class entityClass = indexMeta.getEntityClass();
         PagedCollection<T> results = new PagedCollection<T>( maxPageCount );
-        for ( Object id : orderedMatches.values() ) {
-            T entity = (T) callingRepository.fetchNbl( entityClass, id );
+        for ( K id : orderedMatches.values() ) {
+            T entity = callingRepository.fetchNbl( id );
             if ( entity != null ) {
                 results.add( entity );
             }
@@ -96,20 +96,20 @@ public class GISIndexInMemoryArrayStore<T> implements GISIndexStore<T> {
         return results;
     }
 
-    private static class Node {
-        private Object id;
+    private static class Node<K,T> {
+        private K      id;
         private LatLon latLonNbl;
 
-        public Node( Object id, LatLon latLon ) {
+        public Node( K id, LatLon latLon ) {
             this.id = id;
             this.latLonNbl = latLon;
         }
 
-        public Object getId() {
+        public K getId() {
             return id;
         }
 
-        public boolean considerEntityChangedEvent( Object targetId, LatLon oldLatLon, LatLon newLatLon ) {
+        public boolean considerEntityChangedEvent( K targetId, LatLon oldLatLon, LatLon newLatLon ) {
             if ( this.id.equals(targetId) && ObjectUtils.equals(this.latLonNbl, oldLatLon) ) {
                 this.latLonNbl = newLatLon;
 

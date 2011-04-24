@@ -19,7 +19,7 @@ import java.util.concurrent.ConcurrentSkipListMap;
  *
  */
 @SuppressWarnings({"unchecked"})
-public class UniqueIndexTreeStore<T> implements UniqueIndexStore<T> {
+public class UniqueIndexTreeStore<K,T> implements UniqueIndexStore<K,T> {
     private ConcurrentNavigableMap<Object,UniqueIndexInMemory> rootNode = new ConcurrentSkipListMap();
 
     private IndexMeta indexMeta;
@@ -45,13 +45,13 @@ public class UniqueIndexTreeStore<T> implements UniqueIndexStore<T> {
     // by creating this stack pre-configured to skip the start of the scan.
 
     @Override
-    public PagedCollection<T> scan( Class<T> expectedEntityClass, PagedCollection<T> result, Repository repo, Object[] partialSearchKey, Predicate<T> filter, ScanDirection direction, Object previousRowId ) {
-        Object[] previousRow = extractPreviousRowKeyFrom( repo, expectedEntityClass, previousRowId );
-        Iterator it = iterator(partialSearchKey,direction,previousRow);
+    public PagedCollection<T> scan( PagedCollection<T> result, Repository<K,T> repo, Object[] partialSearchKey, Predicate<T> filter, ScanDirection direction, Object previousRowId ) {
+        Object[] previousRow = extractPreviousRowKeyFrom( repo, previousRowId );
+        Iterator<K> it = iterator(partialSearchKey,direction,previousRow);
 
         while ( result.hasCapacityLeft() && it.hasNext() ) {
-            Object id = it.next();
-            T entity = repo.fetchNbl( expectedEntityClass, id );
+            K id = it.next();
+            T entity = repo.fetchNbl( id );
 
             if ( entity == null ) continue;
 
@@ -279,11 +279,11 @@ public class UniqueIndexTreeStore<T> implements UniqueIndexStore<T> {
         return currentNode;
     }
 
-    private Object[] extractPreviousRowKeyFrom( Repository repo, Class entityClass, Object previousRowId ) {
+    private Object[] extractPreviousRowKeyFrom( Repository<K,T> repo, Object previousRowId ) {
         if ( previousRowId == null ) return null;
         if ( previousRowId.getClass().isArray() ) return (Object[]) previousRowId;
 
-        Object entity = repo.fetchNbl( entityClass, previousRowId );
+        Object entity = repo.fetchNbl( (K) previousRowId );
         return entity == null ? null : indexMeta.getKeyFor( entity );
     }
 

@@ -142,7 +142,7 @@ public class RepositoryInMemory implements Repository {
     }
 
 //    @Override
-    public void close() throws Exception {
+    public void close() {
         db.close();
     }
 

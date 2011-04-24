@@ -13,11 +13,11 @@ import java.util.Arrays;
  *
  */
 @SuppressWarnings({"unchecked"})
-public class UniqueIndexInMemory<T> implements UniqueIndex<T> {
-    private Repository owningRepository;
-    private UniqueIndexStore indexStore;
+public class UniqueIndexInMemory<K,T> implements UniqueIndex<T> {
+    private Repository<K,T>       owningRepository;
+    private UniqueIndexStore<K,T> indexStore;
 
-    public UniqueIndexInMemory( Repository owningRepository, UniqueIndexStore<T> indexStore ) {
+    public UniqueIndexInMemory( Repository<K,T> owningRepository, UniqueIndexStore<K,T> indexStore ) {
         this.owningRepository = owningRepository;
         this.indexStore       = indexStore;
     }
@@ -36,7 +36,7 @@ public class UniqueIndexInMemory<T> implements UniqueIndex<T> {
     public T fetchNbl( Object[] fullKey ) {
         Object pk = indexStore.fetchNbl( fullKey );
         if ( pk != null ) {
-            return (T) owningRepository.fetchNbl( indexStore.getEntityClass(), pk );
+            return (T) owningRepository.fetchNbl( pk );
         }
 
         return null;
@@ -44,7 +44,7 @@ public class UniqueIndexInMemory<T> implements UniqueIndex<T> {
 
     @Override
     public PagedCollection<T> scan( Object[] partialSearchKey, Predicate<T> filter, ScanDirection direction, Object previousRowId, int maxPageSize ) {
-        return indexStore.scan( indexStore.getEntityClass(), new PagedCollection<T>(maxPageSize), owningRepository, partialSearchKey, filter, direction, previousRowId );
+        return indexStore.scan( new PagedCollection<T>(maxPageSize), owningRepository, partialSearchKey, filter, direction, previousRowId );
     }
 
     @Override

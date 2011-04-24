@@ -8,10 +8,10 @@ import com.softwaremosaic.river.ScanDirection;
 /**
  *
  */
-public interface UniqueIndexStore<T> extends IndexStore<T> {
+public interface UniqueIndexStore<K,T> extends IndexStore<T> {
     public T fetchNbl( Object[] fullKey );
 
-    public PagedCollection<T> scan( Class<T> expectedEntityClass, PagedCollection<T> result, Repository repo, Object[] partialSearchKey, Predicate<T> filter, ScanDirection direction, Object previousRowId );
+    public PagedCollection<T> scan( PagedCollection<T> result, Repository<K,T> repo, Object[] partialSearchKey, Predicate<T> filter, ScanDirection direction, Object previousRowId );
 
     public int count( Object[] partialSearchKey, Predicate filter );
 }
