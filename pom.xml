@@ -18,7 +18,7 @@
 		<module>river-core</module>
 		<module>river-tests</module>
 		<module>river-inmemory</module>
-		<module>river-mongodb</module>
+		<!--<module>river-mongodb</module>-->
 	</modules>
 
 </project>

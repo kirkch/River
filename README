@@ -1,0 +1,77 @@
+
+RIVER
+=====
+
+River is a data persistence layer based on the Repository and Specification patterns as written by Eric Evans and
+Martin Fowler. River is designed to support multiple persistence technologies, NoSQL, Relational, Flat File, Object etc
+ without getting in the way of the developer who is focusing on the business domain modelling.
+
+ River has adjusted the Repository pattern to include the following practices that make River suitable for
+ high volume, distributed, OLTP environments:
+
+
+ - Document persistence (entities are self contained and responsible for their own data - todo blog references)
+ - Disconnected domain models (to prevent auto cascade across entities that in high volume can cripple performance the documents do not contain direct links to other documents AND reduces cascade of code changes when the domain model needs to be enhanced due to new knowledge about the domain being discovered - todo blog references)
+ - Queries are index based (queries declare which index they use but not how the index is defined - todo blog references)
+ - REST (publish the persistence layer internally within a JVM via interfaces or across the wire using JSON)
+
+
+At the time of writing there are several other efforts to provide cross NoSQL solutions and there
+are rumours of J2EE support scheduled for JEE 8. To my knowledge none of these efforts focus on DDD, or have the
+intention of providing a REST and HTML5 platform for DDD. At the moment they are either pushing to either extend JPA
+or create a NoSQL version of JPA. These other projects are looking to be configurable for any NoSQL persistence, River
+on the other hand is focusing entirely on DDD and REST. River started as an idea in 2004, and became a reality in 2011.
+
+
+
+Quick Start
+----------
+
+- Install Java 6
+- Install Maven 3
+- Install Git
+
+
+> git clone https://YOURGITHUBUSERNAME@github.com/kirkch/River.git
+> cd river
+> mvn -T 2 clean install
+
+
+Overview
+-------
+
+river-core      - The River API, write your applications to this api
+river-tests     - Persistence validation tests, the same tests are run against each of the persistence technologies
+
+river-inmemory  - Implementation of River that stores all of its data in memory, with no persistence what so ever
+
+
+
+Future planned modules
+
+
+river-rest            - Publish the repositories as http/json REST service
+river-gwthtml5        - A GWT implementation of River that stores data within the html client using html5 persistence
+                        (combined with river-rest this gives a nice abstraction for GWT to store DDD data locally in a
+                        client or remotely in the server)
+river-cassandra
+river-redis
+river-hibernate
+river-mongodb         - Implementation of River that stores its documents in MongoDB
+river-serialization
+river-voldamort
+
+
+
+Recommendations
+--------------
+
+- Use Juice as your IOC container
+
+
+Contributions
+------------
+
+River is a light persistence abstraction, if your persistence technology of choice is not supported then please
+consider contributing it to the River community.
+
