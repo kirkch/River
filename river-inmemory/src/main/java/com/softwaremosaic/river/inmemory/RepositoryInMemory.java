@@ -1,7 +1,7 @@
 package com.softwaremosaic.river.inmemory;
 
 import com.mosaic.lang.Closure;
-import com.softwaremosaic.river.EntityNotFoundException;
+import com.softwaremosaic.river.DocumentNotFoundException;
 import com.softwaremosaic.river.GISIndex;
 import com.softwaremosaic.river.Index;
 import com.softwaremosaic.river.PagedCollection;
@@ -58,12 +58,12 @@ public class RepositoryInMemory implements Repository {
     }
 
     @Override
-    public void clearFirstLevelCache() {
+    public void clearCaches() {
         sessionCache.clear();
     }
 
     @Override
-    public <T> T fetch( Class<T> entityClass, Object primaryKey ) throws EntityNotFoundException {
+    public <T> T fetch( Class<T> entityClass, Object primaryKey ) throws DocumentNotFoundException {
         ConcurrentMap entityCache  = fetchSessionCacheFor( entityClass );
         T             cachedEntity = (T) entityCache.get( primaryKey );
 

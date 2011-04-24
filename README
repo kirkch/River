@@ -62,6 +62,14 @@ river-serialization
 river-voldamort
 
 
+Future planned features
+
+Asynch publishing of domain events
+Audit mechanism driven from async messages
+In VM repository stats
+Across system domain stats
+
+
 
 Recommendations
 --------------

@@ -14,7 +14,7 @@ import java.util.Arrays;
  */
 @SuppressWarnings({"unchecked"})
 public class UniqueIndexInMemory<T> implements UniqueIndex<T> {
-    private Repository       owningRepository;
+    private Repository owningRepository;
     private UniqueIndexStore indexStore;
 
     public UniqueIndexInMemory( Repository owningRepository, UniqueIndexStore<T> indexStore ) {

@@ -2,7 +2,7 @@ package com.softwaremosaic.river.tests;
 
 import com.mosaic.gis.LatLon;
 import com.mosaic.lang.Closure;
-import com.softwaremosaic.river.EntityNotFoundException;
+import com.softwaremosaic.river.DocumentNotFoundException;
 import com.softwaremosaic.river.GISIndex;
 import com.softwaremosaic.river.PagedCollection;
 import com.softwaremosaic.river.Repository;
@@ -75,7 +75,7 @@ public class RiverRepositoryValidator {
         try {
             repo.fetch( Account.class, "5" );
             fail( "expected EntityNotFoundException" );
-        } catch ( EntityNotFoundException e ) {
+        } catch ( DocumentNotFoundException e ) {
             assertEquals( Account.class, e.getEntityClass() );
             assertEquals( "5", e.getKey() );
         }
@@ -88,14 +88,14 @@ public class RiverRepositoryValidator {
         a1.setName( "Jim" );
         assertEquals( "Jim", a1.getName() );
 
-        repo.clearFirstLevelCache();
+        repo.clearCaches();
 
         Account a2 = repo.fetch( Account.class, "10" );
         assertTrue( a1 != a2 );
         assertEquals( "a", a2.getName() );
 
         repo.update( a1 );
-        repo.clearFirstLevelCache();
+        repo.clearCaches();
 
         Account a3 = repo.fetch( Account.class, "10" );
         assertEquals( "Jim", a3.getName() );

@@ -2,7 +2,7 @@ package com.softwaremosaic.river.inmemory.db;
 
 import com.google.common.base.Predicate;
 import com.mosaic.lang.Closure;
-import com.softwaremosaic.river.EntityNotFoundException;
+import com.softwaremosaic.river.DocumentNotFoundException;
 import com.softwaremosaic.river.GISIndex;
 import com.softwaremosaic.river.Index;
 import com.softwaremosaic.river.PagedCollection;
@@ -399,7 +399,7 @@ public class UniqueIndexTreeStoreTest {
         return index;
     }
 
-    private static class MyMockRepository implements Repository  {
+    private static class MyMockRepository implements Repository {
 
         @Override
         public <T> T create( T entity ) {
@@ -415,11 +415,11 @@ public class UniqueIndexTreeStoreTest {
         }
 
         @Override
-        public void clearFirstLevelCache() {
+        public void clearCaches() {
         }
 
         @Override
-        public <T> T fetch( Class<T> entityClass, Object primaryKey ) throws EntityNotFoundException {
+        public <T> T fetch( Class<T> entityClass, Object primaryKey ) throws DocumentNotFoundException {
             return null;
         }
 

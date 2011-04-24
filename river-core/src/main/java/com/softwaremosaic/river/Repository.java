@@ -1,59 +1,98 @@
 package com.softwaremosaic.river;
 
 import com.mosaic.lang.Closure;
+import com.mosaic.lang.Listenable;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
- *
+ * A repository offers Document persistence and lookup facilities. The persistence may occur locally within the same
+ * JVM as the instance of this interface or it may be occurring remotely on another machine or machines.
  */
-public interface Repository { //extends AutoCloseable {
+public interface Repository<K,T> extends Listenable<RepositoryListener> { //extends AutoCloseable {
 
-    public <T> T create( T entity );
-    public void delete( Object entity );
-    public void update( Object entity );
+    public void close();
 
-    public void clearFirstLevelCache();
+    /**
+     * Inserts the specified document into the repository. The document's primary key must be null, as the act
+     * of inserting it will generate a primary key and the document will be updated and returned with the primary
+     * key set. If the primary key is set, or a unique constraint is violated, or a callback class chooses to veto
+     * the insert then this method will throw an exception.
+     *
+     * @param document the document to be persisted
+     *
+     * @return an updated copy of the document
+     */
+    public T create( T document );
+
+    public List<K> createBatch( Iterable<T> document );
+
+    /**
+     * Remove the specified document from the repository.
+     *
+     * @return true if the primary key exists
+     */
+    public boolean delete( T document );
+
+    public Set<K> deleteBatch( Iterable<T> document );
+
+    /**
+     * Removes the specified document from the repository.
+     *
+     * @return true if the primary key exists
+     */
+    public boolean deleteByPrimaryKey( K primaryKey );
+
+    public Set<K> deleteByPrimaryKeyBatch( Iterable<K> primaryKey );
+
+
+    public void update( T document );
+
+    
+    public void updateBatch( Iterable<T> document );
+
+    public void clearCaches();
+
+    public boolean isCached( K primaryKey );
 
     /**
      *
-     * @param entityClass
      * @param primaryKey
-     * @param <T>
      * @return
-     * @throws EntityNotFoundException when an entity is not found
+     * @throws DocumentNotFoundException when an document is not found
      */
-    public <T> T fetch( Class<T> entityClass, Object primaryKey ) throws EntityNotFoundException;
+    public T fetch( K primaryKey ) throws DocumentNotFoundException;
 
     /**
      *
-     * @param entityClass
      * @param primaryKey
-     * @param <T>
      *
-     * @return returns null if an entity is not found
+     * @return returns null if an document is not found
      */
-    public <T> T fetchNbl( Class<T> entityClass, Object primaryKey ) ;
+    public T fetchNbl( K primaryKey ) ;
+
+    public Map<K,T> fetchBatch( Iterable<K> primaryKey ) ;
 
 
-//    public <I> I getIndexT( Class<I> indexType, String indexName );
-
-    public <T> Index<T> getIndex( Class<T> entityClass, String indexName );
-    public <T> UniqueIndex<T> getUniqueIndex( Class<T> entityClass, String indexName );
-    public <T> GISIndex<T> getGISIndex( Class<T> entityClass, String indexName );
+    public Index<T> getIndex( String indexName );
+    public UniqueIndex<T> getUniqueIndex( String indexName );
+    public GISIndex<T> getGISIndex( String indexName );
 
 
-    public <T> int count( Class<T> entityClass );
+    public int countAll();
 
     /**
-     * Performs a full table scan. For each value of type 'entityClass' closure will be invoked. The order of
+     * Performs a full table scan. For each value of type 'documentClass' closure will be invoked. The order of
      * execution is not guaranteed, depending on implementation it may even happen in parallel locally or distributed.
-     * If the closure 'returns' the entity, then it will be updated.
+     * If the closure 'returns' the document, then it will be updated.
      *
      *
      *
-     * @param entityClass
      * @param closure will be invoked for every value within the repository of type.. if the closure returns a value
      * then that value will be updated. null will not persist any changes.
      * @return the number of rows modified
      */
-    public <T> int forEach( Class<T> entityClass, Closure<T> closure );
+    public int forEach( Closure<T> closure );
 }

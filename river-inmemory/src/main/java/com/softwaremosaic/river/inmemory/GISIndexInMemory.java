@@ -13,7 +13,7 @@ import com.softwaremosaic.river.inmemory.db.GISIndexStore;
  */
 @SuppressWarnings({"unchecked"})
 public class GISIndexInMemory<T> implements GISIndex<T> {
-    private Repository       callingRepository;
+    private Repository callingRepository;
     private GISIndexStore<T> indexStore;
 
     public GISIndexInMemory( Repository callingRepository, GISIndexStore<T> indexStore ) {

@@ -2,7 +2,7 @@ package com.softwaremosaic.river.inmemory.db;
 
 import com.google.inject.Inject;
 import com.mosaic.lang.Cloner;
-import com.softwaremosaic.river.EntityNotFoundException;
+import com.softwaremosaic.river.DocumentNotFoundException;
 import com.softwaremosaic.river.IdGenerator;
 import com.softwaremosaic.river.idgenerators.IdGeneratorSequence;
 import com.softwaremosaic.river.meta.RootDocumentMeta;
@@ -111,10 +111,10 @@ public class InMemoryDB {
         }
     }
 
-    public synchronized <T> T fetch( Class<T> entityClass, Object primaryKey ) throws EntityNotFoundException {
+    public synchronized <T> T fetch( Class<T> entityClass, Object primaryKey ) throws DocumentNotFoundException {
         T entity = fetchNbl( entityClass, primaryKey );
         if ( entity == null ) {
-            throw new EntityNotFoundException( entityClass, primaryKey );
+            throw new DocumentNotFoundException( entityClass, primaryKey );
         }
 
         return entity;
