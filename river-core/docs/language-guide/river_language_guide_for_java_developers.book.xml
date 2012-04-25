@@ -1,0 +1,209 @@
+<document>
+    <!--A design goal of River is to be as expressive as the language designers could foresee while avoiding declaring the same-->
+    <!--information multiple times. Before moving on to functions, and closures this chapter focuses on how River handles-->
+    <!--data.-->
+
+  <chapter title="Welcome">
+    This book compares the language features offered by River with Java. It assumes a good knowledge of Java and OO
+    principles.
+
+    River was created out of a love hate relationship with Java. The goal of River was to be Fast, Fun, Powerful
+    and Flexible. Making industrial strength, asynchronous, enterprise systems easier to write and reason about.
+  </chapter>
+
+  <chapter title="Quick Start">
+    Want to try River now without needing to read the entire reference section? This part of the book focuses on short
+    tutorials that show of specific parts of the River language.
+
+    Hello World               yes
+    Stock Market Downloader   ?
+    CSV File to XML File Converter  ?
+    Async
+
+
+
+
+  </chapter>
+
+
+  <part title="Functions">
+
+    River thinks of functions as callable blocks of code that are not attached to objects. They are implemented within
+    the JVM stack as static methods on classes. Methods on the other hand are tightly associated with objects and can
+    only be invoked on an instance of an object.
+
+
+    <chapter title="Delcaring Classes">
+
+      <section title="Package Naming">
+
+      </section>
+
+      <section title="Object Naming">
+
+      </section>
+
+    </chapter>
+  </part>
+
+
+  <part title="Classes">
+
+    A class in River follows the same grain as Java. This gives River very close compatibility with its older relation.
+    The main differences are syntactic. River uses a more concise syntax with less duplication of intent than Java, it also
+    places a heavier emphasis on mutability vs immutability making it easier to write heavily concurrent programs using
+    immutable objects.
+
+    <chapter title="Delcaring Objects">
+<todo>
+      <section title="Package and Class Naming" version="0.1">
+        River groups objects using packages, just as Java does. The difference is that River enforces the Java convention
+        of matching directory names with package names. This enables River to drop the package declaration entirely.
+
+        <insert>
+          <description>
+            Immutable class with a no-arg constructor, no methods or fields. The class User is declared in the file
+            example/User.river which means that the Java class will be created in package example with class name of User.
+            It is an error to call use a class name that does not match the files name.
+          </description>
+
+          <code language="River" file="example/User.river">
+            User {
+
+            }
+          </code>
+          <code language="Java" file="example/User.java">
+            package examples;
+
+            public class User {
+
+            }
+          </code>
+        </insert>
+      </section>
+</todo>
+    </chapter>
+
+    <chapter title="Declaring Instance Fields">
+
+      Instance fields are named slots on a runtime instantiation of a class. Many instances of a single class may exist
+      at a time, as per standard Java. River enhances the concepts of fields by tracking at compilation time whether
+      an object is mutable or not. Providing greater compile time checking than Java and more tools for working with
+      immutable objects while not needing to write as much code.
+
+<todo>
+      <section title="Immutable Objects" version="0.1">
+        An immutable object is an object whose fields can only be set when the object is created. Due to the
+        effectiveness of using immutable objects in highly concurrent programs, all objects in River are assumed to be
+        immutable unless declared otherwise.
+
+        <insert>
+          <description>
+            Immutable class with a no-arg constructor, no methods or fields. Notice that no class keyword or braces are
+            required.
+          </description>
+
+          <code language="River" file="example/User.river">
+            User
+          </code>
+          <code language="Java" file="example/User.java">
+            package examples;
+
+            public class User {
+
+            }
+          </code>
+        </insert>
+
+
+        <insert>
+          <description>
+            Immutable class with a single String field which must be set via the constructor.
+          </description>
+
+          <code language="River" file="example/User.river">
+            User {
+              name:String
+            }
+          </code>
+
+          <code language="Java" file="example/User.java">
+            package examples;
+
+            public class User {
+                private final String name;
+
+                public User( String name ) {
+                    this.name = name;
+                }
+
+                public String name() {
+                    return name;
+                }
+            }
+          </code>
+        </insert>
+
+
+        <insert>
+          <description>
+            Immutable class with a single String field set via the constructor and declared as part of the identity of
+            the object; that is part of the same equals/hashcode contract from Java and for ease of debugging toString as well.
+          </description>
+
+          <code language="River" file="example/User.river">
+            User( name:String )
+          </code>
+
+          <code language="Java" file="example/User.java">
+            package examples;
+
+            public class User {
+                private final String name;
+
+                public User( String name ) {
+                    this.name = name;
+                }
+
+                public String name() {
+                    return name;
+                }
+
+                public int hashCode() {
+                    return name.hashCode();
+                }
+
+                public String toString() {
+                    return "User(name="+name+")";
+                }
+
+                public boolean equals( Object o ) {
+                    if ( o == null || !(o instanceof User) ) {
+                        return false;
+                    }
+
+                    User other = (User) o;
+                    return ObjectUtils.equals(this.name, other.name);
+                }
+            }
+          </code>
+        </insert>
+
+        <section title="Mutable Objects">
+
+        </section>
+
+        <section title="Lockable Objects">
+
+        </section>
+
+        Mutable class with a single String field set via the constructor:
+      </section>
+</todo>
+    </chapter>
+  </part>
+
+
+
+
+</document>

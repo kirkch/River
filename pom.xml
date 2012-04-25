@@ -4,21 +4,84 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.jiscover</groupId>
-        <artifactId>jiscover</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
-    </parent>
 
+    <groupId>com.mosaic</groupId>
     <artifactId>river</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    
     <name>River</name>
     <packaging>pom</packaging>
 
 	<modules>
-		<module>river-core</module>
-		<module>river-tests</module>
-		<module>river-inmemory</module>
-		<!--<module>river-mongodb</module>-->
+        <module>editor</module>
+        <module>jvm-byte-gen</module>
+        <module>river-core</module>
 	</modules>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <build>
+        <!-- sourceEncoding>UTF-8</sourceEncoding -->  <!-- NB support for this is scheduled for Maven 3.1' replaces property project.build.sourceEncoding above   CK -->
+
+      <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.7.2</version>
+                <configuration>
+                    <parallel>methods</parallel>
+                    <threadCount>6</threadCount>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+          <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.8.1</version>
+            <scope>test</scope>
+          </dependency>
+
+          <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.8.5</version>
+          </dependency>
+
+          <dependency>
+            <groupId>org.ow2.asm</groupId>
+            <artifactId>asm</artifactId>
+            <version>4.0</version>
+          </dependency>
+        </dependencies>
+    </dependencyManagement>
+    
 </project>

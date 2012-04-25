@@ -1,0 +1,106 @@
+
+
+opt-FunctionDeclarations
+
+ClassName opt-IdentityFields opt-ClassBlock
+
+
+
+
+
+
+User
+
+
+
+
+
+User( name:String )
+
+
+lockable User( name:String )
+
+
+modifiable User( name:String )
+
+
+modifiable User( name:String ) {
+
+  jsonTemplate = {"name":$name}
+
+  xmlTemplate = <user name="$name"/>
+
+}
+
+
+UserRestfulEndPoint {
+
+  GET /user/{id} = userRepository.fetchUser( id )    // where fetchUser returns Future<User>
+                                                     // supports  'map' to HttpResponse for fine tuning responses
+
+  POST /user = 404
+
+  POST /user = 404 + cookie("a","b") + header("a","b")
+
+}
+
+
+request.cookies["abc"]
+cookies["ABC"]  // array/map/reflection
+cookies.ABC     // normal
+requestHeaders[]
+
+
+a.b.c    if a.b is null a.b.c evaluates to null too
+
+
+
+lockable AccountDTO( id:String ) {
+  created:DTM    = SystemClock.currentDTM()
+  nameNbl:String
+
+  constructor( id:String, createdDTM:DTM, nameNbl:String ) {
+    super( id )
+
+    this.created = createdDTM
+    this.nameNbl = nameNbl
+  }
+
+  setter nameNbl( newNameNbl:String )          = this.nameNbl = newNameNbl
+  getter nameNbl                      : String = this.nameNbl
+
+  setter nameNbl = this.nameNbl = newNameNbl
+  getter nameNbl = this.nameNbl
+
+  json jsonTemplate   = { "id":${id}, "when": ${created}, "name"=${nameNbl} }
+  xml  xmlTemplate    = <account id=${id} when=${created} name=${nameNbl}/>
+  sql  insertTemplate = insert into ACCOUNT (id,name,created) values(${id},${nameNbl},${created})
+  protobuf proto
+}
+
+interface AccountService {
+  insert( account:Account ) : Void
+  fetch( id:String ) : Account
+
+
+  before insert( account:Account ) = println( "hello" )
+  after insert( account:Account )  = {
+    println( "bye" )
+  }
+}
+
+mixin LoggingMixin {
+
+  before * = log( "hello" )
+  after  * = log( "bye" )
+
+
+  private log( msg:String ) = println( msg )
+
+}
+
+
+use java.lang.Integer with river.lang.RichIntMixin
+use river.lang.*
+use river.collections.ArrayUtils.*
+

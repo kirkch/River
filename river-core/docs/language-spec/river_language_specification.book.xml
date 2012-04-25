@@ -1,0 +1,84 @@
+<document>
+    <!--A design goal of River is to be as expressive as the language designers could foresee while avoiding declaring the same-->
+  <!--information multiple times. Before moving on to functions, and closures this chapter focuses on how River handles-->
+  <!--data.-->
+
+  <chapter language="Welcome">
+
+  </chapter>
+
+
+  <chapter language="Grammar">
+
+    <section title="High Level Grammar Usage">
+
+      <bnf-example>
+        ClassName
+      </bnf-example>
+
+    </section>
+
+
+    <section title="Class Grammar">
+      <bnf>
+        InitialIdentifierCharacter := a-z A-Z _
+        IdentifierCharacter        := InitialIdentifierCharacter 0-9 $ _
+
+        Identifier                 := InitialIdentifierCharacter IdentifierCharacter
+        ClassName                  := Identifier
+      </bnf>
+    </section>
+
+  </chapter>
+
+
+
+  <chapter language="Packages">
+
+    Packages provide scope and grouping for classes.
+
+    <li id="1.0">
+      <li id="1.0.1" title="Declaring a package">
+        Package names are inferred directly from the directory structure of the file holding the class.
+
+        <rationale>
+          Explicit package naming from within the file will not be supported in the first release, pending feedback on
+          whether it is really needed. The rationale being that nearly everybody in the Java world follows this pattern
+          and deviations from it do cause confusion.
+        </rationale>
+
+        <li id="1.0.2">Package root is declared at compilation time.</li>
+        <li id="1.0.3">Every directory is a package.</li>
+        <li id="1.0.4">Subdirectories form subpackages in a standard tree structure.</li>
+        <li id="1.0.5">Package names are case sensitive.</li>
+        <li id="1.0.6">Valid characters are: a-z 0-9 $ _</li>
+      </li>
+    </li>
+
+  </chapter>
+
+
+  <chapter language="Classes">
+
+    Classes group functions, methods, fields and shared constants. They are declared within a package and are usually
+    within a file with the same name as the class. The exception to this are helper/embedded object declarations
+    which will be covered in <ref section="3.0"/>.
+
+    <li>
+      <li id="2.0" title="Class Names">
+        <li id="2.0.1">The primary class within a file must match the name of the file. Case sensitive.</li>
+        <li id="2.0.2">Valid characters are a-z 0-9 $ _</li>
+      </li>
+    </li>
+
+  </chapter>
+
+  <chapter language="Helper Classes">
+
+
+  </chapter>
+
+
+
+
+</document>

@@ -10,10 +10,10 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>river-core</artifactId>
+    <artifactId>jvm-byte-gen</artifactId>
 	
-    <name>River Core</name>
-    <description>The core of the language parser.</description>
+    <name>JVM Byte Code Generator</name>
+    <description>Wrapper around ASM.</description>
     
     <packaging>jar</packaging>
 
@@ -22,16 +22,32 @@
 	</properties>
 
     <dependencies>
+
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>jvm-byte-gen</artifactId>
-            <version>${project.version}</version>
+            <groupId>org.ow2.asm</groupId>
+            <artifactId>asm</artifactId>
         </dependency>
+
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>pull-parser-mosaic</artifactId>
-            <version>${project.version}</version>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
         </dependency>
+
     </dependencies>
 
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.ow2.asm</groupId>
+                <artifactId>asm</artifactId>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
 </project>

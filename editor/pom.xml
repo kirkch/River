@@ -10,10 +10,10 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>river-core</artifactId>
+    <artifactId>editor</artifactId>
 	
-    <name>River Core</name>
-    <description>The core of the language parser.</description>
+    <name>Editor</name>
+    <description>Text editor and IDE</description>
     
     <packaging>jar</packaging>
 
@@ -21,17 +21,6 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> <!-- property does not inherit from root.. revise when mvn 3.1 is released CK -->
 	</properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>jvm-byte-gen</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>pull-parser-mosaic</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-    </dependencies>
+
 
 </project>
