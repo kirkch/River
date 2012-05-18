@@ -1,0 +1,23 @@
+
+Fast, Fun, Powerful and Flexible.
+
+Making industrial strength, asynchronous, enterprise systems easier to write and reason about.
+
+
+
+Powerful AND Beautiful
+
+Powerful => multi paradigm: async/sync, OO/imperative/functional/declarative, transactional/nontransactional
+Beauty   => readable, elegant, concise
+
+
+
+emphasis on writing modern enterprise grade servers
+
+
+
+
+
+
+Inspired by: C, JVM, Java, Scala
+Built on the shoulders of giants:   JVM

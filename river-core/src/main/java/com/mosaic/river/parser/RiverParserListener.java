@@ -23,8 +23,8 @@ public interface RiverParserListener {
 //    /**
 //     * Expression that evaluates to the default value to use for the field if no other value is supplied.  Account( name:String="Bob" )
 //     */
-//    void startOfDefaultFieldExpression( TextPosition position, String fieldName );
-//    void endOfDefaultFieldExpression( TextPosition position );
+//    void startOfDefaultIdentityFieldExpression( TextPosition position, String fieldName );
+//    void endOfDefaultIdentityFieldExpression( TextPosition position );
 
 
 //    void startOfExpression( TextPosition position );

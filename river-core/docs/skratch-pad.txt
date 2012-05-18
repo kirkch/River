@@ -104,3 +104,76 @@ use java.lang.Integer with river.lang.RichIntMixin
 use river.lang.*
 use river.collections.ArrayUtils.*
 
+
+SCOPE
+-----
+
+Idea: avoid typing private by prefixing with _?  Good idea, bad idea?
+      how about changing the default. So _X defaults to private but could be declared as 'public _X' if one wanted
+
+_rootLabel
+private rootLabel
+
+_ROOT_LABEL
+private ROOT_LABEL
+
+_RootLabel
+
+Expressions
+------
+
+        // creturn !consume(tokenizer, "(")
+
+        if ( !consume(tokenizer,"(") ) return;
+
+
+
+Functions
+=========
+
+
+add(a,b) = a+b
+addition = &add
+
+
+onKeypress( callback(key:Char):Void )
+
+onKeypress( println("key: "+key) )
+onKeypress( {println("key: "+key)} )
+onKeypress( callback=println("key: "+key) )
+onKeypress( callback(k)=println("key: "+k) )
+onKeypress( callback(k:Char)=println("key: "+k) )
+onKeypress( f(k)=println("key: "+k) )
+onKeypress( f(k:Char)=println("key: "+k) )
+
+callback(key) =  println("key: "+key)
+onKeypress( &callback )
+onKeypress( callback=&callback )
+
+
+
+
+AutoConversions
+------------
+
+foo:Colour = "red"
+
+
+will call   Colour.fromString("red")
+
+
+
+or
+
+converter fromStr( str:String ) =
+
+
+
+Good to clean up
+--------
+
+            if( healthCheck.passed ) {
+              monitoringService.debug( "HealthCheck [%s] %s".format(healthCheck.testName,  healthCheck.status) )
+            } else {
+              monitoringService.fyi( "HealthCheck [%s] %s".format(healthCheck.testName,  healthCheck.status) )
+            }
