@@ -67,8 +67,7 @@ public class RiverParser_IdentityFields_Tests {
 
         verify(callbackMock).startOfClassDeclaration(new TextPosition(1,1));
         verify(callbackMock).className( new TextPosition(1,1), "User" );
-        verify(callbackMock).endOfClassDeclaration(new TextPosition(1,5));
-        verify(callbackMock).parseError( new TextPosition(1,5), "Unrecognized symbol ')'" );
+        verify(callbackMock).parseError( new TextPosition(1,5), "Expected EOF" );
         verifyNoMoreInteractions(callbackMock);
     }
 
@@ -78,8 +77,7 @@ public class RiverParser_IdentityFields_Tests {
 
         verify(callbackMock).startOfClassDeclaration(new TextPosition(1,1));
         verify(callbackMock).className( new TextPosition(1,1), "User" );
-        verify(callbackMock).endOfClassDeclaration(new TextPosition(1,6));
-        verify(callbackMock).parseError( new TextPosition(1,6), "Missing closing ')'" );
+        verify(callbackMock).parseError( new TextPosition(1,6), "Expected ')'" );
         verifyNoMoreInteractions(callbackMock);
     }
 
@@ -89,12 +87,11 @@ public class RiverParser_IdentityFields_Tests {
 
         verify(callbackMock).startOfClassDeclaration(new TextPosition(1,1));
         verify(callbackMock).className( new TextPosition(1,1), "User" );
-        verify(callbackMock).endOfClassDeclaration(new TextPosition(1,7));
-        verify(callbackMock).parseError( new TextPosition(1,7), "Missing closing ')'" );
+        verify(callbackMock).parseError( new TextPosition(1,7), "Expected ')'" );
         verifyNoMoreInteractions(callbackMock);
     }
 
-//    @Test
+    @Test
     public void twoIdentityFields() throws IOException {
         parser.parse( new StringReader("User(name:String,height:Int)"), callbackMock );
 

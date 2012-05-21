@@ -3,6 +3,7 @@ package com.mosaic.river.parser;
 import com.mosaic.parsers.pull.BNFExpression;
 import com.mosaic.parsers.pull.Match;
 import com.mosaic.parsers.pull.ParserCallback;
+import com.mosaic.parsers.pull.PullParser;
 import com.mosaic.parsers.pull.TextPosition;
 import com.mosaic.parsers.pull.Tokenizer;
 import com.mosaic.utils.string.CharacterMatcher;
@@ -23,11 +24,11 @@ public class RiverParser {
     private static CharacterMatcher TYPE_MATCHER        = CharacterMatchers.javaVariableType();
 
 
-    private static BNFExpression CLASS_BNF = matches(CLASS_NAME_MATCHER);
+
     private static BNFExpression IDENTITY_FIELD_BNF = and( matches(METHOD_NAME_MATCHER), discard(constant(":")), matches(TYPE_MATCHER) )
         .onMatch(
             new ParserCallback<RiverParserListener, List>() {
-                public Match<List<String>> onResult( RiverParserListener l, Match<List<String>> match ) {
+                public Match<List> onResult( RiverParserListener l, Match<List> match ) {
                     List<String> args      = match.getValue();
                     String       fieldName = args.get(0);
                     String       fieldType = args.get(1);
@@ -38,40 +39,45 @@ public class RiverParser {
                 }
             }
         );
-//    private static BNFExpression IDENTITY_FIELD_BNF = and( discard(constant("(")), matches(METHOD_NAME_MATCHER), discard(constant(":")) );
+
+    private static BNFExpression IDENTITY_FIELDS_BNF = and( discard(constant("(")), optional(repeatableWithSeparator(IDENTITY_FIELD_BNF, matches(","))), discard(constant(")")) );
+
+    private static BNFExpression CLASS_NAME_BNF = matches(CLASS_NAME_MATCHER).onMatch(
+        new ParserCallback<RiverParserListener, String>() {
+            public Match<String> onResult( RiverParserListener l, Match<String> match ) {
+                String       className = match.getValue();
+                TextPosition pos       = match.getPos();
+
+                l.startOfClassDeclaration( pos );
+                l.className( pos, className );
+
+                return match;
+            }
+        }
+    );
+
+    private static BNFExpression CLASS_BNF = and( CLASS_NAME_BNF, optional( IDENTITY_FIELDS_BNF ), eof() );
+
+
+
+    private static final PullParser p = new PullParser();
+
+    static {
+        p.register( "CLASS", CLASS_BNF );
+    }
 
 
     public void parse( Reader in, RiverParserListener l ) throws IOException {
-        Tokenizer tokenizer = new Tokenizer( in );
-        tokenizer.autoskipWhitespace( true );
+        Tokenizer tokenizer = Tokenizer.autoskipWhitespace( in );
+        Match     result    = p.parse( "CLASS", l, tokenizer );
 
-
-        if ( parseClass(tokenizer, l) ) {
-            if ( !tokenizer.isEOF() ) {
-                l.parseError( tokenizer.getPosition(), "Unrecognized symbol ')'" );
-            }
-        }
-    }
-
-    private boolean parseClass( Tokenizer tokenizer, RiverParserListener l ) throws IOException {
-        if ( !tokenizer.walk(CLASS_NAME_MATCHER) ) {
-            l.parseError( tokenizer.getPosition(), "missing class name" );
-
-            return false;
+        if ( result.isError() ) {
+            l.parseError( result.getPos(), result.getError().toString() );
         } else {
-            TextPosition from = tokenizer.getPosition();
-            String className = tokenizer.consume();
-
-            l.startOfClassDeclaration( from );
-            l.className( from, className );
-
-            parseIdentityFields( tokenizer, l );
-
             l.endOfClassDeclaration( tokenizer.getPosition() );
-
-            return true;
         }
     }
+
 
 
     // Parser p = new Parser();
@@ -87,60 +93,5 @@ public class RiverParser {
     // IDENTITY_FIELDS = seq( IDENTITY_FIELD )
     // IDENTITY_FIELD  = FIELDNAME <~ ":" ~> TYPE
 
-    private void parseIdentityFields( Tokenizer tokenizer, RiverParserListener l ) throws IOException {
-        if ( !consume(tokenizer,"(") ) return;
-
-
-        parseIdentityField( tokenizer, l );
-
-
-        consume( tokenizer, l, ")", "Missing closing ')'" );
-    }
-
-    private boolean parseIdentityField( Tokenizer tokenizer, RiverParserListener l ) throws IOException {
-
-        if ( !tokenizer.walk(METHOD_NAME_MATCHER) ) {
-            return false;
-        }
-
-        TextPosition fieldPos = tokenizer.getPosition();
-
-
-        String fieldName = tokenizer.consume();
-
-        tokenizer.walkConstant( ":" );
-        tokenizer.consume();
-
-        tokenizer.walk( TYPE_MATCHER );
-
-        String type = tokenizer.consume();
-
-        l.identityField( fieldPos, type, fieldName );
-
-        return true;
-    }
-
-    private boolean consume( Tokenizer tokenizer, String target ) throws IOException {
-        if ( tokenizer.walkConstant(target) ) {
-            tokenizer.consume();
-
-            return true;
-        }
-
-        return false;
-    }
-
-    private boolean consume( Tokenizer tokenizer, RiverParserListener l, String target, String errorIfMissing ) throws IOException {
-        if ( tokenizer.walkConstant(target) ) {
-            tokenizer.consume();
-
-            return true;
-        }
-
-        l.parseError( tokenizer.getPosition(), errorIfMissing );
-        tokenizer.undoWalk();
-
-        return false;
-    }
 
 }
