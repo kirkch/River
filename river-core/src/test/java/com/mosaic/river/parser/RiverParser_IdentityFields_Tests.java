@@ -92,7 +92,7 @@ public class RiverParser_IdentityFields_Tests {
     }
 
     @Test
-    public void twoIdentityFields() throws IOException {
+    public void twoIdentityFieldsNoWhiteSpace() throws IOException {
         parser.parse( new StringReader("User(name:String,height:Int)"), callbackMock );
 
         verify(callbackMock).startOfClassDeclaration(new TextPosition(1,1));
@@ -103,35 +103,75 @@ public class RiverParser_IdentityFields_Tests {
         verifyNoMoreInteractions(callbackMock);
     }
 
+    @Test
+    public void twoIdentityFieldsWithWhiteSpace() throws IOException {
+        parser.parse( new StringReader(" User ( name : String , height : Int ) "), callbackMock );
 
-    // User(name:String,height:Int)
-    // User( name:String, height:Int )
+        verify(callbackMock).startOfClassDeclaration(new TextPosition(1,1));
+        verify(callbackMock).className( new TextPosition( 1, 1 ), "User" );
+        verify(callbackMock).identityField(new TextPosition(1,8), "String", "name");
+        verify(callbackMock).identityField(new TextPosition(1,24), "Int", "height");
+        verify(callbackMock).endOfClassDeclaration(new TextPosition(1,39));
+        verifyNoMoreInteractions(callbackMock);
+    }
 
+    @Test
+    public void twoIdentityFieldsWithNewLines() throws IOException {
+        parser.parse(
+            createReader(
+                " User "," ( ", " name ", " : ", " String ", " , ", " height ", " : ", " Int ", " ) "
+            ),
+            callbackMock
+        );
 
-    // User
-    // (
-    // name
-    // :
-    // String
-    // ,
-    // height:Int
-    // )
+        verify(callbackMock).startOfClassDeclaration(new TextPosition(1,1));
+        verify(callbackMock).className( new TextPosition( 1, 1 ), "User" );
+        verify(callbackMock).identityField(new TextPosition(2,2), "String", "name");
+        verify(callbackMock).identityField(new TextPosition(6,2), "Int", "height");
+        verify(callbackMock).endOfClassDeclaration(new TextPosition(10,2));
+        verifyNoMoreInteractions(callbackMock);
+    }
 
-    // User( name: )
-    // User( name )
-    // User( name String )
+    @Test
+    public void missingIdentifyFieldType() throws IOException {
+        parser.parse( new StringReader("User( name: )"), callbackMock );
 
-    // User( 43:String, height:Int )
+        verify(callbackMock).startOfClassDeclaration(new TextPosition(1,1));
+        verify(callbackMock).className( new TextPosition(1,1), "User" );
+        verify(callbackMock).parseError( new TextPosition(1,12), "Expected 'java variable type'" ); // todo replace java with river
+        verifyNoMoreInteractions(callbackMock);
+    }
 
-//    @Test
-//    public void bracketsAfterClassNameButNoIdentityFields() throws IOException {
-//        parser.parse( new StringReader("User()"), callbackMock );
-//
-//        verify(callbackMock).startOfClassDeclaration(new TextPosition(1,1));
-//        verify(callbackMock).className(new TextPosition(1,1), "User");
-//        verify(callbackMock).endOfClassDeclaration(new TextPosition(1,5));
-//        verifyNoMoreInteractions(callbackMock);
-//    }
+    @Test
+    public void missingIdentifyFieldTypeAndSeparator() throws IOException {
+        parser.parse( new StringReader("User( name )"), callbackMock );
+
+        verify(callbackMock).startOfClassDeclaration(new TextPosition(1,1));
+        verify(callbackMock).className( new TextPosition(1,1), "User" );
+        verify(callbackMock).parseError( new TextPosition(1,11), "Expected ':'" );
+        verifyNoMoreInteractions(callbackMock);
+    }
+
+    @Test
+    public void missingIdentifyFieldTypeSeparator() throws IOException {
+        parser.parse( new StringReader("User( name String )"), callbackMock );
+
+        verify(callbackMock).startOfClassDeclaration(new TextPosition(1,1));
+        verify(callbackMock).className( new TextPosition(1,1), "User" );
+        verify(callbackMock).parseError( new TextPosition(1,11), "Expected ':'" );
+        verifyNoMoreInteractions(callbackMock);
+    }
+
+    @Test
+    public void numberAsIdentityFieldName() throws IOException {
+        parser.parse( new StringReader("User( 43 String )"), callbackMock );
+
+        verify(callbackMock).startOfClassDeclaration(new TextPosition(1,1));
+        verify(callbackMock).className( new TextPosition(1,1), "User" );
+        verify(callbackMock).parseError( new TextPosition(1,6), "Expected ')'" );
+        verifyNoMoreInteractions(callbackMock);
+    }
+
 
 
     private Reader createReader( String...lines ) {
