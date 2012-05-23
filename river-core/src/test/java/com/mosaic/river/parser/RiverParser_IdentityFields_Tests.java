@@ -67,7 +67,7 @@ public class RiverParser_IdentityFields_Tests {
 
         verify(callbackMock).startOfClassDeclaration(new TextPosition(1,1));
         verify(callbackMock).className( new TextPosition(1,1), "User" );
-        verify(callbackMock).parseError( new TextPosition(1,5), "Expected EOF" );
+        verify(callbackMock).parseError( new TextPosition(1,5), "expected EOF" );
         verifyNoMoreInteractions(callbackMock);
     }
 
@@ -77,7 +77,7 @@ public class RiverParser_IdentityFields_Tests {
 
         verify(callbackMock).startOfClassDeclaration(new TextPosition(1,1));
         verify(callbackMock).className( new TextPosition(1,1), "User" );
-        verify(callbackMock).parseError( new TextPosition(1,6), "Expected ')'" );
+        verify(callbackMock).parseError( new TextPosition(1,6), "expected ')'" );
         verifyNoMoreInteractions(callbackMock);
     }
 
@@ -87,7 +87,7 @@ public class RiverParser_IdentityFields_Tests {
 
         verify(callbackMock).startOfClassDeclaration(new TextPosition(1,1));
         verify(callbackMock).className( new TextPosition(1,1), "User" );
-        verify(callbackMock).parseError( new TextPosition(1,7), "Expected ')'" );
+        verify(callbackMock).parseError( new TextPosition(1,7), "expected ')'" );
         verifyNoMoreInteractions(callbackMock);
     }
 
@@ -138,7 +138,7 @@ public class RiverParser_IdentityFields_Tests {
 
         verify(callbackMock).startOfClassDeclaration(new TextPosition(1,1));
         verify(callbackMock).className( new TextPosition(1,1), "User" );
-        verify(callbackMock).parseError( new TextPosition(1,12), "Expected 'java variable type'" ); // todo replace java with river
+        verify(callbackMock).parseError( new TextPosition(1,12), "expected 'java variable type'" ); // todo replace java with river
         verifyNoMoreInteractions(callbackMock);
     }
 
@@ -148,7 +148,7 @@ public class RiverParser_IdentityFields_Tests {
 
         verify(callbackMock).startOfClassDeclaration(new TextPosition(1,1));
         verify(callbackMock).className( new TextPosition(1,1), "User" );
-        verify(callbackMock).parseError( new TextPosition(1,11), "Expected ':'" );
+        verify(callbackMock).parseError( new TextPosition(1,11), "expected ':'" );
         verifyNoMoreInteractions(callbackMock);
     }
 
@@ -158,7 +158,7 @@ public class RiverParser_IdentityFields_Tests {
 
         verify(callbackMock).startOfClassDeclaration(new TextPosition(1,1));
         verify(callbackMock).className( new TextPosition(1,1), "User" );
-        verify(callbackMock).parseError( new TextPosition(1,11), "Expected ':'" );
+        verify(callbackMock).parseError( new TextPosition(1,11), "expected ':'" );
         verifyNoMoreInteractions(callbackMock);
     }
 
@@ -168,7 +168,7 @@ public class RiverParser_IdentityFields_Tests {
 
         verify(callbackMock).startOfClassDeclaration(new TextPosition(1,1));
         verify(callbackMock).className( new TextPosition(1,1), "User" );
-        verify(callbackMock).parseError( new TextPosition(1,6), "Expected ')'" );
+        verify(callbackMock).parseError( new TextPosition(1,6), "expected ')'" );
         verifyNoMoreInteractions(callbackMock);
     }
 

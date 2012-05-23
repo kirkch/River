@@ -177,3 +177,49 @@ Good to clean up
             } else {
               monitoringService.fyi( "HealthCheck [%s] %s".format(healthCheck.testName,  healthCheck.status) )
             }
+
+
+Closure ideas
+----------
+
+yes
+spinUntilTrue( `ctx.countThreads(threadPrefix) > 0` )
+
+f() = ctx.countThreads(threadPrefix) > 0
+f(a,b) = ctx.countThreads(a) > b
+f(a,b) = a eq b
+f(a,b) : Boolean = a eq b
+
+spinUntilTrue( f )
+
+
+map( collection:Iterable[A], f(a:A):B ) : Iterable[B]
+
+
+map( [1,2,3], `a.toString()` )
+map( [1,2,3], a.toString() )
+map( [1,2,3], f(a)=a.toString() )
+
+
+[1,2,3].map( e.toString() )
+[1,2,3].map( f(e)=e.toString() )
+
+f(e)=e.toString()
+[1,2,3].map( f )
+
+No
+spinUntilTrue( f(ctx.countThreads(threadPrefix) > 0) )
+spinUntilTrue( {ctx.countThreads(threadPrefix) > 0} )
+spinUntilTrue( &f )
+spinUntilTrue( f )
+spinUntilTrue( `f` )
+spinUntilTrue( eval f )
+
+
+f = eval ctx.countThreads(threadPrefix) > 0
+f = func ctx.countThreads(threadPrefix) > 0
+f := ctx.countThreads(threadPrefix) > 0
+
+f(a,b) := a == b
+f(a,b) = `a == b`
+

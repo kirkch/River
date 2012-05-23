@@ -50,7 +50,7 @@ public class RiverParser_VanillaClassDeclaration_Tests {
     public void expectedClassNameButFoundPercentSymbol_expectError() throws IOException {
         parser.parse( new StringReader("%"), callbackMock );
 
-        verify(callbackMock).parseError(new TextPosition(1,1), "missing class name");
+        verify(callbackMock).parseError(new TextPosition(1,1), "expected 'java variable name'");
         verifyNoMoreInteractions(callbackMock);
     }
 
