@@ -223,3 +223,39 @@ f := ctx.countThreads(threadPrefix) > 0
 f(a,b) := a == b
 f(a,b) = `a == b`
 
+
+
+Async Web Server Ideas
+================
+
+
+
+  // user    = async cpt.getUser_1( callingUserId.get )
+  // tweetId = async sendTweet( user.twitterCredentials, tweetMessage )
+
+  // tweetId.httpStatusCode match {
+  //   case 200 => httpResponse write json( {"id": tweetId} )
+  //   case     => httpResponse write httpError( tweetId.httpStatusCode )
+  // }
+
+
+
+// every call to this class is automatically async, and for clarity must be marked as async
+// only one call may progress at a time due to shared state
+actor MonitoringService {
+  private file = ...
+
+  debug( msg:String ) : void = if ( isDebugEnabled ) file.write(msg)
+
+  warn( msg:String ) : void throws IOException {
+     if ( isWarnEnabled ) file.write(msg)
+  }
+}
+
+
+// method attributes:  isBlocking, isImmutable   (or couldBlock, couldAccessSharedMutableState
+
+couldBlock - scheduled to the blockable pool of threads vs the high cpu throughput pool of threads
+couldAccessSharedMutableState - only one thread allowed within the class at once vs hardware limit only
+
+
