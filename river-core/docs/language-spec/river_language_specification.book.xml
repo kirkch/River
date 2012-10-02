@@ -1,5 +1,5 @@
 <document>
-    <!--A design goal of River is to be as expressive as the language designers could foresee while avoiding declaring the same-->
+  <!--A design goal of River is to be as expressive as the language designers could foresee while avoiding declaring the same-->
   <!--information multiple times. Before moving on to functions, and closures this chapter focuses on how River handles-->
   <!--data.-->
 

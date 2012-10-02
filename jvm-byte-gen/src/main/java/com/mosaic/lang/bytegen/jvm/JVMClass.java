@@ -1,5 +1,6 @@
 package com.mosaic.lang.bytegen.jvm;
 
+import com.mosaic.lang.Lockable;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
@@ -10,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  *
  */
-public class JVMClass {
+public class JVMClass extends Lockable {
 
     private String classPackage;
     private String className;
@@ -27,34 +28,71 @@ public class JVMClass {
         this.className    = cName;
     }
 
-    public String getClassName()                       { return className; }
-    public void setClassName( String className )       { this.className = className; }
+    public String getClassName() {
+        return className;
+    }
 
-    public String getClassPackage()                    { return classPackage; }
-    public void setClassPackage( String classPackage ) { this.classPackage = classPackage; }
+    public JVMClass withClassName( String className ) {
+        throwIfLocked();
 
-    public String getSourceFile()                      { return sourceFile; }
-    public void setSourceFile( String sourceFile )     { this.sourceFile = sourceFile; }
+        this.className = className;
 
-    public int getStaticMethodCount() { return 0; }
-    public int getMethodCount() { return 0; }
+        return this;
+    }
+
+    public String getClassPackage() {
+        return classPackage;
+    }
+
+    public JVMClass withClassPackage( String classPackage ) {
+        throwIfLocked();
+
+        this.classPackage = classPackage;
+
+        return this;
+    }
+
+    public String getSourceFile() {
+        return sourceFile;
+    }
+
+    public JVMClass withSourceFile( String sourceFile ) {
+        throwIfLocked();
+        this.sourceFile = sourceFile;
+
+        return this;
+    }
+
+    public int getStaticMethodCount() {
+        return 0;
+    }
+
+    public int getMethodCount() {
+        return 0;
+    }
 
 
     public String getFullyQualifiedJVMName() {
+        if ( classPackage == null ) {
+            return className;
+        }
+
         return classPackage + "/" + className;
     }
 
     public void appendField( JVMField field ) {
+        throwIfLocked();
+
         fields.put( field.getName(), field );
     }
 
     public byte[] generateClass() {
         ClassWriter cw = new ClassWriter( ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS );
 
-        cw.visit( Opcodes.V1_2, Opcodes.ACC_PUBLIC + Opcodes.ACC_SUPER, classPackage+"/"+className, null, "java/lang/Object", null );
+        cw.visit( Opcodes.V1_2, Opcodes.ACC_PUBLIC + Opcodes.ACC_SUPER, getFullyQualifiedJVMName(), null, "java/lang/Object", null );
 
         if ( sourceFile != null ) {
-            cw.visitSource( "pm/H1.java", null );
+            cw.visitSource( sourceFile, null );
         }
 
         cw.visitEnd();

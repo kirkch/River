@@ -15,7 +15,19 @@ public class JVMClassTest {
 
 
     @Test
-    public void generateEmptyClass() throws ClassNotFoundException {
+    public void generateEmptyClassNoPackage() throws ClassNotFoundException {
+        JVMClass node = new JVMClass( null, "H1" );
+        loader.declareJavaClass( node );
+
+
+        Class c = loader.loadClass( "H1" );
+        assertEquals( "H1", c.getName() );
+
+        assertEquals( 0, c.getDeclaredFields().length );
+    }
+
+    @Test
+    public void generateEmptyClassWithPackage() throws ClassNotFoundException {
         JVMClass node = new JVMClass( "pm/test", "H1" );
         loader.declareJavaClass( node );
 

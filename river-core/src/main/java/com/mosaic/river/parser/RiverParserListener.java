@@ -5,7 +5,7 @@ import com.mosaic.parsers.pull.TextPosition;
 /**
  *
  */
-public interface RiverParserListener {
+public interface  RiverParserListener {
 
     void parseError( TextPosition position, String message );
 

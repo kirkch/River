@@ -54,16 +54,4 @@ public class RiverParser_VanillaClassDeclaration_Tests {
         verifyNoMoreInteractions(callbackMock);
     }
 
-//    @Test
-//    public void classWithSingleParamConstructor() throws IOException {
-//        RiverClass rc = parser.parse( new StringReader("Account(name:String)") );
-//
-//
-//        assertEquals( "Account", rc.getClassName() );
-//        assertEquals( 0, rc.getStaticMethodCount() );
-//        assertEquals( 0, rc.getMethodCount() );
-//
-//        assertEquals( Arrays.asList(), rc.getErrors() );
-//    }
-
 }

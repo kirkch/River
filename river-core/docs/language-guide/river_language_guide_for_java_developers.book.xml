@@ -28,9 +28,8 @@
 
   <part title="Functions">
 
-    River thinks of functions as callable blocks of code that are not attached to objects. They are implemented within
-    the JVM stack as static methods on classes. Methods on the other hand are tightly associated with objects and can
-    only be invoked on an instance of an object.
+    River breaks down the differences between functions and objects, taking the view that everything is an object, including
+    null, functions, packages and even class and function documentation.
 
 
     <chapter title="Delcaring Classes">
