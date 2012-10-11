@@ -18,7 +18,8 @@ public class JVMClass extends Lockable {
 
     private String sourceFile;
 
-    private Map<String,JVMField> fields = new ConcurrentHashMap();
+    private Map<String,JVMField>  fields  = new ConcurrentHashMap();
+    private Map<String,JVMMethod> methods = new ConcurrentHashMap();
 
 
     public JVMClass() {}
@@ -80,10 +81,22 @@ public class JVMClass extends Lockable {
         return classPackage + "/" + className;
     }
 
-    public void appendField( JVMField field ) {
+    public JVMClass withField( JVMField field ) {
         throwIfLocked();
+        field.lock();
 
-        fields.put( field.getName(), field );
+        fields.put( field.getFieldName(), field );
+
+        return this;
+    }
+
+    public JVMClass withMethod( JVMMethod method ) {
+        throwIfLocked();
+        method.lock();
+
+        methods.put( method.getMethodName(), method );
+
+        return this;
     }
 
     public byte[] generateClass() {
@@ -103,8 +116,18 @@ public class JVMClass extends Lockable {
 
         appendDefaultNoArgsConstructor( cw );
 
+        for ( JVMMethod method : methods.values() ) {
+            method.appendMethodToClass( cw );
+        }
 
         return cw.toByteArray();
+    }
+
+    @Override
+    protected void onLock() {
+        super.onLock();
+
+        lockAll( fields.values() );
     }
 
     private void appendDefaultNoArgsConstructor( ClassWriter cw ) {

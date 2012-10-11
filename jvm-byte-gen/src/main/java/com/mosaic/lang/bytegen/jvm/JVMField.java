@@ -29,50 +29,52 @@ public class JVMField extends Lockable {
         this.name = name;
     }
 
-    public JVMType getType() { return type; }
+    public JVMType  getType()         { return type; }
+    public String   getFieldName()    { return name; }
+    public Object   getInitialValue() { return initialValue; }
+    public JVMScope getScope()        { return scope; }
+    public boolean  isStatic()        { return isStatic; }
+
 
     public void setType( JVMType type ) {
         throwIfLocked();
         this.type = type;
     }
 
-    public String getName() { return name; }
-
-    public void setName( String name ) {
-        throwIfLocked();
-        this.name = name;
-    }
-
-    public Object getInitialValue() { return initialValue; }
-
-    public void setInitialValue( Object initialValue ) {
-        throwIfLocked();
-        this.initialValue = initialValue;
-    }
-
-    public JVMScope getScope() { return scope; }
-
-    public void setScope( JVMScope scope ) {
-        throwIfLocked();
-        this.scope = scope;
-    }
-
-    public boolean isStatic() { return isStatic; }
-
-    public void setStatic( boolean aStatic ) {
-        throwIfLocked();
-        isStatic = aStatic;
-    }
-
     public boolean isFinal() { return isFinal; }
 
-    public void setFinal( boolean aFinal ) {
+    public JVMField withFieldName( String name ) {
+        throwIfLocked();
+        this.name = name;
+        return this;
+    }
+
+    public JVMField withInitialValue( Object initialValue ) {
+        throwIfLocked();
+        this.initialValue = initialValue;
+        return this;
+    }
+
+    public JVMField withScope( JVMScope scope ) {
+        throwIfLocked();
+        this.scope = scope;
+        return this;
+    }
+
+    public JVMField withIsStatic( boolean aStatic ) {
+        throwIfLocked();
+        isStatic = aStatic;
+        return this;
+    }
+
+    public JVMField withIsFinal( boolean aFinal ) {
         throwIfLocked();
         isFinal = aFinal;
+        return this;
     }
 
     void appendFieldToClass( ClassWriter cw ) {
-        throwIfLocked();
+        throwIfUnlocked();
 
         int fieldModifiers = scope.getASMCode();
 
@@ -84,12 +86,12 @@ public class JVMField extends Lockable {
             fieldModifiers |= Opcodes.ACC_STATIC;
         }
 
-        FieldVisitor f = cw.visitField( fieldModifiers, getName(), getType().getJVMDescription(), null, initialValue);
+        FieldVisitor f = cw.visitField( fieldModifiers, getFieldName(), getType().getJVMDescription(), null, initialValue);
         f.visitEnd();
     }
 
     void initFieldWithinConstructor( JVMClass owningClass, MethodVisitor mv ) {
-        throwIfLocked();
+        throwIfUnlocked();
 
         if ( isStatic || initialValue == null ) {
             return;
@@ -97,7 +99,7 @@ public class JVMField extends Lockable {
 
         mv.visitVarInsn( Opcodes.ALOAD, 0 );
         mv.visitLdcInsn( initialValue );
-        mv.visitFieldInsn( Opcodes.PUTFIELD, owningClass.getFullyQualifiedJVMName(), getName(), getType().getJVMDescription() );
+        mv.visitFieldInsn( Opcodes.PUTFIELD, owningClass.getFullyQualifiedJVMName(), getFieldName(), getType().getJVMDescription() );
     }
 
     public int hashCode() {

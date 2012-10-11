@@ -44,7 +44,7 @@ public class JVMClassTest {
         JVMClass node  = new JVMClass( "pm/test", "H1" );
         JVMField field = new JVMField( JVMType.object("java/lang/String"), "name" );
 
-        node.appendField( field );
+        node.withField( field );
 
         loader.declareJavaClass( node );
 
@@ -64,9 +64,9 @@ public class JVMClassTest {
         JVMClass node  = new JVMClass( "pm/test", "H2" );
         JVMField field = new JVMField( JVMType.BOOLEAN, "flag" );
 
-        field.setScope( JVMScope.PRIVATE );
+        field.withScope( JVMScope.PRIVATE );
 
-        node.appendField( field );
+        node.withField( field );
 
         loader.declareJavaClass( node );
 

@@ -34,7 +34,7 @@ public class JVMFieldTest {
         JVMField field = new JVMField( JVMType.object("java.lang.String"), "f1" );
 
 
-        jc.appendField( field );
+        jc.withField( field );
 
 
         loader.declareJavaClass( jc );
@@ -53,10 +53,10 @@ public class JVMFieldTest {
     public void singlePublicString() throws ClassNotFoundException {
         JVMClass jc = new JVMClass( "a/b", "Foo" );
         JVMField field = new JVMField( JVMType.object(String.class), "f1" );
-        field.setScope( JVMScope.PUBLIC );
+        field.withScope( JVMScope.PUBLIC );
 
 
-        jc.appendField( field );
+        jc.withField( field );
 
 
         loader.declareJavaClass( jc );
@@ -75,10 +75,10 @@ public class JVMFieldTest {
     public void primitiveType() throws ClassNotFoundException {
         JVMClass jc = new JVMClass( "a/b", "Foo" );
         JVMField field = new JVMField( JVMType.INT, "age" );
-        field.setScope( JVMScope.PUBLIC );
+        field.withScope( JVMScope.PUBLIC );
 
 
-        jc.appendField( field );
+        jc.withField( field );
 
 
         loader.declareJavaClass( jc );
@@ -97,10 +97,10 @@ public class JVMFieldTest {
     public void protectedIntObject() throws ClassNotFoundException {
         JVMClass jc = new JVMClass( "a/b", "Foo" );
         JVMField field = new JVMField( JVMType.object("java/lang/Integer"), "age" );
-        field.setScope( JVMScope.PROTECTED );
+        field.withScope( JVMScope.PROTECTED );
 
 
-        jc.appendField( field );
+        jc.withField( field );
 
 
         loader.declareJavaClass( jc );
@@ -119,11 +119,11 @@ public class JVMFieldTest {
     public void finalField() throws ClassNotFoundException {
         JVMClass jc = new JVMClass( "a/b", "Foo" );
         JVMField field = new JVMField( JVMType.object("java/lang/Integer"), "age" );
-        field.setScope( JVMScope.PROTECTED );
-        field.setFinal( true );
+        field.withScope( JVMScope.PROTECTED );
+        field.withIsFinal( true );
 
 
-        jc.appendField( field );
+        jc.withField( field );
 
 
         loader.declareJavaClass( jc );
@@ -142,11 +142,11 @@ public class JVMFieldTest {
     public void staticField() throws ClassNotFoundException {
         JVMClass jc = new JVMClass( "a/b", "Foo" );
         JVMField field = new JVMField( JVMType.object(Integer.class), "age" );
-        field.setScope( JVMScope.PROTECTED );
-        field.setStatic( true );
+        field.withScope( JVMScope.PROTECTED );
+        field.withIsStatic( true );
 
 
-        jc.appendField( field );
+        jc.withField( field );
 
 
         loader.declareJavaClass( jc );
@@ -165,12 +165,12 @@ public class JVMFieldTest {
     public void staticFinalField() throws ClassNotFoundException {
         JVMClass jc = new JVMClass( "a/b", "Foo" );
         JVMField field = new JVMField( JVMType.object(Integer.class), "age" );
-        field.setScope( JVMScope.PROTECTED );
-        field.setStatic( true );
-        field.setFinal( true );
+        field.withScope( JVMScope.PROTECTED );
+        field.withIsStatic( true );
+        field.withIsFinal( true );
 
 
-        jc.appendField( field );
+        jc.withField( field );
 
 
         loader.declareJavaClass( jc );
@@ -189,11 +189,11 @@ public class JVMFieldTest {
     public void initialObjectValueFromStaticField() throws ClassNotFoundException, IllegalAccessException {
         JVMClass jc = new JVMClass( "a/b", "Foo" );
         JVMField field = new JVMField( JVMType.object(String.class), "age" );
-        field.setInitialValue( "26" );
-        field.setStatic( true );
+        field.withInitialValue( "26" );
+        field.withIsStatic( true );
 
 
-        jc.appendField( field );
+        jc.withField( field );
 
 
         loader.declareJavaClass( jc );
@@ -209,10 +209,10 @@ public class JVMFieldTest {
     public void initialObjectValueFromInstanceField() throws ClassNotFoundException, IllegalAccessException, InstantiationException {
         JVMClass jc = new JVMClass( "a/b", "Foo" );
         JVMField field = new JVMField( JVMType.object(String.class), "age" );
-        field.setInitialValue( "42" );
+        field.withInitialValue( "42" );
 
 
-        jc.appendField( field );
+        jc.withField( field );
 
 
         loader.declareJavaClass( jc );
@@ -229,11 +229,11 @@ public class JVMFieldTest {
     public void initialPrimitiveValueFromStaticField() throws ClassNotFoundException, IllegalAccessException {
         JVMClass jc = new JVMClass( "a/b", "Foo" );
         JVMField field = new JVMField( JVMType.INT, "age" );
-        field.setInitialValue( 26 );
-        field.setStatic( true );
+        field.withInitialValue( 26 );
+        field.withIsStatic( true );
 
 
-        jc.appendField( field );
+        jc.withField( field );
 
 
         loader.declareJavaClass( jc );
@@ -247,12 +247,11 @@ public class JVMFieldTest {
 
     @Test
     public void initialPrimitiveValueFromInstanceField() throws ClassNotFoundException, IllegalAccessException, InstantiationException {
-        JVMClass jc    = new JVMClass( "a/b", "Foo" );
-        JVMField field = new JVMField( JVMType.INT, "age" );
-        field.setInitialValue( 12 );
-
-
-        jc.appendField( field );
+        JVMClass jc    = new JVMClass( "a/b", "Foo" )
+            .withField(
+                new JVMField( JVMType.INT, "age" )
+                    .withInitialValue(12)
+            );
 
 
         loader.declareJavaClass( jc );
