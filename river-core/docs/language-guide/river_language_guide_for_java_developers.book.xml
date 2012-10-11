@@ -188,6 +188,80 @@
           </code>
         </insert>
 
+        <section title="Basic Types">
+
+
+            ||type name|min value|max value|is nullable|description||
+            |boolean|false|true|no|
+            |bit
+            |byte
+            |char
+            |short
+            |ushort
+            |int
+            |uint
+            |long
+            |ulong
+            |float
+            |double
+            |str
+            |string
+            |boolean[n]
+            |bit[n]
+            |byte[n]
+            |char[n]
+            |short[n]
+            |ushort[n]
+            |int[n]
+            |uint[n]
+            |long[n]
+            |ulong[n]
+            |float[n]
+            |double[n]
+            |str[n]
+            |string[n]
+
+
+        </section>
+
+        <section title="Custom primitive types">
+ideas (not solidified yet)
+            unit km : long
+            unit m : long
+
+            km -> m = km/1000
+
+            unit min,mins,minutes : int between 0 and 60
+            unit hour,hours : int between 0 and 23
+
+            minutes->hours = minutes/60     // implicitly declares  hours->minutes = hours*60
+
+
+            unit dtm : long {
+
+            }
+
+
+            todo think about percentages, ratios, averages, standard deviations, histograms, moving averages etc
+            unit %,perc,percentage : double
+
+
+            todo think about streams/incremental processing
+
+
+            note to self: a programing language encapsulates the programming experiences of its creators
+               a programing language creates the means of expression, a limited language limits expression
+               a concise and clear language not only aids readability but reduces the amount of work arounds and hurdles that a developer
+                  has to jump through to express more sophisticated solutions. Verbose languages propagate speghetti code.
+        </section>
+
+
+
+
+        <section title="Null values in River">
+
+        </section>
+
         <section title="Mutable Objects">
 
         </section>

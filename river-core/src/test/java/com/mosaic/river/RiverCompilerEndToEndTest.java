@@ -39,4 +39,20 @@ public class RiverCompilerEndToEndTest {
         assertEquals( 0, userClass.getDeclaredFields().length );
     }
 
+//    @Test TODO
+    public void classWithOneIdentityField() throws IOException, ClassNotFoundException {
+        parser.parse( new StringReader("User( name:String )"), riverClassFactory );
+
+        RiverClass riverClass = riverClassFactory.build();
+        JVMClass   jvmClass   = river2JVMTranslator.convert( riverClass );
+
+        jvmClassLoader.declareJavaClass( jvmClass );
+
+        Class userClass = jvmClassLoader.loadClass( "User" );
+
+        assertEquals( "User", userClass.getSimpleName() );
+        assertEquals( "User", userClass.getName() );
+        assertEquals( 1, userClass.getDeclaredFields().length );
+    }
+
 }

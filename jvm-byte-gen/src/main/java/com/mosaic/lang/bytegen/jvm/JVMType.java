@@ -23,6 +23,7 @@ public class JVMType {
     public static JVMType object( Class c )            { return object(c.getName()); }
     public static JVMType object( String type )        { return new JVMType("L"+type.replaceAll("\\.", "/")+";"); }
 
+    public static JVMType STRING = JVMType.object("java/lang/String");
 
     private final String desc;
 

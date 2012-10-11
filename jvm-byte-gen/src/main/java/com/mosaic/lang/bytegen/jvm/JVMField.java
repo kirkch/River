@@ -1,5 +1,6 @@
 package com.mosaic.lang.bytegen.jvm;
 
+import com.mosaic.lang.Lockable;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -12,7 +13,7 @@ import org.objectweb.asm.Opcodes;
 /**
  *
  */
-public class JVMField {
+public class JVMField extends Lockable {
     private JVMType type;
     private String  name;
     private Object  initialValue;
@@ -29,24 +30,50 @@ public class JVMField {
     }
 
     public JVMType getType() { return type; }
-    public void setType( JVMType type ) { this.type = type; }
+
+    public void setType( JVMType type ) {
+        throwIfLocked();
+        this.type = type;
+    }
 
     public String getName() { return name; }
-    public void setName( String name ) { this.name = name; }
+
+    public void setName( String name ) {
+        throwIfLocked();
+        this.name = name;
+    }
 
     public Object getInitialValue() { return initialValue; }
-    public void setInitialValue( Object initialValue ) { this.initialValue = initialValue; }
+
+    public void setInitialValue( Object initialValue ) {
+        throwIfLocked();
+        this.initialValue = initialValue;
+    }
 
     public JVMScope getScope() { return scope; }
-    public void setScope( JVMScope scope ) { this.scope = scope; }
+
+    public void setScope( JVMScope scope ) {
+        throwIfLocked();
+        this.scope = scope;
+    }
 
     public boolean isStatic() { return isStatic; }
-    public void setStatic( boolean aStatic ) { isStatic = aStatic; }
+
+    public void setStatic( boolean aStatic ) {
+        throwIfLocked();
+        isStatic = aStatic;
+    }
 
     public boolean isFinal() { return isFinal; }
-    public void setFinal( boolean aFinal ) { isFinal = aFinal; }
+
+    public void setFinal( boolean aFinal ) {
+        throwIfLocked();
+        isFinal = aFinal;
+    }
 
     void appendFieldToClass( ClassWriter cw ) {
+        throwIfLocked();
+
         int fieldModifiers = scope.getASMCode();
 
         if ( isFinal() ) {
@@ -62,6 +89,8 @@ public class JVMField {
     }
 
     void initFieldWithinConstructor( JVMClass owningClass, MethodVisitor mv ) {
+        throwIfLocked();
+
         if ( isStatic || initialValue == null ) {
             return;
         }
