@@ -74,8 +74,6 @@ public class JVMField extends Lockable {
     }
 
     void appendFieldToClass( ClassWriter cw ) {
-        throwIfUnlocked();
-
         int fieldModifiers = scope.getASMCode();
 
         if ( isFinal() ) {
@@ -91,8 +89,6 @@ public class JVMField extends Lockable {
     }
 
     void initFieldWithinConstructor( JVMClass owningClass, MethodVisitor mv ) {
-        throwIfUnlocked();
-
         if ( isStatic || initialValue == null ) {
             return;
         }

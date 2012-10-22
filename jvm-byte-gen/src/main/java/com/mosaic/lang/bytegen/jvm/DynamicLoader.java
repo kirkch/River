@@ -10,6 +10,10 @@ public class DynamicLoader extends ClassLoader {
         nodes.put( node.getFullyQualifiedJVMName().replaceAll( "/", "." ), node );
     }
 
+    /**
+     *
+     * @throws MalformedJVMClassException
+     */
     public Class findClass( String name ) throws ClassNotFoundException {
         JVMClass node = nodes.get( name );
 
@@ -17,7 +21,12 @@ public class DynamicLoader extends ClassLoader {
             throw new ClassNotFoundException( name );
         }
 
-        byte[] b = node.generateClass();
+        ClassGenerationContext context = new ClassGenerationContext();
+
+        byte[] b = node.generateClass( context );
+
+        context.throwErrors();
+
         return defineClass( name, b, 0, b.length );
     }
 }

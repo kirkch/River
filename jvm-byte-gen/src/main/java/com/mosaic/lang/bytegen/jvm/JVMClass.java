@@ -83,7 +83,6 @@ public class JVMClass extends Lockable {
 
     public JVMClass withField( JVMField field ) {
         throwIfLocked();
-        field.lock();
 
         fields.put( field.getFieldName(), field );
 
@@ -92,14 +91,13 @@ public class JVMClass extends Lockable {
 
     public JVMClass withMethod( JVMMethod method ) {
         throwIfLocked();
-        method.lock();
 
         methods.put( method.getMethodName(), method );
 
         return this;
     }
 
-    public byte[] generateClass() {
+    public byte[] generateClass( ClassGenerationContext context ) {
         ClassWriter cw = new ClassWriter( ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS );
 
         cw.visit( Opcodes.V1_2, Opcodes.ACC_PUBLIC + Opcodes.ACC_SUPER, getFullyQualifiedJVMName(), null, "java/lang/Object", null );
@@ -117,7 +115,7 @@ public class JVMClass extends Lockable {
         appendDefaultNoArgsConstructor( cw );
 
         for ( JVMMethod method : methods.values() ) {
-            method.appendMethodToClass( cw );
+            method.appendMethodToClass( context, cw );
         }
 
         return cw.toByteArray();
@@ -127,7 +125,8 @@ public class JVMClass extends Lockable {
     protected void onLock() {
         super.onLock();
 
-        lockAll( fields.values() );
+        lockAll( fields );
+        lockAll( methods );
     }
 
     private void appendDefaultNoArgsConstructor( ClassWriter cw ) {
