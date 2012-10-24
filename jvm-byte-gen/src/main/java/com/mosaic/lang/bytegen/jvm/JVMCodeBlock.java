@@ -27,11 +27,11 @@ public class JVMCodeBlock extends Lockable implements JVMStatement {
     }
 
 
-    public void appendCodeToMethod( ClassGenerationContext context, MethodVisitor m, StackFrameContext parentStackframe ) {
+    public void appendCodeToMethod( MethodVisitor m, StackFrameContext parentStackframe ) {
         StackFrameContext stackframe = parentStackframe.createChildFrame();
 
         for ( JVMStatement s : statements ) {
-            s.appendCodeToMethod( context, m, stackframe );
+            s.appendCodeToMethod( m, stackframe );
         }
     }
 

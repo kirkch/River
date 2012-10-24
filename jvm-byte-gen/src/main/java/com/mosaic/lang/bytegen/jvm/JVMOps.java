@@ -10,15 +10,15 @@ class JVMOps {
 
 
     public static final JVMOp RETURN = new JVMOp() {
-        public void appendCodeToMethod( ClassGenerationContext context, MethodVisitor m, StackFrameContext stackframe ) {
+        public void appendCodeToMethod( MethodVisitor m, StackFrameContext stackframe ) {
             m.visitInsn( Opcodes.RETURN );
         }
     };
 
     public static JVMOp load( JVMStackVariable var ) {
         return new JVMOp() {
-            public void appendCodeToMethod( ClassGenerationContext context, MethodVisitor m, StackFrameContext stackframe ) {
-//                m.visitVarInsn( Opcodes. );
+            public void appendCodeToMethod( MethodVisitor m, StackFrameContext stackframe ) {
+//                m.visitVarInsn( Opcodes.loadVariableFromStackFrameByIndexOp(var), stackframe.getIndexFor(var) );
             }
         };
     }

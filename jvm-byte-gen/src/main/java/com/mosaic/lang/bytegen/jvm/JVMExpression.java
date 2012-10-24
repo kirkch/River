@@ -45,9 +45,9 @@ public class JVMExpression extends Lockable implements JVMStatement {
         return this;
     }
 
-    public void appendCodeToMethod( ClassGenerationContext context, MethodVisitor m, StackFrameContext stackframe ) {
+    public void appendCodeToMethod( MethodVisitor m, StackFrameContext stackframe ) {
         for ( JVMOp op : ops ) {
-            op.appendCodeToMethod( context, m, stackframe );
+            op.appendCodeToMethod( m, stackframe );
         }
     }
 }

@@ -108,16 +108,11 @@ use river.collections.ArrayUtils.*
 SCOPE
 -----
 
-Idea: avoid typing private by prefixing with _?  Good idea, bad idea?
-      how about changing the default. So _X defaults to private but could be declared as 'public _X' if one wanted
+defaults to public
 
-_rootLabel
-private rootLabel
+supports public, package, protected, private
 
-_ROOT_LABEL
-private ROOT_LABEL
 
-_RootLabel
 
 Expressions
 ------
@@ -172,56 +167,60 @@ converter fromStr( str:String ) =
 Good to clean up
 --------
 
-            if( healthCheck.passed ) {
-              monitoringService.debug( "HealthCheck [%s] %s".format(healthCheck.testName,  healthCheck.status) )
-            } else {
-              monitoringService.fyi( "HealthCheck [%s] %s".format(healthCheck.testName,  healthCheck.status) )
-            }
+if( healthCheck.passed ) {
+  monitoringService.debug( "HealthCheck [%s] %s".format(healthCheck.testName,  healthCheck.status) )
+} else {
+  monitoringService.fyi( "HealthCheck [%s] %s".format(healthCheck.testName,  healthCheck.status) )
+}
+
+Using string ideas becomes
+
+if( healthCheck.passed ) {
+  monitoringService.debug( "HealthCheck [${healthCheck.testName}] ${healthCheck.status}" )
+} else {
+  monitoringService.info( "HealthCheck [${healthCheck.testName}] ${healthCheck.status}" )
+}
+
+then by passing method pointers as variables
+
+m = if ( healthCheck.passed ) log.debug else log.info
+m( "HealthCheck [${healthCheck.testName}] ${healthCheck.status}" )
+
+to defer msg creation
+
+m = if ( healthCheck.passed ) log.debug else log.info
+m( `"HealthCheck [${healthCheck.testName}] ${healthCheck.status}"` )
 
 
-Closure ideas
+
+Closures
 ----------
 
-yes
 spinUntilTrue( `ctx.countThreads(threadPrefix) > 0` )
 
-f() = ctx.countThreads(threadPrefix) > 0
-f(a,b) = ctx.countThreads(a) > b
-f(a,b) = a eq b
-f(a,b) : Boolean = a eq b
+f() = `ctx.countThreads(threadPrefix) > 0`
+f(a,b) = `ctx.countThreads(a) > b`
+f(a,b) = `a eq b`
+f(a,b) : Boolean = `a eq b`
 
-spinUntilTrue( f )
+spinUntilTrue( `f` )
 
 
+map( collection:Iterable[A], f():B ) : Iterable[B]
 map( collection:Iterable[A], f(a:A):B ) : Iterable[B]
 
 
 map( [1,2,3], `a.toString()` )
-map( [1,2,3], a.toString() )
+map( [1,2,3], a.toString() )   // errors
 map( [1,2,3], f(a)=a.toString() )
 
 
-[1,2,3].map( e.toString() )
-[1,2,3].map( f(e)=e.toString() )
+[1,2,3].map( `e.toString()` )
+[1,2,3].map( f(e)=`e.toString()` )
+[1,2,3].map( f(e)={e.toString()} )
 
 f(e)=e.toString()
 [1,2,3].map( f )
-
-No
-spinUntilTrue( f(ctx.countThreads(threadPrefix) > 0) )
-spinUntilTrue( {ctx.countThreads(threadPrefix) > 0} )
-spinUntilTrue( &f )
-spinUntilTrue( f )
-spinUntilTrue( `f` )
-spinUntilTrue( eval f )
-
-
-f = eval ctx.countThreads(threadPrefix) > 0
-f = func ctx.countThreads(threadPrefix) > 0
-f := ctx.countThreads(threadPrefix) > 0
-
-f(a,b) := a == b
-f(a,b) = `a == b`
 
 
 
@@ -259,3 +258,223 @@ couldBlock - scheduled to the blockable pool of threads vs the high cpu throughp
 couldAccessSharedMutableState - only one thread allowed within the class at once vs hardware limit only
 
 
+
+
+Flatten
+--------
+
+flatten log = new Log()
+    // results in pass through methods for each of the public methods on the class Log
+
+flatten ILog log = new Log()
+    // results in pass through methods for each ofthe public methods on the interface ILog to the instance of new Log()
+
+
+
+Closures
+------
+
+foo = `1 + 2`
+foo = `f(a:int, b:int) = a+b`
+foo = `f(a:int, b:int) = {
+          a+b
+        }`
+
+Strings
+------
+
+Constants:   'hello world'
+Evaluate:    "hello ${arg}"
+MultiLine includes whitespace and new line:   "hello
+    world"
+MultiLine that infers indents: """
+                                    Hello
+                                    ${name}
+                               """
+''' may also be used
+
+
+XML
+---
+
+v = <book>$name</book>
+v = <book>LOTR</book>
+
+v =
+  <book>
+    <name>LOTR</name>
+    <credits>
+      for ( c : credits ) {
+        <credit>${c.name}</credit>
+      }
+    </credits>
+  </book>
+
+or by letting credit handle its own xml
+
+v =
+  <book>
+    <name>LOTR</name>
+    <credits>
+      for ( c : $credits ) {
+        $c
+      }
+
+      foreach $credits
+    </credits>
+  </book>
+
+inc native support for walking xml
+
+v/book/name        // returns LOTR
+v/book/credits     // list of credits
+v/book/credits[0]  // first credit
+v/book["title"]    // attribute
+v/$tagname         // support dynamic paths
+v/book[$attr]      // support dynamic attributes
+
+JSON
+----
+
+v = {'name':$name}
+v = {"name":"LOTR"}
+
+inc native support for walking json
+
+v/book/name        // returns LOTR
+v/book/credits     // list of credits
+v/book/credits[0]  // first credit
+v/$tagname         // support dynamic paths
+
+SQL
+---
+
+fetch(id:String) = select ClassName(col_name) from books where id=$id
+
+fetch(id:String) = {
+  select ClassName(col_name) from books
+
+  if ( id != null ) {
+    where id=$id
+  }
+}
+
+// implicitly starts/stops transaction
+fetch("12")
+
+// explicit transaction demarcation
+db transaction {
+  fetch("12")
+  insert("foo")
+}
+
+// custom error handling
+db transaction {
+  fetch("12")
+  insert("foo")
+
+
+  catch ex:SQLException =
+  catch ex              =
+}
+
+// custom error handling
+db transaction {
+  fetch("12")
+  insert("foo")
+
+
+  catch ex:SQLException:
+  catch SQLException:        // implicit ex declaration
+  catch SQLException(msg):   // uses extractor
+
+    retry       // automatically support transaction retries, with rethrow exception if max retry fails
+  catch ex:
+
+  on Commit:
+  on Rollback:
+}
+
+signature for transaction method
+
+
+transaction( f:Function[void] ) = {
+  f.registerEvent( Commit )       // compiler turns this function call into an attribute of the declaration for f
+  f.registerEvent( Rollback )
+
+}
+
+
+
+Extractors
+-------
+
+Class(a:String,b:int)
+
+
+supports extractors that exactly match
+
+case Class(a,b):
+
+but also those with subsets where the variable names match
+
+case Class(b):
+
+var names can be renamed
+
+case Class(newVarName=b):
+
+
+supports conditionals
+
+
+case Class(a,b) if ( a == null ):
+
+
+Eval
+---
+
+eval( "code" )   // compiles and executes the specified code; using the current 'scope' of the point where eval was called
+
+
+restrict-scope(a,b,c) {   // removes everything from scope except the values a,b,c
+  eval( "code" )   // compiles and executes the specified code; using the current 'scope' of the point where eval was called
+}
+
+renames the variables that are accessable
+
+
+restrict-scope(f1=a,f2=b,f3=c) {
+  eval( "code" )   // compiles and executes the specified code; using the current 'scope' of the point where eval was called
+}
+
+reduces nesting by saying that scope is reduced from this point on
+
+restrict-scope(f1=a,f2=b,f3=c)
+eval( "code" )
+
+
+Shell Scripting
+--------
+
+shell {
+  output  = /a/b/foo a b <- stream
+
+  ~/bar | grep 'error' | sed 's/a/b/g'
+
+  on ExitCodeFailure:       // if any of the shell commands return non-zero
+  on MissingShellCommand:   // if any of the shell commands (such as grep, or ~/bar) cannot be found
+}
+
+
+GUI Layout
+--------
+
+window    = new Window
+nameField = new InputField
+nameLabel = new Label('Name')
+
+
+window layout {
+  nameLabel,nameField
+}

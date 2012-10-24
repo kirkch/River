@@ -157,7 +157,7 @@ public class JVMMethod extends Lockable {
             if ( codeBlock == null ) {
 //                context.error( sourceFileName, methodDeclarationPosition, "None abstract method '%s' has no implementation" );
             } else {
-                codeBlock.appendCodeToMethod( context, m, new StackFrameContext() );
+                codeBlock.appendCodeToMethod( m, new StackFrameContext(context) );
             }
 
             m.visitEnd();

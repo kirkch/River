@@ -7,5 +7,5 @@ import org.objectweb.asm.MethodVisitor;
  */
 public interface JVMStatement {
 
-    void appendCodeToMethod( ClassGenerationContext context, MethodVisitor m, StackFrameContext parentStackframe );
+    void appendCodeToMethod( MethodVisitor m, StackFrameContext parentStackframe );
 }
