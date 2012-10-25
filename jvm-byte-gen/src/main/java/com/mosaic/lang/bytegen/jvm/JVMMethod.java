@@ -132,6 +132,9 @@ public class JVMMethod extends Lockable {
     }
 
     void appendMethodToClass( ClassGenerationContext context, ClassWriter cw ) {
+        context.visitMethod( methodName );
+        // todo method declaration line
+
         int methodModifiers = scope.getASMCode();
 
         if ( isStatic() ) {
@@ -153,9 +156,9 @@ public class JVMMethod extends Lockable {
 
         if ( !isAbstract() ) {
             m.visitCode();
-//            m.visitInsn( Opcodes.RETURN );
+
             if ( codeBlock == null ) {
-//                context.error( sourceFileName, methodDeclarationPosition, "None abstract method '%s' has no implementation" );
+                context.error( "None abstract method '"+methodName+"' has no implementation" );
             } else {
                 codeBlock.appendCodeToMethod( m, new StackFrameContext(context) );
             }

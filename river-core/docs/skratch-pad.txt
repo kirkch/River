@@ -478,3 +478,17 @@ nameLabel = new Label('Name')
 window layout {
   nameLabel,nameField
 }
+
+
+Self Return Types
+-------------
+
+withName(name:String):S = this.name = name
+
+visitMethod:S {
+  do work
+}
+
+// type 'S' automatically becomes the name of the class where the method was called, no need for a return as
+// 'return this' will be added automatically
+

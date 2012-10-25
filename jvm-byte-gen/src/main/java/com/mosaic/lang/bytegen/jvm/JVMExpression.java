@@ -18,14 +18,16 @@ public class JVMExpression extends Lockable implements JVMStatement {
      * Pops the head value from the stack frame and returns it from the currently executing method.
      */
     public JVMStatement returnNoValue() {
-        return append( JVMOps.RETURN );
+//        return append( JVMOps.RETURN );
+        return null;
     }
 
     /**
      * Loads and pushes the specified variable from the current frame onto the processing stack.
      */
     public JVMStatement load( JVMStackVariable var ) {
-        return append( JVMOps.load(var) );
+//        return append( JVMOps.load(var) );
+        return null;
     }
 
 
