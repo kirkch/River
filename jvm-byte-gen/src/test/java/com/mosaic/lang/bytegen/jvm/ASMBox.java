@@ -5,8 +5,8 @@ package com.mosaic.lang.bytegen.jvm;
  */
 public class ASMBox {
 
-    public char f() {
-        return Character.MAX_VALUE;
+    public int f() {
+        return (new boolean[2]).length;
     }
 
 }

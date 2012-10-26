@@ -22,6 +22,28 @@ abstract class JVMOps {
         return this;
     }
 
+// FIELD OPS
+    /**
+     *
+     * @param ownerDesc class name that the field is declared on;  eg java/lang/Object
+     * @param fieldType as per JVM types, eg J, Z, S etc
+     * @stack objectref -> value
+     */
+    public abstract void getField( String ownerDesc, String fieldName, String fieldType );
+
+    /**
+     *
+     * @param ownerDesc class name that the field is declared on;  eg java/lang/Object
+     * @param fieldType as per JVM types, eg J, Z, S etc
+     * @stack objectref,value ->
+     */
+    public abstract void putField( String ownerDesc, String fieldName, String fieldType );
+
+    /**
+     * @stack arrayref -> int
+     */
+    public abstract void arrayLength();
+
 // MISC STACK OPS
 
     /**
@@ -57,7 +79,7 @@ abstract class JVMOps {
     public abstract void returnBoolean();
 
     /**
-     * Creates a new boolean area of the specified length. Leaves it on the stack.
+     * Creates a new boolean array of the specified length. Leaves it on the stack.
      *
      * @stack  -> newarray
      */
@@ -69,6 +91,13 @@ abstract class JVMOps {
      * @stack  array,index(int),boolean(int) ->
      */
     public abstract void setArrayBoolean();
+
+    /**
+     * Reads a value out of an array and leaves it on the stack.
+     *
+     * @stack  array,index(int) -> boolean
+     */
+    public abstract void getArrayBoolean();
 
 // BYTE OPS
     /**
@@ -86,7 +115,7 @@ abstract class JVMOps {
     public abstract void returnByte();
 
     /**
-     * Creates a new byte area of the specified length. Leaves it on the stack.
+     * Creates a new byte array of the specified length. Leaves it on the stack.
      *
      * @stack  -> newarray
      */
@@ -115,7 +144,7 @@ abstract class JVMOps {
     public abstract void returnChar();
 
     /**
-     * Creates a new char area of the specified length. Leaves it on the stack.
+     * Creates a new char array of the specified length. Leaves it on the stack.
      *
      * @stack  -> newarray
      */
@@ -144,7 +173,7 @@ abstract class JVMOps {
     public abstract void returnShort();
 
     /**
-     * Creates a new short area of the specified length. Leaves it on the stack.
+     * Creates a new short array of the specified length. Leaves it on the stack.
      *
      * @stack  -> newarray
      */
@@ -167,13 +196,157 @@ abstract class JVMOps {
      */
     public abstract void pushInt( int v );
 
+    /**
+     * Exits current method with the int value at the head of the stack.
+     *
+     * @stack int ->
+     */
+    public abstract void returnInt();
+
+    /**
+     * Creates a new int array of the specified length. Leaves it on the stack.
+     *
+     * @stack  -> newarray
+     */
+    public abstract void newArrayInt( int length );
+
+    /**
+     * Pops the current value on the stack and stores it into index i of the array
+     *
+     * @stack  array,index(int),int(int) ->
+     */
+    public abstract void setArrayInt();
+
+
+
+// LONG OPS
+    /**
+     * Pushes the supplied long value onto the stack.
+     *
+     * @stack  -> long
+     */
+    public abstract void pushLong( long v );
+
+    /**
+     * Exits current method with the long value at the head of the stack.
+     *
+     * @stack long ->
+     */
+    public abstract void returnLong();
+
+    /**
+     * Creates a new long array of the specified length. Leaves it on the stack.
+     *
+     * @stack  -> newarray
+     */
+    public abstract void newArrayLong( int length );
+
+    /**
+     * Pops the current value on the stack and stores it longo index i of the array
+     *
+     * @stack  array,index(long),long(long) ->
+     */
+    public abstract void setArrayLong();
+
+
+
+// FLOAT OPS
+    /**
+     * Pushes the supplied float value onto the stack.
+     *
+     * @stack  -> float
+     */
+    public abstract void pushFloat( float v );
+
+    /**
+     * Exits current method with the float value at the head of the stack.
+     *
+     * @stack float ->
+     */
+    public abstract void returnFloat();
+
+    /**
+     * Creates a new float array of the specified length. Leaves it on the stack.
+     *
+     * @stack  -> newarray
+     */
+    public abstract void newArrayFloat( int length );
+
+    /**
+     * Pops the current value on the stack and stores it floato index i of the array
+     *
+     * @stack  array,index(float),float(float) ->
+     */
+    public abstract void setArrayFloat();
+
+
+
+
+// DOUBLE OPS
+    /**
+     * Pushes the supplied double value onto the stack.
+     *
+     * @stack  -> double
+     */
+    public abstract void pushDouble( double v );
+
+    /**
+     * Exits current method with the double value at the head of the stack.
+     *
+     * @stack double ->
+     */
+    public abstract void returnDouble();
+
+    /**
+     * Creates a new double array of the specified length. Leaves it on the stack.
+     *
+     * @stack  -> newarray
+     */
+    public abstract void newArrayDouble( int length );
+
+    /**
+     * Pops the current value on the stack and stores it index i of the array
+     *
+     * @stack  array,index(int),value(double) ->
+     */
+    public abstract void setArrayDouble();
+
 
 // OBJECT OPS
+    /**
+     * Pushes null onto the stack.
+     *
+     * @stack -> null
+     */
+    public abstract void pushNull();
+    /**
+     * Pushes a string constant onto the stack. Stores the string within the classes constant pool.
+     *
+     * @stack -> str
+     */
+    public abstract void pushString( String v );
+
     /**
      * Exits current method with the object value at the head of the stack.
      *
      * @stack object ->
      */
     public abstract void returnObject();
+
+    /**
+     * Creates a new typed array of object refs of specified length. Leaves it on the stack.
+     *
+     * @stack  -> newarray
+     */
+    public abstract void newArrayObject( int length, String refDesc );
+
+    /**
+     * Pops the current value on the stack and stores it doubleo index i of the array
+     *
+     * @stack  array,index(double),double(double) ->
+     */
+    public abstract void setArrayObject();
+
+    public abstract void loadVariableObject( int index );
 
 }

@@ -1,6 +1,7 @@
 package com.mosaic.lang.bytegen.jvm;
 
 import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 
@@ -15,6 +16,9 @@ import static org.objectweb.asm.Opcodes.*;
  *
  */
 class JVMOpsTestTools {
+
+    public static final String JAVA_CLASS_NAME = "com.mosaic.lang.bytegen.jvm.GeneratedClass";
+    public static final String JVM_CLASS_NAME  = JAVA_CLASS_NAME.replaceAll( "\\.", "/" );
 
     public static MethodInstanceRef generateMethod( MethodGenerator methodGenerator ) {
         byte[]          bytes = generateClassBytes( methodGenerator );
@@ -41,6 +45,12 @@ class JVMOpsTestTools {
 
     private static byte[] generateClassBytes( MethodGenerator methodGenerator ) {
         ClassWriter cw = new ClassWriter( ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS );
+
+        FieldVisitor fv = cw.visitField( ACC_PRIVATE, "booleanField", "Z", null, null );
+        fv.visitEnd();
+
+
+
         MethodVisitor mv;
 
         cw.visit( V1_6, ACC_PUBLIC + ACC_SUPER, "com/mosaic/lang/bytegen/jvm/GeneratedClass", null, "java/lang/Object", null );

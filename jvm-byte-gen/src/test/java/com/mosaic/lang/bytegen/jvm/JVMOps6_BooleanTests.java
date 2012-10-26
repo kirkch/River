@@ -65,7 +65,7 @@ public class JVMOps6_BooleanTests {
             }
         );
 
-        assertTrue( Arrays.equals(new boolean[] {}, (boolean[]) m.invoke()) );
+        assertTrue( Arrays.equals( new boolean[] {}, (boolean[]) m.invoke() ) );
     }
 
     @Test
@@ -79,7 +79,7 @@ public class JVMOps6_BooleanTests {
             }
         );
 
-        assertTrue( Arrays.equals(new boolean[] {false,false}, (boolean[]) m.invoke()) );
+        assertTrue( Arrays.equals( new boolean[] {false, false}, (boolean[]) m.invoke() ) );
     }
 
     @Test
@@ -97,7 +97,74 @@ public class JVMOps6_BooleanTests {
             }
         );
 
-        assertTrue( Arrays.equals(new boolean[] {false,true}, (boolean[]) m.invoke()) );
+        assertTrue( Arrays.equals( new boolean[] {false, true}, (boolean[]) m.invoke() ) );
     }
 
+    @Test
+    public void returnFieldValue() {
+        MethodInstanceRef m = generateMethod(
+            new MethodGenerator("()Z") {  // Z -> Boolean
+                public void appendMethod( MethodVisitor m ) {
+                    ops.loadVariableObject( 0 ); // this
+                    ops.getField( JVMOpsTestTools.JVM_CLASS_NAME, "booleanField", "Z" );
+                    ops.returnBoolean();
+                }
+            }
+        );
+
+        assertEquals( false, m.invoke() );
+    }
+
+    @Test
+    public void setFieldValue() {
+        MethodInstanceRef m = generateMethod(
+            new MethodGenerator("()Z") {  // Z -> Boolean
+                public void appendMethod( MethodVisitor m ) {
+                    ops.loadVariableObject( 0 ); // this
+                    ops.pushBoolean( true );
+                    ops.putField( JVMOpsTestTools.JVM_CLASS_NAME, "booleanField", "Z" );
+
+                    ops.loadVariableObject( 0 ); // this
+                    ops.getField( JVMOpsTestTools.JVM_CLASS_NAME, "booleanField", "Z" );
+                    ops.returnBoolean();
+                }
+            }
+        );
+
+        assertEquals( true, m.invoke() );
+    }
+
+    @Test
+    public void readValueFromArray() {
+        MethodInstanceRef m = generateMethod(
+            new MethodGenerator("()Z") {  // Z -> Boolean
+                public void appendMethod( MethodVisitor m ) {
+                    ops.newArrayBoolean( 2 );
+                    ops.pushInt(1);
+                    ops.getArrayBoolean();
+
+                    ops.returnBoolean();
+                }
+            }
+        );
+
+        assertEquals( false, m.invoke() );
+    }
+
+    @Test
+    public void readBooleanArrayLength() {
+        MethodInstanceRef m = generateMethod(
+            new MethodGenerator("()I") {  // Z -> Boolean
+                public void appendMethod( MethodVisitor m ) {
+                    ops.newArrayBoolean( 2 );
+                    ops.arrayLength();
+
+                    ops.returnInt();
+                }
+            }
+        );
+
+        assertEquals( 2, m.invoke() );
+    }
+    
 }

@@ -13,6 +13,20 @@ public class JVMOps6 extends JVMOps {
         m.visitInsn( Opcodes.DUP );
     }
 
+// FIELD TYPES
+
+    public void getField( String ownerDesc, String fieldName, String fieldType ) {
+        m.visitFieldInsn( Opcodes.GETFIELD, ownerDesc, fieldName, fieldType );
+    }
+
+    public void putField( String ownerDesc, String fieldName, String fieldType ) {
+        m.visitFieldInsn( Opcodes.PUTFIELD, ownerDesc, fieldName, fieldType );
+    }
+
+    public void arrayLength() {
+        m.visitInsn( Opcodes.ARRAYLENGTH );
+    }
+
 // VOID OPS
 
     /**
@@ -45,6 +59,10 @@ public class JVMOps6 extends JVMOps {
 
     public void setArrayBoolean() {
         m.visitInsn( Opcodes.BASTORE );
+    }
+
+    public void getArrayBoolean() {
+        m.visitInsn( Opcodes.BALOAD );
     }
 
 // BYTE OPS
@@ -190,16 +208,123 @@ public class JVMOps6 extends JVMOps {
             default:
                 if ( v >= Byte.MIN_VALUE && v <= Byte.MAX_VALUE ) {
                     m.visitIntInsn( Opcodes.BIPUSH, v );
-// todo smaller sizes
+                } else if ( v >= Short.MIN_VALUE && v <= Short.MAX_VALUE ) {
+                    m.visitIntInsn( Opcodes.SIPUSH, v );
                 } else {
                     m.visitLdcInsn( v );
                 }
         }
     }
 
+    public void returnInt() {
+        m.visitInsn( Opcodes.IRETURN );
+    }
+
+    public void newArrayInt( int length ) {
+        assert length >= 0;
+
+        pushInt(length);
+        m.visitIntInsn( Opcodes.NEWARRAY, Opcodes.T_INT );
+    }
+
+    public void setArrayInt() {
+        m.visitInsn( Opcodes.IASTORE );
+    }
+
+// LONG OPS
+
+    public void pushLong( long v ) {
+        if ( v == 0 ) {
+                m.visitInsn( Opcodes.LCONST_0 );
+        } else if ( v == 1 ) {
+                m.visitInsn( Opcodes.LCONST_1 );
+        } else {
+            m.visitLdcInsn( v );
+        }
+    }
+
+    public void returnLong() {
+        m.visitInsn( Opcodes.LRETURN );
+    }
+
+    public void newArrayLong( int length ) {
+        assert length >= 0;
+
+        pushInt(length);
+        m.visitIntInsn( Opcodes.NEWARRAY, Opcodes.T_LONG );
+    }
+
+    public void setArrayLong() {
+        m.visitInsn( Opcodes.LASTORE );
+    }
+
+// FLOAT OPS
+
+    public void pushFloat( float v ) {
+        m.visitLdcInsn( v );
+    }
+
+    public void returnFloat() {
+        m.visitInsn( Opcodes.FRETURN );
+    }
+
+    public void newArrayFloat( int length ) {
+        assert length >= 0;
+
+        pushInt(length);
+        m.visitIntInsn( Opcodes.NEWARRAY, Opcodes.T_FLOAT );
+    }
+
+    public void setArrayFloat() {
+        m.visitInsn( Opcodes.FASTORE );
+    }
+
+
+// DOUBLE OPS
+
+    public void pushDouble( double v ) {
+        m.visitLdcInsn( v );
+    }
+
+    public void returnDouble() {
+        m.visitInsn( Opcodes.DRETURN );
+    }
+
+    public void newArrayDouble( int length ) {
+        assert length >= 0;
+
+        pushInt(length);
+        m.visitIntInsn( Opcodes.NEWARRAY, Opcodes.T_DOUBLE );
+    }
+
+    public void setArrayDouble() {
+        m.visitInsn( Opcodes.DASTORE );
+    }
+
 // OBJECT OPS
+
+    public void pushNull() {
+        m.visitInsn( Opcodes.ACONST_NULL );
+    }
+
+    public void pushString( String v ) {
+        m.visitLdcInsn( v );
+    }
 
     public void returnObject() {
         m.visitInsn( Opcodes.ARETURN );
+    }
+
+    public void newArrayObject( int length, String refDesc ) {
+        pushInt( length );
+        m.visitTypeInsn( Opcodes.ANEWARRAY, refDesc );
+    }
+
+    public void setArrayObject() {
+        m.visitInsn( Opcodes.AASTORE );
+    }
+
+    public void loadVariableObject( int index ) {
+        m.visitVarInsn( Opcodes.ALOAD, index );
     }
 }
