@@ -242,4 +242,22 @@ public class JVMOps6_IntTests {
         assertTrue( Arrays.equals( new int[] {0, 3}, (int[]) m.invoke() ) );
     }
 
+    @Test
+    public void readValueFromArray() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("()I") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.pushThis();
+                    ops.getField( JVMOpsTestTools.JVM_CLASS_NAME, "intArrayField", "[I" );
+                    ops.pushInt( 1 );
+                    ops.getArrayInt();
+
+                    ops.returnInt();
+                }
+            }
+        );
+
+        assertEquals( 42, m.invoke() );
+    }
+
 }

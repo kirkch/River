@@ -128,6 +128,13 @@ abstract class JVMOps {
      */
     public abstract void setArrayByte();
 
+    /**
+     * Reads a value out of an array and leaves it on the stack.
+     *
+     * @stack  array,index(int) -> value
+     */
+    public abstract void getArrayByte();
+
 // CHAR OPS
     /**
      * Pushes the supplied char value onto the stack.
@@ -156,6 +163,13 @@ abstract class JVMOps {
      * @stack  array,index(int),char(int) ->
      */
     public abstract void setArrayChar();
+
+    /**
+     * Reads a value out of an array and leaves it on the stack.
+     *
+     * @stack  array,index(int) -> value
+     */
+    public abstract void getArrayChar();
 
 // SHORT OPS
     /**
@@ -186,7 +200,12 @@ abstract class JVMOps {
      */
     public abstract void setArrayShort();
 
-
+    /**
+     * Reads a value out of an array and leaves it on the stack.
+     *
+     * @stack  array,index(int) -> value
+     */
+    public abstract void getArrayShort();
 
 // INT OPS
     /**
@@ -217,7 +236,12 @@ abstract class JVMOps {
      */
     public abstract void setArrayInt();
 
-
+    /**
+     * Reads a value out of an array and leaves it on the stack.
+     *
+     * @stack  array,index(int) -> value
+     */
+    public abstract void getArrayInt();
 
 // LONG OPS
     /**
@@ -248,7 +272,12 @@ abstract class JVMOps {
      */
     public abstract void setArrayLong();
 
-
+    /**
+     * Reads a value out of an array and leaves it on the stack.
+     *
+     * @stack  array,index(int) -> value
+     */
+    public abstract void getArrayLong();
 
 // FLOAT OPS
     /**
@@ -279,8 +308,12 @@ abstract class JVMOps {
      */
     public abstract void setArrayFloat();
 
-
-
+    /**
+     * Reads a value out of an array and leaves it on the stack.
+     *
+     * @stack  array,index(int) -> value
+     */
+    public abstract void getArrayFloat();
 
 // DOUBLE OPS
     /**
@@ -311,6 +344,12 @@ abstract class JVMOps {
      */
     public abstract void setArrayDouble();
 
+    /**
+     * Reads a value out of an array and leaves it on the stack.
+     *
+     * @stack  array,index(int) -> value
+     */
+    public abstract void getArrayDouble();
 
 // OBJECT OPS
     /**
@@ -347,6 +386,16 @@ abstract class JVMOps {
      */
     public abstract void setArrayObject();
 
-    public abstract void loadVariableObject( int index );
+    /**
+     * Reads a value out of an array and leaves it on the stack.
+     *
+     * @stack  array,index(int) -> value
+     */
+    public abstract void getArrayObject();
+
+    public abstract void pushVariableObject( int index );//todo
+    public void pushThis() {
+        pushVariableObject( 0 );
+    }
 
 }

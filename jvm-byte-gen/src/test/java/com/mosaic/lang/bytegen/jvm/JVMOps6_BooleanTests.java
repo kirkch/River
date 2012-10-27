@@ -105,7 +105,7 @@ public class JVMOps6_BooleanTests {
         MethodInstanceRef m = generateMethod(
             new MethodGenerator("()Z") {  // Z -> Boolean
                 public void appendMethod( MethodVisitor m ) {
-                    ops.loadVariableObject( 0 ); // this
+                    ops.pushVariableObject( 0 ); // this
                     ops.getField( JVMOpsTestTools.JVM_CLASS_NAME, "booleanField", "Z" );
                     ops.returnBoolean();
                 }
@@ -120,11 +120,11 @@ public class JVMOps6_BooleanTests {
         MethodInstanceRef m = generateMethod(
             new MethodGenerator("()Z") {  // Z -> Boolean
                 public void appendMethod( MethodVisitor m ) {
-                    ops.loadVariableObject( 0 ); // this
+                    ops.pushVariableObject( 0 ); // this
                     ops.pushBoolean( true );
                     ops.putField( JVMOpsTestTools.JVM_CLASS_NAME, "booleanField", "Z" );
 
-                    ops.loadVariableObject( 0 ); // this
+                    ops.pushVariableObject( 0 ); // this
                     ops.getField( JVMOpsTestTools.JVM_CLASS_NAME, "booleanField", "Z" );
                     ops.returnBoolean();
                 }
@@ -140,7 +140,7 @@ public class JVMOps6_BooleanTests {
             new MethodGenerator("()Z") {  // Z -> Boolean
                 public void appendMethod( MethodVisitor m ) {
                     ops.newArrayBoolean( 2 );
-                    ops.pushInt(1);
+                    ops.pushInt( 1 );
                     ops.getArrayBoolean();
 
                     ops.returnBoolean();
@@ -151,20 +151,4 @@ public class JVMOps6_BooleanTests {
         assertEquals( false, m.invoke() );
     }
 
-    @Test
-    public void readBooleanArrayLength() {
-        MethodInstanceRef m = generateMethod(
-            new MethodGenerator("()I") {  // Z -> Boolean
-                public void appendMethod( MethodVisitor m ) {
-                    ops.newArrayBoolean( 2 );
-                    ops.arrayLength();
-
-                    ops.returnInt();
-                }
-            }
-        );
-
-        assertEquals( 2, m.invoke() );
-    }
-    
 }

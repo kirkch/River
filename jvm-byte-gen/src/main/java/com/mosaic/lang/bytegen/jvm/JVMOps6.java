@@ -110,6 +110,10 @@ public class JVMOps6 extends JVMOps {
         m.visitInsn( Opcodes.BASTORE );
     }
 
+    public void getArrayByte() {
+        m.visitInsn( Opcodes.BALOAD );
+    }
+
 // CHAR OPS
 
     public void pushChar( char v ) {
@@ -129,6 +133,10 @@ public class JVMOps6 extends JVMOps {
 
     public void setArrayChar() {
         m.visitInsn( Opcodes.CASTORE );
+    }
+
+    public void getArrayChar() {
+        m.visitInsn( Opcodes.CALOAD );
     }
 
 // SHORT OPS
@@ -178,6 +186,10 @@ public class JVMOps6 extends JVMOps {
 
     public void setArrayShort() {
         m.visitInsn( Opcodes.SASTORE );
+    }
+
+    public void getArrayShort() {
+        m.visitInsn( Opcodes.SALOAD );
     }
 
 // INT OPS
@@ -231,6 +243,10 @@ public class JVMOps6 extends JVMOps {
         m.visitInsn( Opcodes.IASTORE );
     }
 
+    public void getArrayInt() {
+        m.visitInsn( Opcodes.IALOAD );
+    }
+
 // LONG OPS
 
     public void pushLong( long v ) {
@@ -258,6 +274,10 @@ public class JVMOps6 extends JVMOps {
         m.visitInsn( Opcodes.LASTORE );
     }
 
+    public void getArrayLong() {
+        m.visitInsn( Opcodes.LALOAD );
+    }
+
 // FLOAT OPS
 
     public void pushFloat( float v ) {
@@ -277,6 +297,10 @@ public class JVMOps6 extends JVMOps {
 
     public void setArrayFloat() {
         m.visitInsn( Opcodes.FASTORE );
+    }
+
+    public void getArrayFloat() {
+        m.visitInsn( Opcodes.FALOAD );
     }
 
 
@@ -299,6 +323,10 @@ public class JVMOps6 extends JVMOps {
 
     public void setArrayDouble() {
         m.visitInsn( Opcodes.DASTORE );
+    }
+
+    public void getArrayDouble() {
+        m.visitInsn( Opcodes.DALOAD );
     }
 
 // OBJECT OPS
@@ -324,7 +352,11 @@ public class JVMOps6 extends JVMOps {
         m.visitInsn( Opcodes.AASTORE );
     }
 
-    public void loadVariableObject( int index ) {
+    public void getArrayObject() {
+        m.visitInsn( Opcodes.AALOAD );
+    }
+
+    public void pushVariableObject( int index ) {
         m.visitVarInsn( Opcodes.ALOAD, index );
     }
 }

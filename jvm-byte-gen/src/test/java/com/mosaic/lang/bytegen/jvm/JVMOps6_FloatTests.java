@@ -200,4 +200,22 @@ public class JVMOps6_FloatTests {
         assertTrue( Arrays.equals( new float[] {(float) 0, (float) 3}, (float[]) m.invoke() ) );
     }
 
+    @Test
+    public void readValueFromArray() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("()F") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.pushThis();
+                    ops.getField( JVMOpsTestTools.JVM_CLASS_NAME, "floatArrayField", "[F" );
+                    ops.pushInt( 1 );
+                    ops.getArrayFloat();
+
+                    ops.returnFloat();
+                }
+            }
+        );
+
+        assertEquals( (float) 42, m.invoke() );
+    }
+
 }

@@ -214,4 +214,22 @@ public class JVMOps6_ShortTests {
         assertTrue( Arrays.equals( new short[] {(short) 0, (short) 3}, (short[]) m.invoke() ) );
     }
 
+    @Test
+    public void readValueFromArray() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("()S") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.pushThis();
+                    ops.getField( JVMOpsTestTools.JVM_CLASS_NAME, "shortArrayField", "[S" );
+                    ops.pushInt( 1 );
+                    ops.getArrayShort();
+
+                    ops.returnShort();
+                }
+            }
+        );
+
+        assertEquals( (short) 42, m.invoke() );
+    }
+    
 }

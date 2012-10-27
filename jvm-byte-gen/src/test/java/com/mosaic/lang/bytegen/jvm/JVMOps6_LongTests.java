@@ -270,4 +270,22 @@ public class JVMOps6_LongTests {
         assertTrue( Arrays.equals( new long[] {0, 3}, (long[]) m.invoke() ) );
     }
 
+    @Test
+    public void readValueFromArray() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("()J") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.pushThis();
+                    ops.getField( JVMOpsTestTools.JVM_CLASS_NAME, "longArrayField", "[J" );
+                    ops.pushInt( 1 );
+                    ops.getArrayLong();
+
+                    ops.returnLong();
+                }
+            }
+        );
+
+        assertEquals( (long) 42, m.invoke() );
+    }
+
 }

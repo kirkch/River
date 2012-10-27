@@ -1,7 +1,6 @@
 package com.mosaic.lang.bytegen.jvm;
 
 import org.objectweb.asm.ClassWriter;
-import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 
@@ -46,8 +45,15 @@ class JVMOpsTestTools {
     private static byte[] generateClassBytes( MethodGenerator methodGenerator ) {
         ClassWriter cw = new ClassWriter( ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS );
 
-        FieldVisitor fv = cw.visitField( ACC_PRIVATE, "booleanField", "Z", null, null );
-        fv.visitEnd();
+        cw.visitField( ACC_PRIVATE, "booleanField", "Z", null, null ).visitEnd();
+        cw.visitField( ACC_PRIVATE, "byteArrayField", "[B", null, null ).visitEnd();
+        cw.visitField( ACC_PRIVATE, "charArrayField", "[C", null, null ).visitEnd();
+        cw.visitField( ACC_PRIVATE, "shortArrayField", "[S", null, null ).visitEnd();
+        cw.visitField( ACC_PRIVATE, "intArrayField", "[I", null, null ).visitEnd();
+        cw.visitField( ACC_PRIVATE, "longArrayField", "[J", null, null ).visitEnd();
+        cw.visitField( ACC_PRIVATE, "floatArrayField", "[F", null, null ).visitEnd();
+        cw.visitField( ACC_PRIVATE, "doubleArrayField", "[D", null, null ).visitEnd();
+
 
 
 
@@ -65,6 +71,15 @@ class JVMOpsTestTools {
             mv.visitLineNumber( 6, l0 );
             mv.visitVarInsn( ALOAD, 0 );
             mv.visitMethodInsn( INVOKESPECIAL, "java/lang/Object", "<init>", "()V" );
+
+            initByteArrayField( mv );
+            initCharArrayField( mv );
+            initShortArrayField( mv );
+            initIntArrayField( mv );
+            initLongArrayField( mv );
+            initFloatArrayField( mv );
+            initDoubleArrayField( mv );
+
             mv.visitInsn( RETURN );
             Label l1 = new Label();
             mv.visitLabel( l1 );
@@ -94,6 +109,111 @@ class JVMOpsTestTools {
         cw.visitEnd();
 
         return cw.toByteArray();
+    }
+
+    private static void initByteArrayField( MethodVisitor mv ) {
+        mv.visitVarInsn( ALOAD, 0 );
+        mv.visitInsn( ICONST_2 );
+        mv.visitIntInsn( NEWARRAY, T_BYTE );
+        mv.visitInsn( DUP );
+        mv.visitInsn( ICONST_0 );
+        mv.visitIntInsn( BIPUSH, 10 );
+        mv.visitInsn( BASTORE );
+        mv.visitInsn( DUP );
+        mv.visitInsn( ICONST_1 );
+        mv.visitIntInsn( BIPUSH, 42 );
+        mv.visitInsn( BASTORE );
+        mv.visitFieldInsn( PUTFIELD, "com/mosaic/lang/bytegen/jvm/GeneratedClass", "byteArrayField", "[B" );
+    }
+
+    private static void initCharArrayField( MethodVisitor mv ) {
+        mv.visitVarInsn( ALOAD, 0 );
+        mv.visitInsn( ICONST_2 );
+        mv.visitIntInsn( NEWARRAY, T_CHAR );
+        mv.visitInsn( DUP );
+        mv.visitInsn( ICONST_0 );
+        mv.visitIntInsn( BIPUSH, 10 );
+        mv.visitInsn( CASTORE );
+        mv.visitInsn( DUP );
+        mv.visitInsn( ICONST_1 );
+        mv.visitIntInsn( BIPUSH, 42 );
+        mv.visitInsn( CASTORE );
+        mv.visitFieldInsn( PUTFIELD, "com/mosaic/lang/bytegen/jvm/GeneratedClass", "charArrayField", "[C" );
+    }
+
+    private static void initShortArrayField( MethodVisitor mv ) {
+        mv.visitVarInsn( ALOAD, 0 );
+        mv.visitInsn( ICONST_2 );
+        mv.visitIntInsn( NEWARRAY, T_SHORT );
+        mv.visitInsn( DUP );
+        mv.visitInsn( ICONST_0 );
+        mv.visitIntInsn( BIPUSH, 10 );
+        mv.visitInsn( SASTORE );
+        mv.visitInsn( DUP );
+        mv.visitInsn( ICONST_1 );
+        mv.visitIntInsn( BIPUSH, 42 );
+        mv.visitInsn( SASTORE );
+        mv.visitFieldInsn( PUTFIELD, "com/mosaic/lang/bytegen/jvm/GeneratedClass", "shortArrayField", "[S" );
+    }
+
+    private static void initIntArrayField( MethodVisitor mv ) {
+        mv.visitVarInsn( ALOAD, 0 );
+        mv.visitInsn( ICONST_2 );
+        mv.visitIntInsn( NEWARRAY, T_INT );
+        mv.visitInsn( DUP );
+        mv.visitInsn( ICONST_0 );
+        mv.visitIntInsn( BIPUSH, 10 );
+        mv.visitInsn( IASTORE );
+        mv.visitInsn( DUP );
+        mv.visitInsn( ICONST_1 );
+        mv.visitIntInsn( BIPUSH, 42 );
+        mv.visitInsn( IASTORE );
+        mv.visitFieldInsn( PUTFIELD, "com/mosaic/lang/bytegen/jvm/GeneratedClass", "intArrayField", "[I" );
+    }
+
+    private static void initLongArrayField( MethodVisitor mv ) {
+        mv.visitVarInsn( ALOAD, 0 );
+        mv.visitInsn( ICONST_2 );
+        mv.visitIntInsn( NEWARRAY, T_LONG );
+        mv.visitInsn( DUP );
+        mv.visitInsn( ICONST_0 );
+        mv.visitLdcInsn( 42L );
+        mv.visitInsn( LASTORE );
+        mv.visitInsn( DUP );
+        mv.visitInsn( ICONST_1 );
+        mv.visitLdcInsn( 42L );
+        mv.visitInsn( LASTORE );
+        mv.visitFieldInsn( PUTFIELD, "com/mosaic/lang/bytegen/jvm/GeneratedClass", "longArrayField", "[J" );
+    }
+
+    private static void initFloatArrayField( MethodVisitor mv ) {
+        mv.visitVarInsn( ALOAD, 0 );
+        mv.visitInsn( ICONST_2 );
+        mv.visitIntInsn( NEWARRAY, T_FLOAT );
+        mv.visitInsn( DUP );
+        mv.visitInsn( ICONST_0 );
+        mv.visitLdcInsn( 42.0f );
+        mv.visitInsn( FASTORE );
+        mv.visitInsn( DUP );
+        mv.visitInsn( ICONST_1 );
+        mv.visitLdcInsn( 42.0f );
+        mv.visitInsn( FASTORE );
+        mv.visitFieldInsn( PUTFIELD, "com/mosaic/lang/bytegen/jvm/GeneratedClass", "floatArrayField", "[F" );
+    }
+
+    private static void initDoubleArrayField( MethodVisitor mv ) {
+        mv.visitVarInsn( ALOAD, 0 );
+        mv.visitInsn( ICONST_2 );
+        mv.visitIntInsn( NEWARRAY, T_DOUBLE );
+        mv.visitInsn( DUP );
+        mv.visitInsn( ICONST_0 );
+        mv.visitLdcInsn( 42.0 );
+        mv.visitInsn( DASTORE );
+        mv.visitInsn( DUP );
+        mv.visitInsn( ICONST_1 );
+        mv.visitLdcInsn( 42.0 );
+        mv.visitInsn( DASTORE );
+        mv.visitFieldInsn( PUTFIELD, "com/mosaic/lang/bytegen/jvm/GeneratedClass", "doubleArrayField", "[D" );
     }
 
 

@@ -186,4 +186,22 @@ public class JVMOps6_CharTests {
         assertTrue( Arrays.equals( new char[] {(char) 0, (char) 3}, (char[]) m.invoke() ) );
     }
 
+    @Test
+    public void readValueFromArray() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("()C") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.pushThis();
+                    ops.getField( JVMOpsTestTools.JVM_CLASS_NAME, "charArrayField", "[C" );
+                    ops.pushInt( 1 );
+                    ops.getArrayChar();
+
+                    ops.returnChar();
+                }
+            }
+        );
+
+        assertEquals( (char) 42, m.invoke() );
+    }
+
 }

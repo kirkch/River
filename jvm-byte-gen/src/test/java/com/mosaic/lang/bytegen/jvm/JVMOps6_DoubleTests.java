@@ -200,4 +200,22 @@ public class JVMOps6_DoubleTests {
         assertTrue( Arrays.equals( new double[] {(double) 0, (double) 3}, (double[]) m.invoke() ) );
     }
 
+    @Test
+    public void readValueFromArray() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("()D") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.pushThis();
+                    ops.getField( JVMOpsTestTools.JVM_CLASS_NAME, "doubleArrayField", "[D" );
+                    ops.pushInt( 1 );
+                    ops.getArrayDouble();
+
+                    ops.returnDouble();
+                }
+            }
+        );
+
+        assertEquals( (double) 42, m.invoke() );
+    }
+
 }

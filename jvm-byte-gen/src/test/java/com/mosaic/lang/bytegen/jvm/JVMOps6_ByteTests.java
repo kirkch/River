@@ -186,4 +186,22 @@ public class JVMOps6_ByteTests {
         assertTrue( Arrays.equals( new byte[] {(byte) 0, (byte) 3}, (byte[]) m.invoke() ) );
     }
 
+    @Test
+    public void readValueFromArray() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("()B") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.pushThis();
+                    ops.getField( JVMOpsTestTools.JVM_CLASS_NAME, "byteArrayField", "[B" );
+                    ops.pushInt( 1 );
+                    ops.getArrayByte();
+
+                    ops.returnByte();
+                }
+            }
+        );
+
+        assertEquals( (byte) 42, m.invoke() );
+    }
+
 }
