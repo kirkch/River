@@ -45,6 +45,16 @@ class JVMOpsTestTools {
     private static byte[] generateClassBytes( MethodGenerator methodGenerator ) {
         ClassWriter cw = new ClassWriter( ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS );
 
+        cw.visitField( ACC_STATIC | ACC_PRIVATE, "booleanStaticField", "Z", null, null ).visitEnd();
+        cw.visitField( ACC_STATIC | ACC_PRIVATE, "byteStaticField", "B", null, null ).visitEnd();
+        cw.visitField( ACC_STATIC | ACC_PRIVATE, "charStaticField", "C", null, null ).visitEnd();
+        cw.visitField( ACC_STATIC | ACC_PRIVATE, "shortStaticField", "S", null, null ).visitEnd();
+        cw.visitField( ACC_STATIC | ACC_PRIVATE, "intStaticField", "I", null, null ).visitEnd();
+        cw.visitField( ACC_STATIC | ACC_PRIVATE, "longStaticField", "J", null, null ).visitEnd();
+        cw.visitField( ACC_STATIC | ACC_PRIVATE, "floatStaticField", "F", null, null ).visitEnd();
+        cw.visitField( ACC_STATIC | ACC_PRIVATE, "doubleStaticField", "D", null, null ).visitEnd();
+        cw.visitField( ACC_STATIC | ACC_PRIVATE, "stringStaticField", "Ljava/lang/String;", null, null ).visitEnd();
+
         cw.visitField( ACC_PRIVATE, "booleanField", "Z", null, null ).visitEnd();
         cw.visitField( ACC_PRIVATE, "byteArrayField", "[B", null, null ).visitEnd();
         cw.visitField( ACC_PRIVATE, "charArrayField", "[C", null, null ).visitEnd();
@@ -53,6 +63,7 @@ class JVMOpsTestTools {
         cw.visitField( ACC_PRIVATE, "longArrayField", "[J", null, null ).visitEnd();
         cw.visitField( ACC_PRIVATE, "floatArrayField", "[F", null, null ).visitEnd();
         cw.visitField( ACC_PRIVATE, "doubleArrayField", "[D", null, null ).visitEnd();
+        cw.visitField( ACC_PRIVATE, "stringArrayField", "[Ljava/lang/String;", null, null ).visitEnd();
 
 
 
@@ -79,6 +90,7 @@ class JVMOpsTestTools {
             initLongArrayField( mv );
             initFloatArrayField( mv );
             initDoubleArrayField( mv );
+            initStringArrayField( mv );
 
             mv.visitInsn( RETURN );
             Label l1 = new Label();
@@ -214,6 +226,21 @@ class JVMOpsTestTools {
         mv.visitLdcInsn( 42.0 );
         mv.visitInsn( DASTORE );
         mv.visitFieldInsn( PUTFIELD, "com/mosaic/lang/bytegen/jvm/GeneratedClass", "doubleArrayField", "[D" );
+    }
+
+    private static void initStringArrayField( MethodVisitor mv ) {
+        mv.visitVarInsn( ALOAD, 0 );
+        mv.visitInsn( ICONST_2 );
+        mv.visitTypeInsn( ANEWARRAY, "java/lang/String" );
+        mv.visitInsn( DUP );
+        mv.visitInsn( ICONST_0 );
+        mv.visitLdcInsn( "a" );
+        mv.visitInsn( AASTORE );
+        mv.visitInsn( DUP );
+        mv.visitInsn( ICONST_1 );
+        mv.visitLdcInsn( "Hello World" );
+        mv.visitInsn( AASTORE );
+        mv.visitFieldInsn( PUTFIELD, "com/mosaic/lang/bytegen/jvm/GeneratedClass", "stringArrayField", "[Ljava/lang/String;" );
     }
 
 

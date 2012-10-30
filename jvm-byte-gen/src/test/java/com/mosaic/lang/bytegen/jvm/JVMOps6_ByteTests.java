@@ -204,4 +204,35 @@ public class JVMOps6_ByteTests {
         assertEquals( (byte) 42, m.invoke() );
     }
 
+    @Test
+    public void returnStaticFieldValue() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("()B") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.getStaticField( JVMOpsTestTools.JVM_CLASS_NAME, "byteStaticField", "B" );
+                    ops.returnByte();
+                }
+            }
+        );
+
+        assertEquals( (byte) 0, m.invoke() );
+    }
+
+    @Test
+    public void setStaticFieldValue() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("()B") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.pushByte( (byte) 42 );
+                    ops.putStaticField( JVMOpsTestTools.JVM_CLASS_NAME, "byteStaticField", "B" );
+
+                    ops.getStaticField( JVMOpsTestTools.JVM_CLASS_NAME, "byteStaticField", "B" );
+                    ops.returnByte();
+                }
+            }
+        );
+
+        assertEquals( (byte) 42, m.invoke() );
+    }
+
 }

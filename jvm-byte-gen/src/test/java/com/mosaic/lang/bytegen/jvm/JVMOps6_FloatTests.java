@@ -218,4 +218,35 @@ public class JVMOps6_FloatTests {
         assertEquals( (float) 42, m.invoke() );
     }
 
+    @Test
+    public void returnStaticFieldValue() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("()F") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.getStaticField( JVMOpsTestTools.JVM_CLASS_NAME, "floatStaticField", "F" );
+                    ops.returnFloat();
+                }
+            }
+        );
+
+        assertEquals( (float) 0, m.invoke() );
+    }
+
+    @Test
+    public void setStaticFieldValue() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("()F") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.pushFloat( (float) 42 );
+                    ops.putStaticField( JVMOpsTestTools.JVM_CLASS_NAME, "floatStaticField", "F" );
+
+                    ops.getStaticField( JVMOpsTestTools.JVM_CLASS_NAME, "floatStaticField", "F" );
+                    ops.returnFloat();
+                }
+            }
+        );
+
+        assertEquals( (float) 42, m.invoke() );
+    }
+
 }

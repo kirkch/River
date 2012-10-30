@@ -260,4 +260,35 @@ public class JVMOps6_IntTests {
         assertEquals( 42, m.invoke() );
     }
 
+    @Test
+    public void returnStaticFieldValue() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("()I") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.getStaticField( JVMOpsTestTools.JVM_CLASS_NAME, "intStaticField", "I" );
+                    ops.returnInt();
+                }
+            }
+        );
+
+        assertEquals( 0, m.invoke() );
+    }
+
+    @Test
+    public void setStaticFieldValue() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("()I") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.pushInt( 42 );
+                    ops.putStaticField( JVMOpsTestTools.JVM_CLASS_NAME, "intStaticField", "I" );
+
+                    ops.getStaticField( JVMOpsTestTools.JVM_CLASS_NAME, "intStaticField", "I" );
+                    ops.returnInt();
+                }
+            }
+        );
+
+        assertEquals( 42, m.invoke() );
+    }
+
 }

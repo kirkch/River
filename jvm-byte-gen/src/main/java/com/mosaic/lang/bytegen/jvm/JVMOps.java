@@ -38,6 +38,21 @@ abstract class JVMOps {
      * @stack objectref,value ->
      */
     public abstract void putField( String ownerDesc, String fieldName, String fieldType );
+    /**
+     *
+     * @param ownerDesc class name that the field is declared on;  eg java/lang/Object
+     * @param fieldType as per JVM types, eg J, Z, S etc
+     * @stack  -> value
+     */
+    public abstract void getStaticField( String ownerDesc, String fieldName, String fieldType );
+
+    /**
+     *
+     * @param ownerDesc class name that the field is declared on;  eg java/lang/Object
+     * @param fieldType as per JVM types, eg J, Z, S etc
+     * @stack value ->
+     */
+    public abstract void putStaticField( String ownerDesc, String fieldName, String fieldType );
 
     /**
      * @stack arrayref -> int

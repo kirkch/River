@@ -23,6 +23,14 @@ public class JVMOps6 extends JVMOps {
         m.visitFieldInsn( Opcodes.PUTFIELD, ownerDesc, fieldName, fieldType );
     }
 
+    public void getStaticField( String ownerDesc, String fieldName, String fieldType ) {
+        m.visitFieldInsn( Opcodes.GETSTATIC, ownerDesc, fieldName, fieldType );
+    }
+
+    public void putStaticField( String ownerDesc, String fieldName, String fieldType ) {
+        m.visitFieldInsn( Opcodes.PUTSTATIC, ownerDesc, fieldName, fieldType );
+    }
+
     public void arrayLength() {
         m.visitInsn( Opcodes.ARRAYLENGTH );
     }

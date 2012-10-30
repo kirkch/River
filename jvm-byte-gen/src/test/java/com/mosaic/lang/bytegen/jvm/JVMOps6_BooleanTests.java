@@ -135,6 +135,37 @@ public class JVMOps6_BooleanTests {
     }
 
     @Test
+    public void returnStaticFieldValue() {
+        MethodInstanceRef m = generateMethod(
+            new MethodGenerator("()Z") {  // Z -> Boolean
+                public void appendMethod( MethodVisitor m ) {
+                    ops.getStaticField( JVMOpsTestTools.JVM_CLASS_NAME, "booleanStaticField", "Z" );
+                    ops.returnBoolean();
+                }
+            }
+        );
+
+        assertEquals( false, m.invoke() );
+    }
+
+    @Test
+    public void setStaticFieldValue() {
+        MethodInstanceRef m = generateMethod(
+            new MethodGenerator("()Z") {  // Z -> Boolean
+                public void appendMethod( MethodVisitor m ) {
+                    ops.pushBoolean( true );
+                    ops.putStaticField( JVMOpsTestTools.JVM_CLASS_NAME, "booleanStaticField", "Z" );
+
+                    ops.getStaticField( JVMOpsTestTools.JVM_CLASS_NAME, "booleanStaticField", "Z" );
+                    ops.returnBoolean();
+                }
+            }
+        );
+
+        assertEquals( true, m.invoke() );
+    }
+
+    @Test
     public void readValueFromArray() {
         MethodInstanceRef m = generateMethod(
             new MethodGenerator("()Z") {  // Z -> Boolean

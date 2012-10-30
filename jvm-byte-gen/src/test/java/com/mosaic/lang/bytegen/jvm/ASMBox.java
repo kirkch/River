@@ -5,10 +5,10 @@ package com.mosaic.lang.bytegen.jvm;
  */
 public class ASMBox {
 
-    private final byte[] foo=new byte[] {(byte)10,(byte)42};
+    private static boolean foo;
 
-    public int f() {
-        return (new boolean[2]).length;
+    public boolean f() {
+        return foo;
     }
 
 }

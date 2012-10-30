@@ -218,4 +218,35 @@ public class JVMOps6_DoubleTests {
         assertEquals( (double) 42, m.invoke() );
     }
 
+    @Test
+    public void returnStaticFieldValue() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("()D") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.getStaticField( JVMOpsTestTools.JVM_CLASS_NAME, "doubleStaticField", "D" );
+                    ops.returnDouble();
+                }
+            }
+        );
+
+        assertEquals( (double) 0, m.invoke() );
+    }
+
+    @Test
+    public void setStaticFieldValue() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("()D") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.pushDouble( (double) 42 );
+                    ops.putStaticField( JVMOpsTestTools.JVM_CLASS_NAME, "doubleStaticField", "D" );
+
+                    ops.getStaticField( JVMOpsTestTools.JVM_CLASS_NAME, "doubleStaticField", "D" );
+                    ops.returnDouble();
+                }
+            }
+        );
+
+        assertEquals( (double) 42, m.invoke() );
+    }
+
 }

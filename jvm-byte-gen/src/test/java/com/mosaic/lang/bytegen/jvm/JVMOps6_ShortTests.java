@@ -17,7 +17,7 @@ public class JVMOps6_ShortTests {
     @Test
     public void returnShortConstant0() {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
-            new JVMOpsTestTools.MethodGenerator("()S") {  
+            new JVMOpsTestTools.MethodGenerator("()S") {
                 public void appendMethod( MethodVisitor m ) {
                     ops.pushShort( (short) 0 );
                     ops.returnShort();
@@ -31,7 +31,7 @@ public class JVMOps6_ShortTests {
     @Test
     public void returnShortConstantM1() {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
-            new JVMOpsTestTools.MethodGenerator("()S") {  
+            new JVMOpsTestTools.MethodGenerator("()S") {
                 public void appendMethod( MethodVisitor m ) {
                     ops.pushShort( (short) -1 );
                     ops.returnShort();
@@ -45,7 +45,7 @@ public class JVMOps6_ShortTests {
     @Test
     public void returnShortConstant2() {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
-            new JVMOpsTestTools.MethodGenerator("()S") {  
+            new JVMOpsTestTools.MethodGenerator("()S") {
                 public void appendMethod( MethodVisitor m ) {
                     ops.pushShort( (short) 2 );
                     ops.returnShort();
@@ -59,7 +59,7 @@ public class JVMOps6_ShortTests {
     @Test
     public void returnShortConstant3() {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
-            new JVMOpsTestTools.MethodGenerator("()S") {  
+            new JVMOpsTestTools.MethodGenerator("()S") {
                 public void appendMethod( MethodVisitor m ) {
                     ops.pushShort( (short) 3 );
                     ops.returnShort();
@@ -73,7 +73,7 @@ public class JVMOps6_ShortTests {
     @Test
     public void returnShortConstant4() {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
-            new JVMOpsTestTools.MethodGenerator("()S") {  
+            new JVMOpsTestTools.MethodGenerator("()S") {
                 public void appendMethod( MethodVisitor m ) {
                     ops.pushShort( (short) 4 );
                     ops.returnShort();
@@ -87,7 +87,7 @@ public class JVMOps6_ShortTests {
     @Test
     public void returnShortConstant5() {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
-            new JVMOpsTestTools.MethodGenerator("()S") {  
+            new JVMOpsTestTools.MethodGenerator("()S") {
                 public void appendMethod( MethodVisitor m ) {
                     ops.pushShort( (short) 5 );
                     ops.returnShort();
@@ -101,7 +101,7 @@ public class JVMOps6_ShortTests {
     @Test
     public void returnShortConstant42() {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
-            new JVMOpsTestTools.MethodGenerator("()S") {  
+            new JVMOpsTestTools.MethodGenerator("()S") {
                 public void appendMethod( MethodVisitor m ) {
                     ops.pushShort( (short) 42 );
                     ops.returnShort();
@@ -115,7 +115,7 @@ public class JVMOps6_ShortTests {
     @Test
     public void returnShortConstantMin() {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
-            new JVMOpsTestTools.MethodGenerator("()S") {  
+            new JVMOpsTestTools.MethodGenerator("()S") {
                 public void appendMethod( MethodVisitor m ) {
                     ops.pushShort( Short.MIN_VALUE );
                     ops.returnShort();
@@ -224,6 +224,37 @@ public class JVMOps6_ShortTests {
                     ops.pushInt( 1 );
                     ops.getArrayShort();
 
+                    ops.returnShort();
+                }
+            }
+        );
+
+        assertEquals( (short) 42, m.invoke() );
+    }
+
+    @Test
+    public void returnStaticFieldValue() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("()S") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.getStaticField( JVMOpsTestTools.JVM_CLASS_NAME, "shortStaticField", "S" );
+                    ops.returnShort();
+                }
+            }
+        );
+
+        assertEquals( (short) 0, m.invoke() );
+    }
+
+    @Test
+    public void setStaticFieldValue() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("()S") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.pushShort( (short) 42 );
+                    ops.putStaticField( JVMOpsTestTools.JVM_CLASS_NAME, "shortStaticField", "S" );
+
+                    ops.getStaticField( JVMOpsTestTools.JVM_CLASS_NAME, "shortStaticField", "S" );
                     ops.returnShort();
                 }
             }

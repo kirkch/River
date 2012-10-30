@@ -288,4 +288,35 @@ public class JVMOps6_LongTests {
         assertEquals( (long) 42, m.invoke() );
     }
 
+    @Test
+    public void returnStaticFieldValue() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("()J") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.getStaticField( JVMOpsTestTools.JVM_CLASS_NAME, "longStaticField", "J" );
+                    ops.returnLong();
+                }
+            }
+        );
+
+        assertEquals( (long) 0, m.invoke() );
+    }
+
+    @Test
+    public void setStaticFieldValue() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("()J") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.pushLong( (long) 42 );
+                    ops.putStaticField( JVMOpsTestTools.JVM_CLASS_NAME, "longStaticField", "J" );
+
+                    ops.getStaticField( JVMOpsTestTools.JVM_CLASS_NAME, "longStaticField", "J" );
+                    ops.returnLong();
+                }
+            }
+        );
+
+        assertEquals( (long) 42, m.invoke() );
+    }
+
 }

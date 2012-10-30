@@ -204,4 +204,35 @@ public class JVMOps6_CharTests {
         assertEquals( (char) 42, m.invoke() );
     }
 
+    @Test
+    public void returnStaticFieldValue() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("()C") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.getStaticField( JVMOpsTestTools.JVM_CLASS_NAME, "charStaticField", "C" );
+                    ops.returnChar();
+                }
+            }
+        );
+
+        assertEquals( (char) 0, m.invoke() );
+    }
+
+    @Test
+    public void setStaticFieldValue() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("()C") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.pushChar( (char) 42 );
+                    ops.putStaticField( JVMOpsTestTools.JVM_CLASS_NAME, "charStaticField", "C" );
+
+                    ops.getStaticField( JVMOpsTestTools.JVM_CLASS_NAME, "charStaticField", "C" );
+                    ops.returnChar();
+                }
+            }
+        );
+
+        assertEquals( (char) 42, m.invoke() );
+    }
+
 }
