@@ -1,5 +1,6 @@
 package com.mosaic.lang.bytegen.jvm;
 
+import org.objectweb.asm.Label;
 import org.objectweb.asm.Opcodes;
 
 /**
@@ -43,6 +44,15 @@ public class JVMOps6 extends JVMOps {
 
     public void throwException() {
         m.visitInsn( Opcodes.ATHROW );
+//        m.visitLabel(  );
+//        m.visitLineNumber(  );
+//        m.visitLocalVariable(  );
+    }
+
+    public void lineNumber( int lineNumber) {
+        Label label = new Label();
+        m.visitLabel( label );
+        m.visitLineNumber( lineNumber, label );
     }
 
 // METHOD OPS

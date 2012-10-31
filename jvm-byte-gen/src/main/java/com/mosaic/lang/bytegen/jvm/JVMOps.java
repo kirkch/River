@@ -77,6 +77,13 @@ abstract class JVMOps {
      */
     public abstract void throwException();
 
+    /**
+     * Declares for debugging purposes what the line number was from the original source code for the next ops that follow this one.
+     *
+     * @stack ->
+     */
+    public abstract void lineNumber( int lineNumber);
+
 
 // METHOD OPS
 
