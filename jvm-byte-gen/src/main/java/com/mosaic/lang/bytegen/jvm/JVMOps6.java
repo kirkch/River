@@ -99,6 +99,14 @@ public class JVMOps6 extends JVMOps {
         m.visitJumpInsn( Opcodes.IFGE, label.l0 );
     }
 
+    public void ifNull( JVMLabel label ) {
+        m.visitJumpInsn( Opcodes.IFNULL, label.l0 );
+    }
+
+    public void ifNotNull( JVMLabel label ) {
+        m.visitJumpInsn( Opcodes.IFNONNULL, label.l0 );
+    }
+
 // METHOD OPS
 
     public void invokeStatic( String ownerDesc, String methodName, String methodSignature ) {

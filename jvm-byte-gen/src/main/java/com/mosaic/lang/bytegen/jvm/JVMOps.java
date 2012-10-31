@@ -147,6 +147,20 @@ abstract class JVMOps {
      */
     public abstract void ifGTEZero( JVMLabel label );
 
+    /**
+     * Jumps to label if the value at the top of the stack is null. The value will be popped from the stack.
+     *
+     * @stack objectref ->
+     */
+    public abstract void ifNull( JVMLabel label );
+
+    /**
+     * Jumps to label if the value at the top of the stack is not null. The value will be popped from the stack.
+     *
+     * @stack objectref ->
+     */
+    public abstract void ifNotNull( JVMLabel label );
+
 // METHOD OPS
 
     /**

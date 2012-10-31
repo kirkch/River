@@ -177,4 +177,58 @@ public class JVMOps_FlowControlTests {
         assertEquals( "gte", m.invoke(1) );
     }
 
+    @Test
+    public void ifNull() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("(Ljava/lang/String;)Ljava/lang/String;") {
+                public void appendMethod( MethodVisitor m ) {
+                    JVMLabel l0 = ops.newLabel();
+
+                    ops.pushRegisterObject( 1 );
+                    ops.ifNull( l0 );
+
+                    // if not matched
+                    ops.pushString( "not-null" );
+                    ops.returnObject();
+
+
+                    // else
+                    ops.visitLabel( l0 );
+                    ops.pushString( "was-null" );
+                    ops.returnObject();
+                }
+            }
+        );
+
+        assertEquals( "was-null", m.invoke((String) null) );
+        assertEquals( "not-null", m.invoke("hello") );
+    }
+
+    @Test
+    public void ifNotNull() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("(Ljava/lang/String;)Ljava/lang/String;") {
+                public void appendMethod( MethodVisitor m ) {
+                    JVMLabel l0 = ops.newLabel();
+
+                    ops.pushRegisterObject( 1 );
+                    ops.ifNotNull( l0 );
+
+                    // if not matched
+                    ops.pushString( "was-null" );
+                    ops.returnObject();
+
+
+                    // else
+                    ops.visitLabel( l0 );
+                    ops.pushString( "not-null" );
+                    ops.returnObject();
+                }
+            }
+        );
+
+        assertEquals( "was-null", m.invoke((String) null) );
+        assertEquals( "not-null", m.invoke("hello") );
+    }
+
 }
