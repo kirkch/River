@@ -240,13 +240,45 @@ public class JVMOps6_ByteTests {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
             new JVMOpsTestTools.MethodGenerator("(B)B") {
                 public void appendMethod( MethodVisitor m ) {
-                    ops.pushRegisterByte( 1 );
+                    ops.loadRegisterByte( 1 );
                     ops.returnByte();
                 }
             }
         );
 
         assertEquals( (byte) 42, m.invoke( (byte) 42 ) );
+    }
+
+    @Test
+    public void loadRegisterByte() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("(B)B") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.loadRegisterByte( 1 );
+                    ops.returnByte();
+                }
+            }
+        );
+
+        assertEquals( (byte) 10, m.invoke((byte) 10) );
+        assertEquals( (byte) 12, m.invoke((byte) 12) );
+    }
+
+    @Test
+    public void storeRegisterByte() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("(B)B") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.loadRegisterByte( 1 );
+                    ops.storeRegisterByte( 2 );
+                    ops.loadRegisterByte( 2 );
+                    ops.returnByte();
+                }
+            }
+        );
+
+        assertEquals( (byte) 10, m.invoke((byte) 10) );
+        assertEquals( (byte) 12, m.invoke((byte) 12) );
     }
 
 }

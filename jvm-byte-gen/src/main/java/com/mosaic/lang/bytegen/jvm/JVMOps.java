@@ -54,9 +54,7 @@ import org.objectweb.asm.MethodVisitor;
 // nop
 
 
-// dreturn
-// dstore
-// lstore
+
 
 // dcmp
 // fcmp
@@ -387,11 +385,18 @@ abstract class JVMOps {
     public abstract void getArrayBoolean();
 
     /**
-     * Push the contents of register i onto the stack.
+     * Write the contents of register i onto the stack.
      *
      * @stack -> val
      */
-    public abstract void pushRegisterBoolean( int index );
+    public abstract void loadRegisterBoolean( int index );
+
+    /**
+     * Write the contents of the stack into the register.
+     *
+     * @stack val ->
+     */
+    public abstract void storeRegisterBoolean( int index );
 
 // BYTE OPS
     /**
@@ -430,11 +435,18 @@ abstract class JVMOps {
     public abstract void getArrayByte();
 
     /**
-     * Push the contents of register i onto the stack.
+     * Write the contents of register i onto the stack.
      *
      * @stack -> val
      */
-    public abstract void pushRegisterByte( int index );
+    public abstract void loadRegisterByte( int index );
+
+    /**
+     * Write the contents of the stack into the register.
+     *
+     * @stack val ->
+     */
+    public abstract void storeRegisterByte( int index );
 
 // CHAR OPS
     /**
@@ -473,11 +485,18 @@ abstract class JVMOps {
     public abstract void getArrayChar();
 
     /**
-     * Push the contents of register i onto the stack.
+     * Write the contents of register i onto the stack.
      *
      * @stack -> val
      */
-    public abstract void pushRegisterChar( int index );
+    public abstract void loadRegisterChar( int index );
+
+    /**
+     * Write the contents of the stack into the register.
+     *
+     * @stack val ->
+     */
+    public abstract void storeRegisterChar( int index );
 
 // SHORT OPS
     /**
@@ -520,7 +539,14 @@ abstract class JVMOps {
      *
      * @stack -> val
      */
-    public abstract void pushRegisterShort( int index );
+    public abstract void loadRegisterShort( int index );
+
+    /**
+     * Write the contents of the stack into the register.
+     *
+     * @stack val ->
+     */
+    public abstract void storeRegisterShort( int index );
 
 // INT OPS
     /**
@@ -559,11 +585,18 @@ abstract class JVMOps {
     public abstract void getArrayInt();
 
     /**
-     * Push the contents of register i onto the stack.
+     * Write the contents of register i onto the stack.
      *
      * @stack -> val
      */
-    public abstract void pushRegisterInt( int index );
+    public abstract void loadRegisterInt( int index );
+
+    /**
+     * Write the contents of the stack into the register.
+     *
+     * @stack val ->
+     */
+    public abstract void storeRegisterInt( int index );
 
 // LONG OPS
     /**
@@ -602,11 +635,18 @@ abstract class JVMOps {
     public abstract void getArrayLong();
 
     /**
-     * Push the contents of register i onto the stack.
+     * Write the contents of register i onto the stack.
      *
      * @stack -> val
      */
-    public abstract void pushRegisterLong( int index );
+    public abstract void loadRegisterLong( int index );
+
+    /**
+     * Write the contents of the stack into the register.
+     *
+     * @stack val ->
+     */
+    public abstract void storeRegisterLong( int index );
 
 // FLOAT OPS
     /**
@@ -645,11 +685,18 @@ abstract class JVMOps {
     public abstract void getArrayFloat();
 
     /**
-     * Push the contents of register i onto the stack.
+     * Write the contents of register i onto the stack.
      *
      * @stack -> val
      */
-    public abstract void pushRegisterFloat( int index );
+    public abstract void loadRegisterFloat( int index );
+
+    /**
+     * Write the contents of the stack into the register.
+     *
+     * @stack val ->
+     */
+    public abstract void storeRegisterFloat( int index );
 
 // DOUBLE OPS
     /**
@@ -688,11 +735,18 @@ abstract class JVMOps {
     public abstract void getArrayDouble();
 
     /**
-     * Push the contents of register i onto the stack.
+     * Write the contents of register i onto the stack.
      *
      * @stack -> val
      */
-    public abstract void pushRegisterDouble( int index );
+    public abstract void loadRegisterDouble( int index );
+
+    /**
+     * Write the contents of the stack into the register.
+     *
+     * @stack val ->
+     */
+    public abstract void storeRegisterDouble( int index );
 
 // OBJECT OPS
     /**
@@ -737,11 +791,18 @@ abstract class JVMOps {
     public abstract void getArrayObject();
 
     /**
-     * Push the contents of register i onto the stack.
+     * Write the contents of register i onto the stack.
      *
      * @stack -> val
      */
-    public abstract void pushRegisterObject( int index );
+    public abstract void loadRegisterObject( int index );
+
+    /**
+     * Write the contents of the stack into the register.
+     *
+     * @stack val ->
+     */
+    public abstract void storeRegisterObject( int index );
 
     /**
      * Push the value of 'this' onto the stack. Otherwise known as register zero.
@@ -749,7 +810,7 @@ abstract class JVMOps {
      * @stack -> val
      */
     public void pushThis() {
-        pushRegisterObject( 0 );
+        loadRegisterObject( 0 );
     }
 
 // CASTING

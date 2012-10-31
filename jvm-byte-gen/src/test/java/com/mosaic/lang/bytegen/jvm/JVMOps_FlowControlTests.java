@@ -18,7 +18,7 @@ public class JVMOps_FlowControlTests {
                 public void appendMethod( MethodVisitor m ) {
                     JVMLabel l0 = ops.newLabel();
 
-                    ops.pushRegisterBoolean( 1 );
+                    ops.loadRegisterBoolean( 1 );
                     ops.ifEqZero( l0 );
 
 
@@ -45,7 +45,7 @@ public class JVMOps_FlowControlTests {
                 public void appendMethod( MethodVisitor m ) {
                     JVMLabel l0 = ops.newLabel();
 
-                    ops.pushRegisterBoolean( 1 );
+                    ops.loadRegisterBoolean( 1 );
                     ops.ifNEZero( l0 );
 
 
@@ -72,7 +72,7 @@ public class JVMOps_FlowControlTests {
                 public void appendMethod( MethodVisitor m ) {
                     JVMLabel l0 = ops.newLabel();
 
-                    ops.pushRegisterInt( 1 );
+                    ops.loadRegisterInt( 1 );
                     ops.ifLTZero( l0 );
 
                     // if not matched
@@ -100,7 +100,7 @@ public class JVMOps_FlowControlTests {
                 public void appendMethod( MethodVisitor m ) {
                     JVMLabel l0 = ops.newLabel();
 
-                    ops.pushRegisterInt( 1 );
+                    ops.loadRegisterInt( 1 );
                     ops.ifLTEZero( l0 );
 
                     // if not matched
@@ -128,7 +128,7 @@ public class JVMOps_FlowControlTests {
                 public void appendMethod( MethodVisitor m ) {
                     JVMLabel l0 = ops.newLabel();
 
-                    ops.pushRegisterInt( 1 );
+                    ops.loadRegisterInt( 1 );
                     ops.ifGTZero( l0 );
 
                     // if not matched
@@ -156,7 +156,7 @@ public class JVMOps_FlowControlTests {
                 public void appendMethod( MethodVisitor m ) {
                     JVMLabel l0 = ops.newLabel();
 
-                    ops.pushRegisterInt( 1 );
+                    ops.loadRegisterInt( 1 );
                     ops.ifGTEZero( l0 );
 
                     // if not matched
@@ -184,7 +184,7 @@ public class JVMOps_FlowControlTests {
                 public void appendMethod( MethodVisitor m ) {
                     JVMLabel l0 = ops.newLabel();
 
-                    ops.pushRegisterObject( 1 );
+                    ops.loadRegisterObject( 1 );
                     ops.ifNull( l0 );
 
                     // if not matched
@@ -211,7 +211,7 @@ public class JVMOps_FlowControlTests {
                 public void appendMethod( MethodVisitor m ) {
                     JVMLabel l0 = ops.newLabel();
 
-                    ops.pushRegisterObject( 1 );
+                    ops.loadRegisterObject( 1 );
                     ops.ifNotNull( l0 );
 
                     // if not matched
@@ -239,8 +239,8 @@ public class JVMOps_FlowControlTests {
                 public void appendMethod( MethodVisitor m ) {
                     JVMLabel l0 = ops.newLabel();
 
-                    ops.pushRegisterObject( 1 );
-                    ops.pushRegisterObject( 2 );
+                    ops.loadRegisterObject( 1 );
+                    ops.loadRegisterObject( 2 );
                     ops.ifEqualObjectRefs( l0 );
 
                     // if not matched
@@ -271,8 +271,8 @@ public class JVMOps_FlowControlTests {
                 public void appendMethod( MethodVisitor m ) {
                     JVMLabel l0 = ops.newLabel();
 
-                    ops.pushRegisterObject( 1 );
-                    ops.pushRegisterObject( 2 );
+                    ops.loadRegisterObject( 1 );
+                    ops.loadRegisterObject( 2 );
                     ops.ifNotEqualObjectRefs( l0 );
 
                     // if not matched
@@ -303,8 +303,8 @@ public class JVMOps_FlowControlTests {
                 public void appendMethod( MethodVisitor m ) {
                     JVMLabel l0 = ops.newLabel();
 
-                    ops.pushRegisterInt( 1 );
-                    ops.pushRegisterInt( 2 );
+                    ops.loadRegisterInt( 1 );
+                    ops.loadRegisterInt( 2 );
                     ops.ifIntsEqual( l0 );
 
                     // if not matched
@@ -333,8 +333,8 @@ public class JVMOps_FlowControlTests {
                 public void appendMethod( MethodVisitor m ) {
                     JVMLabel l0 = ops.newLabel();
 
-                    ops.pushRegisterInt( 1 );
-                    ops.pushRegisterInt( 2 );
+                    ops.loadRegisterInt( 1 );
+                    ops.loadRegisterInt( 2 );
                     ops.ifIntsNotEqual( l0 );
 
                     // if not matched
@@ -363,8 +363,8 @@ public class JVMOps_FlowControlTests {
                 public void appendMethod( MethodVisitor m ) {
                     JVMLabel l0 = ops.newLabel();
 
-                    ops.pushRegisterInt( 1 );
-                    ops.pushRegisterInt( 2 );
+                    ops.loadRegisterInt( 1 );
+                    ops.loadRegisterInt( 2 );
                     ops.ifIntsLT( l0 );
 
                     // if not matched
@@ -393,8 +393,8 @@ public class JVMOps_FlowControlTests {
                 public void appendMethod( MethodVisitor m ) {
                     JVMLabel l0 = ops.newLabel();
 
-                    ops.pushRegisterInt( 1 );
-                    ops.pushRegisterInt( 2 );
+                    ops.loadRegisterInt( 1 );
+                    ops.loadRegisterInt( 2 );
                     ops.ifIntsLTE( l0 );
 
                     // if not matched
@@ -423,8 +423,8 @@ public class JVMOps_FlowControlTests {
                 public void appendMethod( MethodVisitor m ) {
                     JVMLabel l0 = ops.newLabel();
 
-                    ops.pushRegisterInt( 1 );
-                    ops.pushRegisterInt( 2 );
+                    ops.loadRegisterInt( 1 );
+                    ops.loadRegisterInt( 2 );
                     ops.ifIntsGT( l0 );
 
                     // if not matched
@@ -453,8 +453,8 @@ public class JVMOps_FlowControlTests {
                 public void appendMethod( MethodVisitor m ) {
                     JVMLabel l0 = ops.newLabel();
 
-                    ops.pushRegisterInt( 1 );
-                    ops.pushRegisterInt( 2 );
+                    ops.loadRegisterInt( 1 );
+                    ops.loadRegisterInt( 2 );
                     ops.ifIntsGTE( l0 );
 
                     // if not matched

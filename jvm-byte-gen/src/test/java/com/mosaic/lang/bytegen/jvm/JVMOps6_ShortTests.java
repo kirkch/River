@@ -268,13 +268,45 @@ public class JVMOps6_ShortTests {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
             new JVMOpsTestTools.MethodGenerator("(S)S") {
                 public void appendMethod( MethodVisitor m ) {
-                    ops.pushRegisterShort( 1 );
+                    ops.loadRegisterShort( 1 );
                     ops.returnShort();
                 }
             }
         );
 
         assertEquals( Short.MAX_VALUE, m.invoke(Short.MAX_VALUE) );
+    }
+
+    @Test
+    public void loadRegisterShort() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("(S)S") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.loadRegisterShort( 1 );
+                    ops.returnShort();
+                }
+            }
+        );
+
+        assertEquals( (short) 10, m.invoke((short) 10) );
+        assertEquals( (short) 12, m.invoke((short) 12) );
+    }
+
+    @Test
+    public void storeRegisterShort() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("(S)S") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.loadRegisterShort( 1 );
+                    ops.storeRegisterShort( 2 );
+                    ops.loadRegisterShort( 2 );
+                    ops.returnShort();
+                }
+            }
+        );
+
+        assertEquals( (short) 10, m.invoke((short) 10) );
+        assertEquals( (short) 12, m.invoke((short) 12) );
     }
     
 }

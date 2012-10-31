@@ -18,8 +18,8 @@ public class JVMOps_ExpressionInstructionsTests {
                 public void appendMethod( MethodVisitor m ) {
                     JVMLabel l0 = ops.newLabel();
 
-                    ops.pushRegisterInt( 1 );
-                    ops.pushRegisterInt( 2 );
+                    ops.loadRegisterInt( 1 );
+                    ops.loadRegisterInt( 2 );
                     ops.ifIntsGTE( l0 );
 
                     // if not matched

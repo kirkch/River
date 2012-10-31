@@ -254,13 +254,45 @@ public class JVMOps6_DoubleTests {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
             new JVMOpsTestTools.MethodGenerator("(D)D") {
                 public void appendMethod( MethodVisitor m ) {
-                    ops.pushRegisterDouble( 1 );
+                    ops.loadRegisterDouble( 1 );
                     ops.returnDouble();
                 }
             }
         );
 
         assertEquals( 101.5, m.invoke(101.5) );
+    }
+
+    @Test
+    public void loadRegisterDouble() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("(D)D") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.loadRegisterDouble( 1 );
+                    ops.returnDouble();
+                }
+            }
+        );
+
+        assertEquals( (double) 10, m.invoke((double) 10) );
+        assertEquals( (double) 12, m.invoke((double) 12) );
+    }
+
+    @Test
+    public void storeRegisterDouble() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("(D)D") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.loadRegisterDouble( 1 );
+                    ops.storeRegisterDouble( 2 );
+                    ops.loadRegisterDouble( 2 );
+                    ops.returnDouble();
+                }
+            }
+        );
+
+        assertEquals( (double) 10, m.invoke((double) 10) );
+        assertEquals( (double) 12, m.invoke((double) 12) );
     }
 
 }

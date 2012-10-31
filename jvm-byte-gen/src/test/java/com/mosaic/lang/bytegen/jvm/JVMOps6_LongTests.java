@@ -324,7 +324,7 @@ public class JVMOps6_LongTests {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
             new JVMOpsTestTools.MethodGenerator("(J)J") {
                 public void appendMethod( MethodVisitor m ) {
-                    ops.pushRegisterLong( 1 );
+                    ops.loadRegisterLong( 1 );
                     ops.returnLong();
                 }
             }
@@ -333,4 +333,35 @@ public class JVMOps6_LongTests {
         assertEquals( Long.MAX_VALUE, m.invoke(Long.MAX_VALUE) );
     }
 
+    @Test
+    public void loadRegisterLong() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("(J)J") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.loadRegisterLong( 1 );
+                    ops.returnLong();
+                }
+            }
+        );
+
+        assertEquals( (long) 10, m.invoke((long) 10) );
+        assertEquals( (long) 12, m.invoke((long) 12) );
+    }
+
+    @Test
+    public void storeRegisterLong() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("(J)J") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.loadRegisterLong( 1 );
+                    ops.storeRegisterLong( 2 );
+                    ops.loadRegisterLong( 2 );
+                    ops.returnLong();
+                }
+            }
+        );
+
+        assertEquals( (long) 10, m.invoke((long) 10) );
+        assertEquals( (long) 12, m.invoke((long) 12) );
+    }    
 }

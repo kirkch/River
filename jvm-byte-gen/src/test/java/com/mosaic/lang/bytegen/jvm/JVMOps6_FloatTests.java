@@ -254,13 +254,45 @@ public class JVMOps6_FloatTests {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
             new JVMOpsTestTools.MethodGenerator("(F)F") {
                 public void appendMethod( MethodVisitor m ) {
-                    ops.pushRegisterFloat( 1 );
+                    ops.loadRegisterFloat( 1 );
                     ops.returnFloat();
                 }
             }
         );
 
         assertEquals( 11.1f, m.invoke(11.1f) );
+    }
+
+    @Test
+    public void loadRegisterFloat() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("(F)F") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.loadRegisterFloat( 1 );
+                    ops.returnFloat();
+                }
+            }
+        );
+
+        assertEquals( (float) 10, m.invoke((float) 10) );
+        assertEquals( (float) 12, m.invoke((float) 12) );
+    }
+
+    @Test
+    public void storeRegisterFloat() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("(F)F") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.loadRegisterFloat( 1 );
+                    ops.storeRegisterFloat( 2 );
+                    ops.loadRegisterFloat( 2 );
+                    ops.returnFloat();
+                }
+            }
+        );
+
+        assertEquals( (float) 10, m.invoke((float) 10) );
+        assertEquals( (float) 12, m.invoke((float) 12) );
     }
 
 }

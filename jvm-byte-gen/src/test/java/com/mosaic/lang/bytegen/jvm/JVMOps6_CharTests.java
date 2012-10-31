@@ -240,13 +240,45 @@ public class JVMOps6_CharTests {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
             new JVMOpsTestTools.MethodGenerator("(C)C") {
                 public void appendMethod( MethodVisitor m ) {
-                    ops.pushRegisterChar( 1 );
+                    ops.loadRegisterChar( 1 );
                     ops.returnChar();
                 }
             }
         );
 
         assertEquals( 'a', m.invoke('a') );
+    }
+
+    @Test
+    public void loadRegisterChar() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("(C)C") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.loadRegisterChar( 1 );
+                    ops.returnChar();
+                }
+            }
+        );
+
+        assertEquals( (char) 10, m.invoke((char) 10) );
+        assertEquals( (char) 12, m.invoke((char) 12) );
+    }
+
+    @Test
+    public void storeRegisterChar() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("(C)C") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.loadRegisterChar( 1 );
+                    ops.storeRegisterChar( 2 );
+                    ops.loadRegisterChar( 2 );
+                    ops.returnChar();
+                }
+            }
+        );
+
+        assertEquals( (char) 10, m.invoke((char) 10) );
+        assertEquals( (char) 12, m.invoke((char) 12) );
     }
 
 }

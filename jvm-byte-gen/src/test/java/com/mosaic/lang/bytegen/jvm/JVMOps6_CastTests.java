@@ -18,7 +18,7 @@ public class JVMOps6_CastTests {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
             new JVMOpsTestTools.MethodGenerator("(Ljava/lang/Object;)V") {
                 public void appendMethod( MethodVisitor m ) {
-                    ops.pushRegisterObject( 1 );
+                    ops.loadRegisterObject( 1 );
                     ops.checkcast( "java/lang/String" );
                     ops.returnNoValue();
                 }
@@ -40,7 +40,7 @@ public class JVMOps6_CastTests {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
             new JVMOpsTestTools.MethodGenerator("(Ljava/lang/Object;)Z") {
                 public void appendMethod( MethodVisitor m ) {
-                    ops.pushRegisterObject( 1 );
+                    ops.loadRegisterObject( 1 );
                     ops.isInstanceOf( "java/lang/String" );
                     ops.returnBoolean();
                 }
@@ -56,7 +56,7 @@ public class JVMOps6_CastTests {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
             new JVMOpsTestTools.MethodGenerator("(D)F") {
                 public void appendMethod( MethodVisitor m ) {
-                    ops.pushRegisterDouble( 1 );
+                    ops.loadRegisterDouble( 1 );
                     ops.d2f();
                     ops.returnFloat();
                 }
@@ -71,7 +71,7 @@ public class JVMOps6_CastTests {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
             new JVMOpsTestTools.MethodGenerator("(D)I") {
                 public void appendMethod( MethodVisitor m ) {
-                    ops.pushRegisterDouble( 1 );
+                    ops.loadRegisterDouble( 1 );
                     ops.d2i();
                     ops.returnInt();
                 }
@@ -86,7 +86,7 @@ public class JVMOps6_CastTests {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
             new JVMOpsTestTools.MethodGenerator("(D)J") {
                 public void appendMethod( MethodVisitor m ) {
-                    ops.pushRegisterDouble( 1 );
+                    ops.loadRegisterDouble( 1 );
                     ops.d2l();
                     ops.returnLong();
                 }
@@ -101,7 +101,7 @@ public class JVMOps6_CastTests {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
             new JVMOpsTestTools.MethodGenerator("(F)D") {
                 public void appendMethod( MethodVisitor m ) {
-                    ops.pushRegisterFloat( 1 );
+                    ops.loadRegisterFloat( 1 );
                     ops.f2d();
                     ops.returnDouble();
                 }
@@ -116,14 +116,14 @@ public class JVMOps6_CastTests {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
             new JVMOpsTestTools.MethodGenerator("(F)I") {
                 public void appendMethod( MethodVisitor m ) {
-                    ops.pushRegisterFloat( 1 );
+                    ops.loadRegisterFloat( 1 );
                     ops.f2i();
                     ops.returnInt();
                 }
             }
         );
 
-        assertEquals( 42, m.invoke(42.7f) );
+        assertEquals( 42, m.invoke( 42.7f ) );
     }
 
     @Test
@@ -131,14 +131,14 @@ public class JVMOps6_CastTests {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
             new JVMOpsTestTools.MethodGenerator("(F)J") {
                 public void appendMethod( MethodVisitor m ) {
-                    ops.pushRegisterFloat( 1 );
+                    ops.loadRegisterFloat( 1 );
                     ops.f2l();
                     ops.returnLong();
                 }
             }
         );
 
-        assertEquals( 42L, m.invoke(42.7f) );
+        assertEquals( 42L, m.invoke( 42.7f ) );
     }
 
     @Test
@@ -146,14 +146,14 @@ public class JVMOps6_CastTests {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
             new JVMOpsTestTools.MethodGenerator("(I)B") {
                 public void appendMethod( MethodVisitor m ) {
-                    ops.pushRegisterInt( 1 );
+                    ops.loadRegisterInt( 1 );
                     ops.i2b();
                     ops.returnByte();
                 }
             }
         );
 
-        assertEquals( (byte) 50, m.invoke(50) );
+        assertEquals( (byte) 50, m.invoke( 50 ) );
     }
 
     @Test
@@ -161,14 +161,14 @@ public class JVMOps6_CastTests {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
             new JVMOpsTestTools.MethodGenerator("(I)C") {
                 public void appendMethod( MethodVisitor m ) {
-                    ops.pushRegisterInt( 1 );
+                    ops.loadRegisterInt( 1 );
                     ops.i2c();
                     ops.returnChar();
                 }
             }
         );
 
-        assertEquals( (char) 50, m.invoke(50) );
+        assertEquals( (char) 50, m.invoke( 50 ) );
     }
 
     @Test
@@ -176,14 +176,14 @@ public class JVMOps6_CastTests {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
             new JVMOpsTestTools.MethodGenerator("(I)D") {
                 public void appendMethod( MethodVisitor m ) {
-                    ops.pushRegisterInt( 1 );
+                    ops.loadRegisterInt( 1 );
                     ops.i2d();
                     ops.returnDouble();
                 }
             }
         );
 
-        assertEquals( 50.0, m.invoke(50) );
+        assertEquals( 50.0, m.invoke( 50 ) );
     }
 
     @Test
@@ -191,14 +191,14 @@ public class JVMOps6_CastTests {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
             new JVMOpsTestTools.MethodGenerator("(I)F") {
                 public void appendMethod( MethodVisitor m ) {
-                    ops.pushRegisterInt( 1 );
+                    ops.loadRegisterInt( 1 );
                     ops.i2f();
                     ops.returnFloat();
                 }
             }
         );
 
-        assertEquals( 50.0f, m.invoke(50) );
+        assertEquals( 50.0f, m.invoke( 50 ) );
     }
 
     @Test
@@ -206,14 +206,14 @@ public class JVMOps6_CastTests {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
             new JVMOpsTestTools.MethodGenerator("(I)J") {
                 public void appendMethod( MethodVisitor m ) {
-                    ops.pushRegisterInt( 1 );
+                    ops.loadRegisterInt( 1 );
                     ops.i2l();
                     ops.returnLong();
                 }
             }
         );
 
-        assertEquals( 50L, m.invoke(50) );
+        assertEquals( 50L, m.invoke( 50 ) );
     }
 
     @Test
@@ -221,14 +221,14 @@ public class JVMOps6_CastTests {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
             new JVMOpsTestTools.MethodGenerator("(I)S") {
                 public void appendMethod( MethodVisitor m ) {
-                    ops.pushRegisterInt( 1 );
+                    ops.loadRegisterInt( 1 );
                     ops.i2s();
                     ops.returnShort();
                 }
             }
         );
 
-        assertEquals( (short) 50, m.invoke(50) );
+        assertEquals( (short) 50, m.invoke( 50 ) );
     }
 
     @Test
@@ -236,14 +236,14 @@ public class JVMOps6_CastTests {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
             new JVMOpsTestTools.MethodGenerator("(J)D") {
                 public void appendMethod( MethodVisitor m ) {
-                    ops.pushRegisterLong( 1 );
+                    ops.loadRegisterLong( 1 );
                     ops.l2d();
                     ops.returnDouble();
                 }
             }
         );
 
-        assertEquals( 50.0, m.invoke(50L) );
+        assertEquals( 50.0, m.invoke( 50L ) );
     }
 
     @Test
@@ -251,14 +251,14 @@ public class JVMOps6_CastTests {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
             new JVMOpsTestTools.MethodGenerator("(J)F") {
                 public void appendMethod( MethodVisitor m ) {
-                    ops.pushRegisterLong( 1 );
+                    ops.loadRegisterLong( 1 );
                     ops.l2f();
                     ops.returnFloat();
                 }
             }
         );
 
-        assertEquals( 50.0f, m.invoke(50L) );
+        assertEquals( 50.0f, m.invoke( 50L ) );
     }
 
     @Test
@@ -266,7 +266,7 @@ public class JVMOps6_CastTests {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
             new JVMOpsTestTools.MethodGenerator("(J)I") {
                 public void appendMethod( MethodVisitor m ) {
-                    ops.pushRegisterLong( 1 );
+                    ops.loadRegisterLong( 1 );
                     ops.l2i();
                     ops.returnInt();
                 }

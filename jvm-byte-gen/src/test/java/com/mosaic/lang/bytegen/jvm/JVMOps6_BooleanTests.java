@@ -105,7 +105,7 @@ public class JVMOps6_BooleanTests {
         MethodInstanceRef m = generateMethod(
             new MethodGenerator("()Z") {  // Z -> Boolean
                 public void appendMethod( MethodVisitor m ) {
-                    ops.pushRegisterObject( 0 ); // this
+                    ops.loadRegisterObject( 0 ); // this
                     ops.getField( JVMOpsTestTools.JVM_CLASS_NAME, "booleanField", "Z" );
                     ops.returnBoolean();
                 }
@@ -120,11 +120,11 @@ public class JVMOps6_BooleanTests {
         MethodInstanceRef m = generateMethod(
             new MethodGenerator("()Z") {  // Z -> Boolean
                 public void appendMethod( MethodVisitor m ) {
-                    ops.pushRegisterObject( 0 ); // this
+                    ops.loadRegisterObject( 0 ); // this
                     ops.pushBoolean( true );
                     ops.putField( JVMOpsTestTools.JVM_CLASS_NAME, "booleanField", "Z" );
 
-                    ops.pushRegisterObject( 0 ); // this
+                    ops.loadRegisterObject( 0 ); // this
                     ops.getField( JVMOpsTestTools.JVM_CLASS_NAME, "booleanField", "Z" );
                     ops.returnBoolean();
                 }
@@ -180,6 +180,38 @@ public class JVMOps6_BooleanTests {
         );
 
         assertEquals( false, m.invoke() );
+    }
+
+    @Test
+    public void loadRegisterBoolean() {
+        MethodInstanceRef m = generateMethod(
+            new MethodGenerator("(Z)Z") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.loadRegisterBoolean( 1 );
+                    ops.returnBoolean();
+                }
+            }
+        );
+
+        assertEquals( false, m.invoke(false) );
+        assertEquals( true, m.invoke(true) );
+    }
+
+    @Test
+    public void storeRegisterBoolean() {
+        MethodInstanceRef m = generateMethod(
+            new MethodGenerator("(Z)Z") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.loadRegisterBoolean( 1 );
+                    ops.storeRegisterBoolean( 2 );
+                    ops.loadRegisterBoolean( 2 );
+                    ops.returnBoolean();
+                }
+            }
+        );
+
+        assertEquals( false, m.invoke(false) );
+        assertEquals( true, m.invoke(true) );
     }
 
 }

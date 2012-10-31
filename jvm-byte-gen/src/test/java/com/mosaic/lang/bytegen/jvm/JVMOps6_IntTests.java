@@ -296,7 +296,7 @@ public class JVMOps6_IntTests {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
             new JVMOpsTestTools.MethodGenerator("(I)I") {
                 public void appendMethod( MethodVisitor m ) {
-                    ops.pushRegisterInt( 1 );
+                    ops.loadRegisterInt( 1 );
                     ops.returnInt();
                 }
             }
@@ -305,4 +305,35 @@ public class JVMOps6_IntTests {
         assertEquals( 42, m.invoke(42) );
     }
 
+    @Test
+    public void loadRegisterInt() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("(I)I") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.loadRegisterInt( 1 );
+                    ops.returnInt();
+                }
+            }
+        );
+
+        assertEquals( 10, m.invoke((int) 10) );
+        assertEquals( 12, m.invoke((int) 12) );
+    }
+
+    @Test
+    public void storeRegisterInt() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("(I)I") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.loadRegisterInt( 1 );
+                    ops.storeRegisterInt( 2 );
+                    ops.loadRegisterInt( 2 );
+                    ops.returnInt();
+                }
+            }
+        );
+
+        assertEquals( 10, m.invoke((int) 10) );
+        assertEquals( 12, m.invoke((int) 12) );
+    }
 }

@@ -195,8 +195,12 @@ public class JVMOps6 extends JVMOps {
         m.visitInsn( Opcodes.BALOAD );
     }
 
-    public void pushRegisterBoolean( int index ) {
+    public void loadRegisterBoolean( int index ) {
         m.visitVarInsn( Opcodes.ILOAD, index );
+    }
+
+    public void storeRegisterBoolean( int index ) {
+        m.visitVarInsn( Opcodes.ISTORE, index );
     }
 
 // BYTE OPS
@@ -248,8 +252,12 @@ public class JVMOps6 extends JVMOps {
         m.visitInsn( Opcodes.BALOAD );
     }
 
-    public void pushRegisterByte( int index ) {
+    public void loadRegisterByte( int index ) {
         m.visitVarInsn( Opcodes.ILOAD, index );
+    }
+
+    public void storeRegisterByte( int index ) {
+        m.visitVarInsn( Opcodes.ISTORE, index );
     }
 
 // CHAR OPS
@@ -277,8 +285,12 @@ public class JVMOps6 extends JVMOps {
         m.visitInsn( Opcodes.CALOAD );
     }
 
-    public void pushRegisterChar( int index ) {
+    public void loadRegisterChar( int index ) {
         m.visitVarInsn( Opcodes.ILOAD, index );
+    }
+
+    public void storeRegisterChar( int index ) {
+        m.visitVarInsn( Opcodes.ISTORE, index );
     }
 
 // SHORT OPS
@@ -334,8 +346,12 @@ public class JVMOps6 extends JVMOps {
         m.visitInsn( Opcodes.SALOAD );
     }
 
-    public void pushRegisterShort( int index ) {
+    public void loadRegisterShort( int index ) {
         m.visitVarInsn( Opcodes.ILOAD, index );
+    }
+
+    public void storeRegisterShort( int index ) {
+        m.visitVarInsn( Opcodes.ISTORE, index );
     }
 
 // INT OPS
@@ -393,8 +409,12 @@ public class JVMOps6 extends JVMOps {
         m.visitInsn( Opcodes.IALOAD );
     }
 
-    public void pushRegisterInt( int index ) {
+    public void loadRegisterInt( int index ) {
         m.visitVarInsn( Opcodes.ILOAD, index );
+    }
+
+    public void storeRegisterInt( int index ) {
+        m.visitVarInsn( Opcodes.ISTORE, index );
     }
 
 // LONG OPS
@@ -428,8 +448,12 @@ public class JVMOps6 extends JVMOps {
         m.visitInsn( Opcodes.LALOAD );
     }
 
-    public void pushRegisterLong( int index ) {
+    public void loadRegisterLong( int index ) {
         m.visitVarInsn( Opcodes.LLOAD, index );
+    }
+
+    public void storeRegisterLong( int index ) {
+        m.visitVarInsn( Opcodes.LSTORE, index );
     }
 
 // FLOAT OPS
@@ -457,8 +481,12 @@ public class JVMOps6 extends JVMOps {
         m.visitInsn( Opcodes.FALOAD );
     }
 
-    public void pushRegisterFloat( int index ) {
+    public void loadRegisterFloat( int index ) {
         m.visitVarInsn( Opcodes.FLOAD, index );
+    }
+
+    public void storeRegisterFloat( int index ) {
+        m.visitVarInsn( Opcodes.FSTORE, index );
     }
 
 // DOUBLE OPS
@@ -486,8 +514,12 @@ public class JVMOps6 extends JVMOps {
         m.visitInsn( Opcodes.DALOAD );
     }
 
-    public void pushRegisterDouble( int index ) {
+    public void loadRegisterDouble( int index ) {
         m.visitVarInsn( Opcodes.DLOAD, index );
+    }
+
+    public void storeRegisterDouble( int index ) {
+        m.visitVarInsn( Opcodes.DSTORE, index );
     }
 
 // OBJECT OPS
@@ -517,78 +549,82 @@ public class JVMOps6 extends JVMOps {
         m.visitInsn( Opcodes.AALOAD );
     }
 
-    public void pushRegisterObject( int index ) {
+    public void loadRegisterObject( int index ) {
         m.visitVarInsn( Opcodes.ALOAD, index );
+    }
+
+    public void storeRegisterObject( int index ) {
+        m.visitVarInsn( Opcodes.ASTORE, index );
     }
 
 // CASTING
 
-  public void checkcast( String jvmClass ) {
-      m.visitTypeInsn( Opcodes.CHECKCAST, jvmClass );
-  }
+    public void checkcast( String jvmClass ) {
+        m.visitTypeInsn( Opcodes.CHECKCAST, jvmClass );
+    }
 
-  public void isInstanceOf( String jvmClass ) {
-      m.visitTypeInsn( Opcodes.INSTANCEOF, jvmClass );
-  }
+    public void isInstanceOf( String jvmClass ) {
+        m.visitTypeInsn( Opcodes.INSTANCEOF, jvmClass );
+    }
 
-  public void d2f() {
-      m.visitInsn( Opcodes.D2F );  
-  }
+    public void d2f() {
+        m.visitInsn( Opcodes.D2F );
+    }
 
-  public void d2i()  {
-      m.visitInsn( Opcodes.D2I );
-  }
+    public void d2i()  {
+        m.visitInsn( Opcodes.D2I );
+    }
 
-  public void d2l() {
-      m.visitInsn( Opcodes.D2L );
-  }
+    public void d2l() {
+        m.visitInsn( Opcodes.D2L );
+    }
 
-  public void f2d() {
-      m.visitInsn( Opcodes.F2D );
-  }
+    public void f2d() {
+        m.visitInsn( Opcodes.F2D );
+    }
 
-  public void f2i() {
-      m.visitInsn( Opcodes.F2I );
-  }
+    public void f2i() {
+        m.visitInsn( Opcodes.F2I );
+    }
 
-  public void f2l() {
-      m.visitInsn( Opcodes.F2L );
-  }
+    public void f2l() {
+        m.visitInsn( Opcodes.F2L );
+    }
 
-  public void i2b() {
-      m.visitInsn( Opcodes.I2B );
-  }
+    public void i2b() {
+        m.visitInsn( Opcodes.I2B );
+    }
 
-  public void i2c() {
-      m.visitInsn( Opcodes.I2C );
-  }
+    public void i2c() {
+        m.visitInsn( Opcodes.I2C );
+    }
 
-  public void i2d() {
-      m.visitInsn( Opcodes.I2D );
-  }
+    public void i2d() {
+        m.visitInsn( Opcodes.I2D );
+    }
 
-  public void i2f() {
-      m.visitInsn( Opcodes.I2F );
-  }
+    public void i2f() {
+        m.visitInsn( Opcodes.I2F );
+    }
 
-  public void i2l() {
-      m.visitInsn( Opcodes.I2L );
-  }
+    public void i2l() {
+        m.visitInsn( Opcodes.I2L );
+    }
 
-  public void i2s() {
-      m.visitInsn( Opcodes.I2S );
-  }
+    public void i2s() {
+        m.visitInsn( Opcodes.I2S );
+    }
 
-  public void l2d() {
-      m.visitInsn( Opcodes.L2D );
-  }
+    public void l2d() {
+        m.visitInsn( Opcodes.L2D );
+    }
 
-  public void l2f() {
-      m.visitInsn( Opcodes.L2F );
-  }
+    public void l2f() {
+        m.visitInsn( Opcodes.L2F );
+    }
 
-  public void l2i() {
-      m.visitInsn( Opcodes.L2I );
-  }
+    public void l2i() {
+        m.visitInsn( Opcodes.L2I );
+    }
 
 }
