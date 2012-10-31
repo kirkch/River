@@ -112,6 +112,41 @@ abstract class JVMOps {
      */
     public abstract void ifEqZero( JVMLabel label );
 
+    /**
+     * If the int on the head of the stack is not zero then jump to label.
+     *
+     * @stack value(int) ->
+     */
+    public abstract void ifNEZero( JVMLabel label );
+
+    /**
+     * If the int on the head of the stack is less than zero then jump to label.
+     *
+     * @stack value(int) ->
+     */
+    public abstract void ifLTZero( JVMLabel label );
+
+    /**
+     * If the int on the head of the stack is less than or equal to zero then jump to label.
+     *
+     * @stack value(int) ->
+     */
+    public abstract void ifLTEZero( JVMLabel label );
+
+    /**
+     * If the int on the head of the stack is greater than zero then jump to label.
+     *
+     * @stack value(int) ->
+     */
+    public abstract void ifGTZero( JVMLabel label );
+
+    /**
+     * If the int on the head of the stack is greater than or equal to zero then jump to label.
+     *
+     * @stack value(int) ->
+     */
+    public abstract void ifGTEZero( JVMLabel label );
+
 // METHOD OPS
 
     /**

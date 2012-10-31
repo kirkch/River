@@ -79,6 +79,26 @@ public class JVMOps6 extends JVMOps {
         m.visitJumpInsn( Opcodes.IFEQ, label.l0 );
     }
 
+    public void ifNEZero( JVMLabel label ) {
+        m.visitJumpInsn( Opcodes.IFNE, label.l0 );
+    }
+
+    public void ifLTZero( JVMLabel label ) {
+        m.visitJumpInsn( Opcodes.IFLT, label.l0 );
+    }
+
+    public void ifLTEZero( JVMLabel label ) {
+        m.visitJumpInsn( Opcodes.IFLE, label.l0 );
+    }
+
+    public void ifGTZero( JVMLabel label ) {
+        m.visitJumpInsn( Opcodes.IFGT, label.l0 );
+    }
+
+    public void ifGTEZero( JVMLabel label ) {
+        m.visitJumpInsn( Opcodes.IFGE, label.l0 );
+    }
+
 // METHOD OPS
 
     public void invokeStatic( String ownerDesc, String methodName, String methodSignature ) {
