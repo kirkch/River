@@ -631,4 +631,70 @@ public class JVMOps6 extends JVMOps {
         m.visitInsn( Opcodes.L2I );
     }
 
+// EQUATION OPS
+
+    public void addInt() {
+        m.visitInsn( Opcodes.IADD );
+    }
+
+    public void addLong() {
+        m.visitInsn( Opcodes.LADD );
+    }
+
+    public void addFloat() {
+        m.visitInsn( Opcodes.FADD );
+    }
+
+    public void addDouble() {
+        m.visitInsn( Opcodes.DADD );
+    }
+
+    public void subtractInt() {
+        m.visitInsn( Opcodes.ISUB );
+    }
+
+    public void subtractLong() {
+        m.visitInsn( Opcodes.LSUB );
+    }
+
+    public void subtractFloat() {
+        m.visitInsn( Opcodes.FSUB );
+    }
+
+    public void subtractDouble() {
+        m.visitInsn( Opcodes.DSUB );
+    }
+
+    public void multiplyInt() {
+        m.visitInsn( Opcodes.IMUL );
+    }
+
+    public void multiplyLong() {
+        m.visitInsn( Opcodes.LMUL );
+    }
+
+    public void multiplyFloat() {
+        m.visitInsn( Opcodes.FMUL );
+    }
+
+    public void multiplyDouble() {
+        m.visitInsn( Opcodes.DMUL );
+    }
+
+    public void divideInt() {
+        m.visitInsn( Opcodes.IDIV );
+    }
+
+    public void divideLong() {
+        m.visitInsn( Opcodes.LDIV );
+    }
+
+    public void divideFloat() {
+        m.visitInsn( Opcodes.FDIV );
+    }
+
+    public void divideDouble() {
+        m.visitInsn( Opcodes.DDIV );
+    }
+
 }

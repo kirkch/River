@@ -7,8 +7,8 @@ import java.io.IOException;
  */
 public class ASMBox {
 
-    public String[][] f() throws IOException{
-        return new String[2][4];
+    public long f( long i ) throws IOException{
+        return i + 2L;
     }
 
 }

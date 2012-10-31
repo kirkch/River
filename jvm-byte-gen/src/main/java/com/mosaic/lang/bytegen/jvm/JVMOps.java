@@ -12,47 +12,7 @@ import org.objectweb.asm.MethodVisitor;
 // pop
 // pop2
 // swap
-
-
-// fadd
-// fdiv
-// fmul
-// fneg
-// frem
-// fsub
-// dadd
-// ddiv
-// dmul
-// dneg
-// drem
-// dsub
-// iadd
-// iand
-// idiv
-// iinc
-// imul
-// ineg
-// isub
-// iushr
-// ior
-// irem
-// ishl
-// ishr
-// ixor
-// ladd
-// land
-// ldiv
-// lmul
-// lneg
-// lor
-// lrem
-// lshl
-// lshr
-// lsub
-// lushr
-// lxor
 // nop
-
 
 
 
@@ -72,7 +32,6 @@ import org.objectweb.asm.MethodVisitor;
 // monitorenter
 // monitorexit
 
-// multianewarray
 
 
 /**
@@ -946,4 +905,49 @@ abstract class JVMOps {
      */
     public abstract void l2i();
 
+// EQUATION OPS
+
+    public abstract void addInt();
+    public abstract void addLong();
+    public abstract void addFloat();
+    public abstract void addDouble();
+
+    public abstract void subtractInt();
+    public abstract void subtractLong();
+    public abstract void subtractFloat();
+    public abstract void subtractDouble();
+
+    public abstract void multiplyInt();
+    public abstract void multiplyLong();
+    public abstract void multiplyFloat();
+    public abstract void multiplyDouble();
+
+    public abstract void divideInt();
+    public abstract void divideLong();
+    public abstract void divideFloat();
+    public abstract void divideDouble();
+
+
+
+// fneg
+// frem
+// dneg
+// drem
+// iand
+// iinc
+// ineg
+// iushr
+// ior
+// irem
+// ishl
+// ishr
+// ixor
+// land
+// lneg
+// lor
+// lrem
+// lshl
+// lshr
+// lushr
+// lxor
 }
