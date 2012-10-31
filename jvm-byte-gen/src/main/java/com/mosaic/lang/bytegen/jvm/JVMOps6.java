@@ -35,6 +35,24 @@ public class JVMOps6 extends JVMOps {
         m.visitInsn( Opcodes.ARRAYLENGTH );
     }
 
+// METHOD OPS
+
+    public void invokeStatic( String ownerDesc, String methodName, String methodSignature ) {
+        m.visitMethodInsn( Opcodes.INVOKESTATIC, ownerDesc, methodName, methodSignature );
+    }
+
+    public void invokeMethod( String ownerDesc, String methodName, String methodSignature ) {
+        m.visitMethodInsn( Opcodes.INVOKEVIRTUAL, ownerDesc, methodName, methodSignature );
+    }
+
+    public void invokeSpecial( String ownerDesc, String methodName, String methodSignature ) {
+        m.visitMethodInsn( Opcodes.INVOKESPECIAL, ownerDesc, methodName, methodSignature );
+    }
+
+    public void invokeInterface( String ownerDesc, String methodName, String methodSignature ) {
+        m.visitMethodInsn( Opcodes.INVOKEINTERFACE, ownerDesc, methodName, methodSignature );
+    }
+
 // VOID OPS
 
     /**

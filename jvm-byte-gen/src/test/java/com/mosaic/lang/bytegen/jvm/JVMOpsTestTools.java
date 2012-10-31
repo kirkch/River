@@ -19,14 +19,19 @@ class JVMOpsTestTools {
     public static final String JAVA_CLASS_NAME = "com.mosaic.lang.bytegen.jvm.GeneratedClass";
     public static final String JVM_CLASS_NAME  = JAVA_CLASS_NAME.replaceAll( "\\.", "/" );
 
-    public static MethodInstanceRef generateMethod( MethodGenerator methodGenerator ) {
-        byte[]          bytes = generateClassBytes( methodGenerator );
-        ByteClassLoader cl    = new ByteClassLoader();
+    public static final String JAVA_INTERFACE_NAME = "com.mosaic.lang.bytegen.jvm.GeneratedInterface";
+    public static final String JVM_INTERFACE_NAME  = JAVA_INTERFACE_NAME.replaceAll( "\\.", "/" );
 
-        cl.declareJavaClass( "com.mosaic.lang.bytegen.jvm.GeneratedClass", bytes );
+    public static MethodInstanceRef generateMethod( MethodGenerator methodGenerator ) {
+        byte[]          ibytes = generateInterface();
+        byte[]          bytes  = generateClassBytes( methodGenerator );
+        ByteClassLoader cl     = new ByteClassLoader();
+
+        cl.declareJavaClass( JAVA_INTERFACE_NAME, ibytes );
+        cl.declareJavaClass( JAVA_CLASS_NAME, bytes );
 
         try {
-            Class  c = cl.loadClass( "com.mosaic.lang.bytegen.jvm.GeneratedClass" );
+            Class  c = cl.loadClass( JAVA_CLASS_NAME );
             Object o = c.newInstance();
 
             for ( Method m : c.getMethods() ) {
@@ -41,6 +46,22 @@ class JVMOpsTestTools {
         return null;
     }
 
+    private static byte[] generateInterface() {
+        ClassWriter cw = new ClassWriter( 0 );
+        MethodVisitor mv;
+
+        cw.visit( V1_6, ACC_ABSTRACT + ACC_INTERFACE, JVM_INTERFACE_NAME, null, "java/lang/Object", null );
+
+        cw.visitSource( "GeneratedInterface.java", null );
+
+        {
+            mv = cw.visitMethod( ACC_PUBLIC + ACC_ABSTRACT, "interfaceIntMethod", "()I", null, null );
+            mv.visitEnd();
+        }
+        cw.visitEnd();
+
+        return cw.toByteArray();
+    }
 
     private static byte[] generateClassBytes( MethodGenerator methodGenerator ) {
         ClassWriter cw = new ClassWriter( ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS );
@@ -70,7 +91,7 @@ class JVMOpsTestTools {
 
         MethodVisitor mv;
 
-        cw.visit( V1_6, ACC_PUBLIC + ACC_SUPER, "com/mosaic/lang/bytegen/jvm/GeneratedClass", null, "java/lang/Object", null );
+        cw.visit( V1_6, ACC_PUBLIC + ACC_SUPER, JVM_CLASS_NAME, null, "java/lang/Object", new String[] {JVM_INTERFACE_NAME} );
 
         cw.visitSource( "GeneratedClass.java", null );
 
@@ -117,6 +138,42 @@ class JVMOpsTestTools {
 //            mv.visitLocalVariable( "this", "Lcom/mosaic/lang/bytegen/jvm/ASMBox;", null, l0, l1, 0 );
 //            mv.visitMaxs( 1, 1 );
             mv.visitEnd();
+        }
+        {
+            mv = cw.visitMethod( ACC_PUBLIC | ACC_STATIC, "staticIntMethod", "()I", null, null );
+            mv.visitCode();
+
+            mv.visitLdcInsn( 42 );
+            mv.visitInsn( IRETURN );
+
+            mv.visitMaxs( 0, 0 ); // must be called even though COMPUTE_FRAMES is used; values don't matter as it will compute the value            mv.visitEnd();
+        }
+        {
+            mv = cw.visitMethod( ACC_PUBLIC, "intMethod", "()I", null, null );
+            mv.visitCode();
+
+            mv.visitLdcInsn( -42 );
+            mv.visitInsn( IRETURN );
+
+            mv.visitMaxs( 0, 0 ); // must be called even though COMPUTE_FRAMES is used; values don't matter as it will compute the value            mv.visitEnd();
+        }
+        {
+            mv = cw.visitMethod( ACC_PRIVATE, "privateIntMethod", "()I", null, null );
+            mv.visitCode();
+
+            mv.visitLdcInsn( 2 );
+            mv.visitInsn( IRETURN );
+
+            mv.visitMaxs( 0, 0 ); // must be called even though COMPUTE_FRAMES is used; values don't matter as it will compute the value            mv.visitEnd();
+        }
+        {
+            mv = cw.visitMethod( ACC_PUBLIC, "interfaceIntMethod", "()I", null, null );
+            mv.visitCode();
+
+            mv.visitLdcInsn( 7 );
+            mv.visitInsn( IRETURN );
+
+            mv.visitMaxs( 0, 0 ); // must be called even though COMPUTE_FRAMES is used; values don't matter as it will compute the value            mv.visitEnd();
         }
         cw.visitEnd();
 

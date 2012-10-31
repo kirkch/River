@@ -59,6 +59,49 @@ abstract class JVMOps {
      */
     public abstract void arrayLength();
 
+// METHOD OPS
+
+    /**
+     *
+     * @param ownerDesc eg java/lang/String
+     * @param methodName
+     * @param methodSignature   eg ()I
+     *
+     * @stack each param in order as defined by the method Signature -> return value
+     */
+    public abstract void invokeStatic( String ownerDesc, String methodName, String methodSignature );
+
+    /**
+     *
+     * @param ownerDesc eg java/lang/String
+     * @param methodName
+     * @param methodSignature   eg ()I
+     *
+     * @stack obj,each param in order as defined by the method Signature -> return value
+     */
+    public abstract void invokeMethod( String ownerDesc, String methodName, String methodSignature );
+
+    /**
+     *
+     * @param ownerDesc eg java/lang/String
+     * @param methodName
+     * @param methodSignature   eg ()I
+     *
+     * @stack obj,each param in order as defined by the method Signature -> return value
+     */
+    public abstract void invokeSpecial( String ownerDesc, String methodName, String methodSignature );
+
+    /**
+     *
+     * @param ownerDesc eg java/lang/String
+     * @param methodName
+     * @param methodSignature   eg ()I
+     *
+     * @stack obj,each param in order as defined by the method Signature -> return value
+     */
+    public abstract void invokeInterface( String ownerDesc, String methodName, String methodSignature );
+
+
 // MISC STACK OPS
 
     /**
