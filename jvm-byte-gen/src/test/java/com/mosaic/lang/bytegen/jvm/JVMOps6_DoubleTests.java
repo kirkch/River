@@ -249,4 +249,18 @@ public class JVMOps6_DoubleTests {
         assertEquals( (double) 42, m.invoke() );
     }
 
+    @Test
+    public void returnFirstParameter() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("(D)D") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.pushRegisterDouble( 1 );
+                    ops.returnDouble();
+                }
+            }
+        );
+
+        assertEquals( 101.5, m.invoke(101.5) );
+    }
+
 }

@@ -70,6 +70,9 @@ abstract class JVMOps {
      */
     public abstract void newObject( String jvmClassName );
 
+
+// CONTROL FLOW OPS
+
     /**
      * Pops the objectref off of the top of the stack and throws it as an exception.
      *
@@ -79,11 +82,35 @@ abstract class JVMOps {
 
     /**
      * Declares for debugging purposes what the line number was from the original source code for the next ops that follow this one.
+     * Convenience method for visitLabel(newLabel(),lineNumber).
      *
      * @stack ->
      */
     public abstract void lineNumber( int lineNumber);
 
+    /**
+     * Creates a new JVMLabel instance without visiting it yet. This allows foreward referencing of labels for jump commands.
+     */
+    public abstract JVMLabel newLabel();
+
+    /**
+     * Binds the specified label to this location within the op stack. Jump commands will now be able to use this location to
+     * calculate their jump offsets.
+     */
+    public abstract void visitLabel( JVMLabel label );
+
+    /**
+     * Binds the specified label to this location within the op stack and declares the line number for the following commands.
+     * Jump commands will now be able to use this location to calculate their jump offsets.
+     */
+    public abstract void visitLabel( JVMLabel label, int lineNumber );
+
+    /**
+     * If the int on the head of the stack is zero then jump to label.
+     *
+     * @stack value(int) ->
+     */
+    public abstract void ifEqZero( JVMLabel label );
 
 // METHOD OPS
 
@@ -183,6 +210,13 @@ abstract class JVMOps {
      */
     public abstract void getArrayBoolean();
 
+    /**
+     * Push the contents of register i onto the stack.
+     *
+     * @stack -> val
+     */
+    public abstract void pushRegisterBoolean( int index );
+
 // BYTE OPS
     /**
      * Pushes the supplied byte value onto the stack.
@@ -218,6 +252,13 @@ abstract class JVMOps {
      * @stack  array,index(int) -> value
      */
     public abstract void getArrayByte();
+
+    /**
+     * Push the contents of register i onto the stack.
+     *
+     * @stack -> val
+     */
+    public abstract void pushRegisterByte( int index );
 
 // CHAR OPS
     /**
@@ -255,6 +296,13 @@ abstract class JVMOps {
      */
     public abstract void getArrayChar();
 
+    /**
+     * Push the contents of register i onto the stack.
+     *
+     * @stack -> val
+     */
+    public abstract void pushRegisterChar( int index );
+
 // SHORT OPS
     /**
      * Pushes the supplied short value onto the stack.
@@ -290,6 +338,13 @@ abstract class JVMOps {
      * @stack  array,index(int) -> value
      */
     public abstract void getArrayShort();
+
+    /**
+     * Push the contents of register i onto the stack.
+     *
+     * @stack -> val
+     */
+    public abstract void pushRegisterShort( int index );
 
 // INT OPS
     /**
@@ -327,6 +382,13 @@ abstract class JVMOps {
      */
     public abstract void getArrayInt();
 
+    /**
+     * Push the contents of register i onto the stack.
+     *
+     * @stack -> val
+     */
+    public abstract void pushRegisterInt( int index );
+
 // LONG OPS
     /**
      * Pushes the supplied long value onto the stack.
@@ -362,6 +424,13 @@ abstract class JVMOps {
      * @stack  array,index(int) -> value
      */
     public abstract void getArrayLong();
+
+    /**
+     * Push the contents of register i onto the stack.
+     *
+     * @stack -> val
+     */
+    public abstract void pushRegisterLong( int index );
 
 // FLOAT OPS
     /**
@@ -399,6 +468,13 @@ abstract class JVMOps {
      */
     public abstract void getArrayFloat();
 
+    /**
+     * Push the contents of register i onto the stack.
+     *
+     * @stack -> val
+     */
+    public abstract void pushRegisterFloat( int index );
+
 // DOUBLE OPS
     /**
      * Pushes the supplied double value onto the stack.
@@ -435,6 +511,13 @@ abstract class JVMOps {
      */
     public abstract void getArrayDouble();
 
+    /**
+     * Push the contents of register i onto the stack.
+     *
+     * @stack -> val
+     */
+    public abstract void pushRegisterDouble( int index );
+
 // OBJECT OPS
     /**
      * Pushes null onto the stack.
@@ -464,7 +547,7 @@ abstract class JVMOps {
     public abstract void newArrayObject( int length, String refDesc );
 
     /**
-     * Pops the current value on the stack and stores it doubleo index i of the array
+     * Pops the current value on the stack and stores it double index i of the array
      *
      * @stack  array,index(double),double(double) ->
      */
@@ -477,9 +560,20 @@ abstract class JVMOps {
      */
     public abstract void getArrayObject();
 
-    public abstract void pushVariableObject( int index );//todo
+    /**
+     * Push the contents of register i onto the stack.
+     *
+     * @stack -> val
+     */
+    public abstract void pushRegisterObject( int index );
+
+    /**
+     * Push the value of 'this' onto the stack. Otherwise known as register zero.
+     *
+     * @stack -> val
+     */
     public void pushThis() {
-        pushVariableObject( 0 );
+        pushRegisterObject( 0 );
     }
 
 }

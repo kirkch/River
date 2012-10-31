@@ -319,4 +319,18 @@ public class JVMOps6_LongTests {
         assertEquals( (long) 42, m.invoke() );
     }
 
+    @Test
+    public void returnFirstParameter() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("(J)J") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.pushRegisterLong( 1 );
+                    ops.returnLong();
+                }
+            }
+        );
+
+        assertEquals( Long.MAX_VALUE, m.invoke(Long.MAX_VALUE) );
+    }
+
 }

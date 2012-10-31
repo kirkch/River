@@ -235,4 +235,18 @@ public class JVMOps6_CharTests {
         assertEquals( (char) 42, m.invoke() );
     }
 
+    @Test
+    public void returnFirstParameter() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("(C)C") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.pushRegisterByte( 1 );
+                    ops.returnChar();
+                }
+            }
+        );
+
+        assertEquals( 'a', m.invoke('a') );
+    }
+
 }

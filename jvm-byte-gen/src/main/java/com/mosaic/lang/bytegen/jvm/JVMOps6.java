@@ -42,6 +42,8 @@ public class JVMOps6 extends JVMOps {
         m.visitTypeInsn( Opcodes.NEW, jvmClassName );
     }
 
+// CONTROL FLOW OPS
+
     public void throwException() {
         m.visitInsn( Opcodes.ATHROW );
 //        m.visitLabel(  );
@@ -53,6 +55,28 @@ public class JVMOps6 extends JVMOps {
         Label label = new Label();
         m.visitLabel( label );
         m.visitLineNumber( lineNumber, label );
+    }
+
+    public JVMLabel newLabel() {
+        return new JVMLabel();
+    }
+
+    public void visitLabel( JVMLabel label ) {
+        label.errorIfAlreadyVisited();
+
+        m.visitLabel( label.visit() );
+    }
+
+    public void visitLabel( JVMLabel label, int lineNumber ) {
+        label.errorIfAlreadyVisited();
+
+        Label l0 = label.visit();
+        m.visitLabel( l0 );
+        m.visitLineNumber( lineNumber, l0 );
+    }
+
+    public void ifEqZero( JVMLabel label ) {
+        m.visitJumpInsn( Opcodes.IFEQ, label.l0 );
     }
 
 // METHOD OPS
@@ -111,6 +135,10 @@ public class JVMOps6 extends JVMOps {
         m.visitInsn( Opcodes.BALOAD );
     }
 
+    public void pushRegisterBoolean( int index ) {
+        m.visitVarInsn( Opcodes.ILOAD, index );
+    }
+
 // BYTE OPS
 
     public void pushByte( byte v ) {
@@ -160,6 +188,10 @@ public class JVMOps6 extends JVMOps {
         m.visitInsn( Opcodes.BALOAD );
     }
 
+    public void pushRegisterByte( int index ) {
+        m.visitVarInsn( Opcodes.ILOAD, index );
+    }
+
 // CHAR OPS
 
     public void pushChar( char v ) {
@@ -183,6 +215,10 @@ public class JVMOps6 extends JVMOps {
 
     public void getArrayChar() {
         m.visitInsn( Opcodes.CALOAD );
+    }
+
+    public void pushRegisterChar( int index ) {
+        m.visitVarInsn( Opcodes.ILOAD, index );
     }
 
 // SHORT OPS
@@ -236,6 +272,10 @@ public class JVMOps6 extends JVMOps {
 
     public void getArrayShort() {
         m.visitInsn( Opcodes.SALOAD );
+    }
+
+    public void pushRegisterShort( int index ) {
+        m.visitVarInsn( Opcodes.ILOAD, index );
     }
 
 // INT OPS
@@ -293,6 +333,10 @@ public class JVMOps6 extends JVMOps {
         m.visitInsn( Opcodes.IALOAD );
     }
 
+    public void pushRegisterInt( int index ) {
+        m.visitVarInsn( Opcodes.ILOAD, index );
+    }
+
 // LONG OPS
 
     public void pushLong( long v ) {
@@ -324,6 +368,10 @@ public class JVMOps6 extends JVMOps {
         m.visitInsn( Opcodes.LALOAD );
     }
 
+    public void pushRegisterLong( int index ) {
+        m.visitVarInsn( Opcodes.LLOAD, index );
+    }
+
 // FLOAT OPS
 
     public void pushFloat( float v ) {
@@ -349,6 +397,9 @@ public class JVMOps6 extends JVMOps {
         m.visitInsn( Opcodes.FALOAD );
     }
 
+    public void pushRegisterFloat( int index ) {
+        m.visitVarInsn( Opcodes.FLOAD, index );
+    }
 
 // DOUBLE OPS
 
@@ -373,6 +424,10 @@ public class JVMOps6 extends JVMOps {
 
     public void getArrayDouble() {
         m.visitInsn( Opcodes.DALOAD );
+    }
+
+    public void pushRegisterDouble( int index ) {
+        m.visitVarInsn( Opcodes.DLOAD, index );
     }
 
 // OBJECT OPS
@@ -402,7 +457,7 @@ public class JVMOps6 extends JVMOps {
         m.visitInsn( Opcodes.AALOAD );
     }
 
-    public void pushVariableObject( int index ) {
+    public void pushRegisterObject( int index ) {
         m.visitVarInsn( Opcodes.ALOAD, index );
     }
 }

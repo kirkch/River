@@ -262,5 +262,19 @@ public class JVMOps6_ShortTests {
 
         assertEquals( (short) 42, m.invoke() );
     }
+
+    @Test
+    public void returnFirstParameter() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("(S)S") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.pushRegisterByte( 1 );
+                    ops.returnShort();
+                }
+            }
+        );
+
+        assertEquals( Short.MAX_VALUE, m.invoke(Short.MAX_VALUE) );
+    }
     
 }

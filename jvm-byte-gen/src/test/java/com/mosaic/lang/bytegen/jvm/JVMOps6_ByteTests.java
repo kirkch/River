@@ -235,4 +235,18 @@ public class JVMOps6_ByteTests {
         assertEquals( (byte) 42, m.invoke() );
     }
 
+    @Test
+    public void returnFirstParameter() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("(B)B") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.pushRegisterByte( 1 );
+                    ops.returnByte();
+                }
+            }
+        );
+
+        assertEquals( (byte) 42, m.invoke( (byte) 42 ) );
+    }
+
 }

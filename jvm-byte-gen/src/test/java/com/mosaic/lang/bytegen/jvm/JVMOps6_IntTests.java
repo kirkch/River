@@ -291,4 +291,18 @@ public class JVMOps6_IntTests {
         assertEquals( 42, m.invoke() );
     }
 
+    @Test
+    public void returnFirstParameter() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("(I)I") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.pushRegisterInt( 1 );
+                    ops.returnInt();
+                }
+            }
+        );
+
+        assertEquals( 42, m.invoke(42) );
+    }
+
 }

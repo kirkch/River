@@ -105,7 +105,7 @@ public class JVMOps6_BooleanTests {
         MethodInstanceRef m = generateMethod(
             new MethodGenerator("()Z") {  // Z -> Boolean
                 public void appendMethod( MethodVisitor m ) {
-                    ops.pushVariableObject( 0 ); // this
+                    ops.pushRegisterObject( 0 ); // this
                     ops.getField( JVMOpsTestTools.JVM_CLASS_NAME, "booleanField", "Z" );
                     ops.returnBoolean();
                 }
@@ -120,11 +120,11 @@ public class JVMOps6_BooleanTests {
         MethodInstanceRef m = generateMethod(
             new MethodGenerator("()Z") {  // Z -> Boolean
                 public void appendMethod( MethodVisitor m ) {
-                    ops.pushVariableObject( 0 ); // this
+                    ops.pushRegisterObject( 0 ); // this
                     ops.pushBoolean( true );
                     ops.putField( JVMOpsTestTools.JVM_CLASS_NAME, "booleanField", "Z" );
 
-                    ops.pushVariableObject( 0 ); // this
+                    ops.pushRegisterObject( 0 ); // this
                     ops.getField( JVMOpsTestTools.JVM_CLASS_NAME, "booleanField", "Z" );
                     ops.returnBoolean();
                 }

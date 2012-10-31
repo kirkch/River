@@ -249,4 +249,18 @@ public class JVMOps6_FloatTests {
         assertEquals( (float) 42, m.invoke() );
     }
 
+    @Test
+    public void returnFirstParameter() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("(F)F") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.pushRegisterFloat( 1 );
+                    ops.returnFloat();
+                }
+            }
+        );
+
+        assertEquals( 11.1f, m.invoke(11.1f) );
+    }
+
 }
