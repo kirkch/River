@@ -268,7 +268,7 @@ public class JVMOps6_ShortTests {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
             new JVMOpsTestTools.MethodGenerator("(S)S") {
                 public void appendMethod( MethodVisitor m ) {
-                    ops.pushRegisterByte( 1 );
+                    ops.pushRegisterShort( 1 );
                     ops.returnShort();
                 }
             }

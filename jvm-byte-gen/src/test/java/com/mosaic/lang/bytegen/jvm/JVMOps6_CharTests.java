@@ -240,7 +240,7 @@ public class JVMOps6_CharTests {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
             new JVMOpsTestTools.MethodGenerator("(C)C") {
                 public void appendMethod( MethodVisitor m ) {
-                    ops.pushRegisterByte( 1 );
+                    ops.pushRegisterChar( 1 );
                     ops.returnChar();
                 }
             }

@@ -2,6 +2,81 @@ package com.mosaic.lang.bytegen.jvm;
 
 import org.objectweb.asm.MethodVisitor;
 
+
+
+// dup_x1
+// dup_x2
+// dup2
+// dup_x1
+// dup_x2
+// pop
+// pop2
+// swap
+
+
+// fadd
+// fdiv
+// fmul
+// fneg
+// frem
+// fsub
+// dadd
+// ddiv
+// dmul
+// dneg
+// drem
+// dsub
+// iadd
+// iand
+// idiv
+// iinc
+// imul
+// ineg
+// isub
+// iushr
+// ior
+// irem
+// ishl
+// ishr
+// ixor
+// ladd
+// land
+// ldiv
+// lmul
+// lneg
+// lor
+// lrem
+// lshl
+// lshr
+// lsub
+// lushr
+// lxor
+// nop
+
+
+// dreturn
+// dstore
+// lstore
+
+// dcmp
+// fcmp
+// goto/goto_w
+// jsr/jsr_w
+// lcmp
+// lookupswitch
+// ret
+// tableswitch
+
+// dconst
+// fconst
+
+
+// monitorenter
+// monitorexit
+
+// multianewarray
+
+
 /**
  *
  */
@@ -222,7 +297,6 @@ abstract class JVMOps {
     /**
      *
      * @param ownerDesc eg java/lang/String
-     * @param methodName
      * @param methodSignature   eg ()I
      *
      * @stack each param in order as defined by the method Signature -> return value
@@ -232,7 +306,6 @@ abstract class JVMOps {
     /**
      *
      * @param ownerDesc eg java/lang/String
-     * @param methodName
      * @param methodSignature   eg ()I
      *
      * @stack obj,each param in order as defined by the method Signature -> return value
@@ -242,7 +315,6 @@ abstract class JVMOps {
     /**
      *
      * @param ownerDesc eg java/lang/String
-     * @param methodName
      * @param methodSignature   eg ()I
      *
      * @stack obj,each param in order as defined by the method Signature -> return value
@@ -252,7 +324,6 @@ abstract class JVMOps {
     /**
      *
      * @param ownerDesc eg java/lang/String
-     * @param methodName
      * @param methodSignature   eg ()I
      *
      * @stack obj,each param in order as defined by the method Signature -> return value
@@ -680,5 +751,129 @@ abstract class JVMOps {
     public void pushThis() {
         pushRegisterObject( 0 );
     }
+
+// CASTING
+
+    /**
+     * Errors if the object on the head of the stack cannot be cast to the specified type.
+     *
+     * @param jvmClass eg java/lang/String
+     * @stack objectref -> objectref  (unchanged)
+     */
+    public abstract void checkcast( String jvmClass );
+
+    /**
+     * Checks whether the value at the top of the stack is castable to the specified class. Pushing the result as a
+     * boolean onto the stack.
+     *
+     * @param jvmClass eg java/lang/String
+     * @stack objectref -> boolean
+     */
+    public abstract void isInstanceOf( String jvmClass );
+
+    /**
+     * Narrows double down to a float.
+     *
+     * @stack v -> v
+     */
+    public abstract void d2f();
+
+    /**
+     * Narrows double down to an int.
+     *
+     * @stack v -> v
+     */
+    public abstract void d2i();
+
+    /**
+     * Narrows double down to an long.
+     *
+     * @stack v -> v
+     */
+    public abstract void d2l();
+
+    /**
+     * Upcasts float to a double.
+     *
+     * @stack v -> v
+     */
+    public abstract void f2d();
+
+    /**
+     * Converts float to an integer.
+     *
+     * @stack v -> v
+     */
+    public abstract void f2i();
+
+    /**
+     * Converts float to a long.
+     *
+     * @stack v -> v
+     */
+    public abstract void f2l();
+
+    /**
+     * Converts int to a byte.
+     *
+     * @stack v -> v
+     */
+    public abstract void i2b();
+
+    /**
+     * Converts int to a char.
+     *
+     * @stack v -> v
+     */
+    public abstract void i2c();
+
+    /**
+     * Converts int to a double.
+     *
+     * @stack v -> v
+     */
+    public abstract void i2d();
+
+    /**
+     * Converts int to a float.
+     *
+     * @stack v -> v
+     */
+    public abstract void i2f();
+
+    /**
+     * Converts int to a long.
+     *
+     * @stack v -> v
+     */
+    public abstract void i2l();
+
+    /**
+     * Converts int to a short.
+     *
+     * @stack v -> v
+     */
+    public abstract void i2s();
+
+    /**
+     * Converts long to a double.
+     *
+     * @stack v -> v
+     */
+    public abstract void l2d();
+
+    /**
+     * Converts long to a float.
+     *
+     * @stack v -> v
+     */
+    public abstract void l2f();
+
+    /**
+     * Converts long to a int.
+     *
+     * @stack v -> v
+     */
+    public abstract void l2i();
 
 }

@@ -520,4 +520,75 @@ public class JVMOps6 extends JVMOps {
     public void pushRegisterObject( int index ) {
         m.visitVarInsn( Opcodes.ALOAD, index );
     }
+
+// CASTING
+
+  public void checkcast( String jvmClass ) {
+      m.visitTypeInsn( Opcodes.CHECKCAST, jvmClass );
+  }
+
+  public void isInstanceOf( String jvmClass ) {
+      m.visitTypeInsn( Opcodes.INSTANCEOF, jvmClass );
+  }
+
+  public void d2f() {
+      m.visitInsn( Opcodes.D2F );  
+  }
+
+  public void d2i()  {
+      m.visitInsn( Opcodes.D2I );
+  }
+
+  public void d2l() {
+      m.visitInsn( Opcodes.D2L );
+  }
+
+  public void f2d() {
+      m.visitInsn( Opcodes.F2D );
+  }
+
+  public void f2i() {
+      m.visitInsn( Opcodes.F2I );
+  }
+
+  public void f2l() {
+      m.visitInsn( Opcodes.F2L );
+  }
+
+  public void i2b() {
+      m.visitInsn( Opcodes.I2B );
+  }
+
+  public void i2c() {
+      m.visitInsn( Opcodes.I2C );
+  }
+
+  public void i2d() {
+      m.visitInsn( Opcodes.I2D );
+  }
+
+  public void i2f() {
+      m.visitInsn( Opcodes.I2F );
+  }
+
+  public void i2l() {
+      m.visitInsn( Opcodes.I2L );
+  }
+
+  public void i2s() {
+      m.visitInsn( Opcodes.I2S );
+  }
+
+  public void l2d() {
+      m.visitInsn( Opcodes.L2D );
+  }
+
+  public void l2f() {
+      m.visitInsn( Opcodes.L2F );
+  }
+
+  public void l2i() {
+      m.visitInsn( Opcodes.L2I );
+  }
+
 }
