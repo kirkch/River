@@ -35,6 +35,16 @@ public class JVMOps6 extends JVMOps {
         m.visitInsn( Opcodes.ARRAYLENGTH );
     }
 
+// OBJECT OPS
+
+    public void newObject( String jvmClassName ) {
+        m.visitTypeInsn( Opcodes.NEW, jvmClassName );
+    }
+
+    public void throwException() {
+        m.visitInsn( Opcodes.ATHROW );
+    }
+
 // METHOD OPS
 
     public void invokeStatic( String ownerDesc, String methodName, String methodSignature ) {

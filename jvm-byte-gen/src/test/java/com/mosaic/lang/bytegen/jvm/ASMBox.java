@@ -1,14 +1,14 @@
 package com.mosaic.lang.bytegen.jvm;
 
+import java.io.IOException;
+
 /**
  *
  */
 public class ASMBox {
 
-    public int foo() {return 42;}
-
-    public int f() {
-        return foo();
+    public int f() throws IOException{
+        throw new IOException("fudge");
     }
 
 }

@@ -357,5 +357,9 @@ class JVMOpsTestTools {
                 throw new RuntimeException(e);
             }
         }
+
+        public Object invokeRaw( Object...args ) throws InvocationTargetException, IllegalAccessException {
+            return m.invoke( o, args );
+        }
     }
 }

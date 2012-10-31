@@ -3,8 +3,10 @@ package com.mosaic.lang.bytegen.jvm;
 import org.junit.Test;
 import org.objectweb.asm.MethodVisitor;
 
+import java.lang.reflect.InvocationTargetException;
+
 import static com.mosaic.lang.bytegen.jvm.JVMOpsTestTools.*;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  *
@@ -72,6 +74,27 @@ public class JVMOps_MethodTests {
         );
 
         assertEquals( 7, m.invoke() );
+    }
+
+    @Test
+    public void createAndThrowException() throws IllegalAccessException {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("()I") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.newObject( "java/lang/RuntimeException" );
+                    ops.dup();
+                    ops.invokeSpecial( "java/lang/RuntimeException", "<init>", "()V" );
+                    ops.throwException();
+                }
+            }
+        );
+
+        try {
+            assertEquals( 7, m.invokeRaw() );
+            fail("Expected exception");
+        } catch ( InvocationTargetException e ) {
+            assertEquals( RuntimeException.class, e.getCause().getClass() );
+        }
     }
 
 }

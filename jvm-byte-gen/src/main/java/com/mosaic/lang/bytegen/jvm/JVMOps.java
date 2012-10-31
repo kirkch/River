@@ -59,6 +59,25 @@ abstract class JVMOps {
      */
     public abstract void arrayLength();
 
+// OBJECT OPS
+
+    /**
+     * Allocates memory on the heap and assigns default values to each field for a new instance of the specified class.
+     * Does not call a constructor, that requires a separate INVOKESPECIAL &lt;init&gt; command.
+     *
+     * @param eg java/lang/RuntimeException
+     * @stack -> objectref
+     */
+    public abstract void newObject( String jvmClassName );
+
+    /**
+     * Pops the objectref off of the top of the stack and throws it as an exception.
+     *
+     * @stack objectref ->
+     */
+    public abstract void throwException();
+
+
 // METHOD OPS
 
     /**
