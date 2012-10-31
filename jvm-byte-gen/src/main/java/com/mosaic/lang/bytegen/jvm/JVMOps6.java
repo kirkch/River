@@ -107,6 +107,38 @@ public class JVMOps6 extends JVMOps {
         m.visitJumpInsn( Opcodes.IFNONNULL, label.l0 );
     }
 
+    public void ifEqualObjectRefs( JVMLabel label ) {
+        m.visitJumpInsn( Opcodes.IF_ACMPEQ, label.l0 );
+    }
+
+    public void ifNotEqualObjectRefs( JVMLabel label ) {
+        m.visitJumpInsn( Opcodes.IF_ACMPNE, label.l0 );
+    }
+
+    public void ifIntsEqual( JVMLabel label ) {
+        m.visitJumpInsn( Opcodes.IF_ICMPEQ, label.l0 );
+    }
+
+    public void ifIntsNotEqual( JVMLabel label ) {
+        m.visitJumpInsn( Opcodes.IF_ICMPNE, label.l0 );
+    }
+
+    public void ifIntsLT( JVMLabel label ) {
+        m.visitJumpInsn( Opcodes.IF_ICMPLT, label.l0 );
+    }
+
+    public void ifIntsLTE( JVMLabel label ) {
+        m.visitJumpInsn( Opcodes.IF_ICMPLE, label.l0 );
+    }
+
+    public void ifIntsGT( JVMLabel label ) {
+        m.visitJumpInsn( Opcodes.IF_ICMPGT, label.l0 );
+    }
+
+    public void ifIntsGTE( JVMLabel label ) {
+        m.visitJumpInsn( Opcodes.IF_ICMPGE, label.l0 );
+    }
+
 // METHOD OPS
 
     public void invokeStatic( String ownerDesc, String methodName, String methodSignature ) {

@@ -231,4 +231,248 @@ public class JVMOps_FlowControlTests {
         assertEquals( "not-null", m.invoke("hello") );
     }
 
+    @SuppressWarnings("RedundantStringConstructorCall")
+    @Test
+    public void ifEqualObjectRefs() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;") {
+                public void appendMethod( MethodVisitor m ) {
+                    JVMLabel l0 = ops.newLabel();
+
+                    ops.pushRegisterObject( 1 );
+                    ops.pushRegisterObject( 2 );
+                    ops.ifEqualObjectRefs( l0 );
+
+                    // if not matched
+                    ops.pushString( "ne" );
+                    ops.returnObject();
+
+
+                    // else
+                    ops.visitLabel( l0 );
+                    ops.pushString( "eq" );
+                    ops.returnObject();
+                }
+            }
+        );
+
+        assertEquals( "eq", m.invoke("a","a") );
+        assertEquals( "ne", m.invoke("a","b") );
+        assertEquals( "ne", m.invoke("a",new String("a")) );
+        assertEquals( "eq", m.invoke(null,null) );
+        assertEquals( "ne", m.invoke(null,"b") );
+    }
+
+    @SuppressWarnings("RedundantStringConstructorCall")
+    @Test
+    public void ifNotEqualObjectRefs() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;") {
+                public void appendMethod( MethodVisitor m ) {
+                    JVMLabel l0 = ops.newLabel();
+
+                    ops.pushRegisterObject( 1 );
+                    ops.pushRegisterObject( 2 );
+                    ops.ifNotEqualObjectRefs( l0 );
+
+                    // if not matched
+                    ops.pushString( "eq" );
+                    ops.returnObject();
+
+
+                    // else
+                    ops.visitLabel( l0 );
+                    ops.pushString( "ne" );
+                    ops.returnObject();
+                }
+            }
+        );
+
+        assertEquals( "eq", m.invoke("a","a") );
+        assertEquals( "ne", m.invoke("a","b") );
+        assertEquals( "ne", m.invoke("a",new String("a")) );
+        assertEquals( "eq", m.invoke(null,null) );
+        assertEquals( "ne", m.invoke(null,"b") );
+    }
+
+    @SuppressWarnings("RedundantStringConstructorCall")
+    @Test
+    public void ifIntsEqual() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("(II)Ljava/lang/String;") {
+                public void appendMethod( MethodVisitor m ) {
+                    JVMLabel l0 = ops.newLabel();
+
+                    ops.pushRegisterInt( 1 );
+                    ops.pushRegisterInt( 2 );
+                    ops.ifIntsEqual( l0 );
+
+                    // if not matched
+                    ops.pushString( "ne" );
+                    ops.returnObject();
+
+
+                    // else
+                    ops.visitLabel( l0 );
+                    ops.pushString( "eq" );
+                    ops.returnObject();
+                }
+            }
+        );
+
+        assertEquals( "eq", m.invoke(1,1) );
+        assertEquals( "ne", m.invoke(1,2) );
+        assertEquals( "ne", m.invoke(2,1) );
+    }
+
+    @SuppressWarnings("RedundantStringConstructorCall")
+    @Test
+    public void ifIntsNotEqual() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("(II)Ljava/lang/String;") {
+                public void appendMethod( MethodVisitor m ) {
+                    JVMLabel l0 = ops.newLabel();
+
+                    ops.pushRegisterInt( 1 );
+                    ops.pushRegisterInt( 2 );
+                    ops.ifIntsNotEqual( l0 );
+
+                    // if not matched
+                    ops.pushString( "eq" );
+                    ops.returnObject();
+
+
+                    // else
+                    ops.visitLabel( l0 );
+                    ops.pushString( "ne" );
+                    ops.returnObject();
+                }
+            }
+        );
+
+        assertEquals( "eq", m.invoke(1,1) );
+        assertEquals( "ne", m.invoke(1,2) );
+        assertEquals( "ne", m.invoke(2,1) );
+    }
+
+    @SuppressWarnings("RedundantStringConstructorCall")
+    @Test
+    public void ifIntsLT() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("(II)Ljava/lang/String;") {
+                public void appendMethod( MethodVisitor m ) {
+                    JVMLabel l0 = ops.newLabel();
+
+                    ops.pushRegisterInt( 1 );
+                    ops.pushRegisterInt( 2 );
+                    ops.ifIntsLT( l0 );
+
+                    // if not matched
+                    ops.pushString( "gte" );
+                    ops.returnObject();
+
+
+                    // else
+                    ops.visitLabel( l0 );
+                    ops.pushString( "lt" );
+                    ops.returnObject();
+                }
+            }
+        );
+
+        assertEquals( "gte", m.invoke(1,1) );
+        assertEquals( "lt", m.invoke(1,2) );
+        assertEquals( "gte", m.invoke(2,1) );
+    }
+
+    @SuppressWarnings("RedundantStringConstructorCall")
+    @Test
+    public void ifIntsLTE() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("(II)Ljava/lang/String;") {
+                public void appendMethod( MethodVisitor m ) {
+                    JVMLabel l0 = ops.newLabel();
+
+                    ops.pushRegisterInt( 1 );
+                    ops.pushRegisterInt( 2 );
+                    ops.ifIntsLTE( l0 );
+
+                    // if not matched
+                    ops.pushString( "gt" );
+                    ops.returnObject();
+
+
+                    // else
+                    ops.visitLabel( l0 );
+                    ops.pushString( "lte" );
+                    ops.returnObject();
+                }
+            }
+        );
+
+        assertEquals( "lte", m.invoke(1,1) );
+        assertEquals( "lte", m.invoke(1,2) );
+        assertEquals( "gt", m.invoke(2,1) );
+    }
+
+    @SuppressWarnings("RedundantStringConstructorCall")
+    @Test
+    public void ifIntsGT() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("(II)Ljava/lang/String;") {
+                public void appendMethod( MethodVisitor m ) {
+                    JVMLabel l0 = ops.newLabel();
+
+                    ops.pushRegisterInt( 1 );
+                    ops.pushRegisterInt( 2 );
+                    ops.ifIntsGT( l0 );
+
+                    // if not matched
+                    ops.pushString( "lte" );
+                    ops.returnObject();
+
+
+                    // else
+                    ops.visitLabel( l0 );
+                    ops.pushString( "gt" );
+                    ops.returnObject();
+                }
+            }
+        );
+
+        assertEquals( "lte", m.invoke(1,1) );
+        assertEquals( "lte", m.invoke(1,2) );
+        assertEquals( "gt", m.invoke(2,1) );
+    }
+
+    @SuppressWarnings("RedundantStringConstructorCall")
+    @Test
+    public void ifIntsGTE() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("(II)Ljava/lang/String;") {
+                public void appendMethod( MethodVisitor m ) {
+                    JVMLabel l0 = ops.newLabel();
+
+                    ops.pushRegisterInt( 1 );
+                    ops.pushRegisterInt( 2 );
+                    ops.ifIntsGTE( l0 );
+
+                    // if not matched
+                    ops.pushString( "lt" );
+                    ops.returnObject();
+
+
+                    // else
+                    ops.visitLabel( l0 );
+                    ops.pushString( "gte" );
+                    ops.returnObject();
+                }
+            }
+        );
+
+        assertEquals( "gte", m.invoke(1,1) );
+        assertEquals( "lt", m.invoke(1,2) );
+        assertEquals( "gte", m.invoke(2,1) );
+    }
+
 }

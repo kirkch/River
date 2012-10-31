@@ -161,6 +161,62 @@ abstract class JVMOps {
      */
     public abstract void ifNotNull( JVMLabel label );
 
+    /**
+     * Jumps to label if the two objectrefs at the top of the stack are identical. The values will be popped from the stack.
+     *
+     * @stack objectref,objectref ->
+     */
+    public abstract void ifEqualObjectRefs( JVMLabel label );
+
+    /**
+     * Jumps to label if the two objectrefs at the top of the stack are not identical. The values will be popped from the stack.
+     *
+     * @stack objectref,objectref ->
+     */
+    public abstract void ifNotEqualObjectRefs( JVMLabel label );
+
+    /**
+     * Jumps to label if the two int values at the top of the stack are equal. The values will be popped from the stack.
+     *
+     * @stack intvalue,intvalue ->
+     */
+    public abstract void ifIntsEqual( JVMLabel label );
+
+    /**
+     * Jumps to label if the two int values at the top of the stack are not equal. The values will be popped from the stack.
+     *
+     * @stack intvalue,intvalue ->
+     */
+    public abstract void ifIntsNotEqual( JVMLabel label );
+
+    /**
+     * Jumps to label if head-1 is less than head int value on the stack. The values will be popped from the stack.
+     *
+     * @stack intvalue,intvalue ->
+     */
+    public abstract void ifIntsLT( JVMLabel label );
+
+    /**
+     * Jumps to label if head-1 is less than or equal to head int value on the stack. The values will be popped from the stack.
+     *
+     * @stack intvalue,intvalue ->
+     */
+    public abstract void ifIntsLTE( JVMLabel label );
+
+    /**
+     * Jumps to label if head-1 is greater than head int value on the stack. The values will be popped from the stack.
+     *
+     * @stack intvalue,intvalue ->
+     */
+    public abstract void ifIntsGT( JVMLabel label );
+
+    /**
+     * Jumps to label if head-1 is greater than or equal to head int value on the stack. The values will be popped from the stack.
+     *
+     * @stack intvalue,intvalue ->
+     */
+    public abstract void ifIntsGTE( JVMLabel label );
+
 // METHOD OPS
 
     /**

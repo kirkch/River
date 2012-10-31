@@ -7,8 +7,8 @@ import java.io.IOException;
  */
 public class ASMBox {
 
-    public int f( boolean flag) throws IOException{
-        if ( flag ) {
+    public int f( float f ) throws IOException{
+        if ( f == 42.1f ) {
             return 10;
         } else {
             return 20;
