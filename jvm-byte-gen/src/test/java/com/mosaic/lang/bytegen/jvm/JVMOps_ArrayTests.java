@@ -27,4 +27,24 @@ public class JVMOps_ArrayTests {
         assertEquals( 2, m.invoke() );
     }
 
+    @Test
+    public void newMultiArray() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("()[[I") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.pushInt( 2 );
+                    ops.pushInt( 4 );
+                    ops.newMultiArray( "[[I", 2 );
+
+                    ops.returnObject();
+                }
+            }
+        );
+
+        int[][] v = (int[][]) m.invoke();
+
+        assertEquals( 2, v.length );
+        assertEquals( 4, v[0].length );
+    }
+
 }

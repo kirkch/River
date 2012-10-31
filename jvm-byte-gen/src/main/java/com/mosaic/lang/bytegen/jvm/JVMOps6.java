@@ -36,6 +36,10 @@ public class JVMOps6 extends JVMOps {
         m.visitInsn( Opcodes.ARRAYLENGTH );
     }
 
+    public void newMultiArray( String jvmType, int dimensionCount ) {
+        m.visitMultiANewArrayInsn( jvmType, dimensionCount );
+    }
+
 // OBJECT OPS
 
     public void newObject( String jvmClassName ) {

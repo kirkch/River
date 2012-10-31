@@ -132,6 +132,15 @@ abstract class JVMOps {
      */
     public abstract void arrayLength();
 
+    /**
+     * Create a new multi dimensional array.
+     *
+     * @param jvmType eg [[Ljava/lang/String;
+     *
+     * @stack 1stDimensionLength,2ndDimensionLength,.. -> newArrayRef
+     */
+    public abstract void newMultiArray( String jvmType, int dimensionCount );
+
 // OBJECT OPS
 
     /**
