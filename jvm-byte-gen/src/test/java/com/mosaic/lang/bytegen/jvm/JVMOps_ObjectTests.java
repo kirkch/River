@@ -3,6 +3,7 @@ package com.mosaic.lang.bytegen.jvm;
 import org.junit.Test;
 import org.objectweb.asm.MethodVisitor;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 
 import static com.mosaic.lang.bytegen.jvm.JVMOpsTestTools.*;
@@ -52,7 +53,7 @@ public class JVMOps_ObjectTests {
             }
         );
 
-        assertTrue( Arrays.equals(new String[] {}, (String[]) m.invoke()) );
+        assertTrue( Arrays.equals( new String[] {}, (String[]) m.invoke() ) );
     }
 
     @Test
@@ -134,6 +135,33 @@ public class JVMOps_ObjectTests {
         );
 
         assertEquals( "hello", m.invoke() );
+    }
+
+    @Test
+    public void monitorTests() throws IllegalAccessException {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("(Ljava/lang/String;)V") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.loadRegisterObject(1);
+                    ops.dup();
+                    ops.lockMonitor();
+                    ops.unlockMonitor();
+                    ops.returnNoValue();
+                }
+            }
+        );
+
+        // NB does not test that the real monitor is used, as we do not want to block the test thread
+        // so this test merely checks that the methods do not error in the standard case and that when passed null it does throw npe.
+
+        assertEquals( null, m.invoke("abc") );
+
+        try {
+            m.invokeRaw((String) null);
+            fail( "expected exception" );
+        } catch ( InvocationTargetException e ) {
+            assertEquals( NullPointerException.class, e.getCause().getClass() );
+        }
     }
 
 }

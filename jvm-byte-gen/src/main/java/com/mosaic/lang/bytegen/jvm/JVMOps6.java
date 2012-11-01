@@ -46,6 +46,14 @@ public class JVMOps6 extends JVMOps {
         m.visitTypeInsn( Opcodes.NEW, jvmClassName );
     }
 
+    public void lockMonitor() {
+        m.visitInsn( Opcodes.MONITORENTER );
+    }
+
+    public void unlockMonitor() {
+        m.visitInsn( Opcodes.MONITOREXIT );
+    }
+    
 // CONTROL FLOW OPS
 
     public void throwException() {

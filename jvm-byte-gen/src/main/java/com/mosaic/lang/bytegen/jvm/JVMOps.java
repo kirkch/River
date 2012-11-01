@@ -15,11 +15,6 @@ import org.objectweb.asm.MethodVisitor;
 // nop
 
 
-
-// lcmp
-// dcmp
-// fcmp
-
 // goto/goto_w
 // jsr/jsr_w  / ret
 
@@ -108,6 +103,21 @@ abstract class JVMOps {
      * @stack -> objectref
      */
     public abstract void newObject( String jvmClassName );
+
+    /**
+     * Block until the specified objects' monitor is available.
+     *
+     * @stack objectref ->
+     */
+    public abstract void lockMonitor();
+
+    /**
+     * Releases the hold on the specified object.
+     *
+     * @stack objectref ->
+     */
+    public abstract void unlockMonitor();
+
 
 
 // CONTROL FLOW OPS
