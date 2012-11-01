@@ -475,4 +475,64 @@ public class JVMOps_FlowControlTests {
         assertEquals( "gte", m.invoke(2,1) );
     }
 
+    @Test
+    public void cmpLong() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("(JJ)I") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.loadRegisterLong(1);
+                    ops.loadRegisterLong(3);
+                    ops.cmpLong();
+                    ops.returnInt();
+                }
+            }
+        );
+
+        assertEquals( 0, m.invoke(0,0) );
+        assertEquals( 0, m.invoke(10,10) );
+        assertEquals( 0, m.invoke(-10,-10) );
+        assertEquals( -1, m.invoke(-10,10) );
+        assertEquals( 1, m.invoke(10,-10) );
+    }
+
+    @Test
+    public void cmpFloat() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("(FF)I") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.loadRegisterFloat(1);
+                    ops.loadRegisterFloat(2);
+                    ops.cmpFloat();
+                    ops.returnInt();
+                }
+            }
+        );
+
+        assertEquals( 0, m.invoke(0f,0f) );
+        assertEquals( 0, m.invoke(10f,10f) );
+        assertEquals( 0, m.invoke(-10f,-10f) );
+        assertEquals( -1, m.invoke(-10f,10f) );
+        assertEquals( 1, m.invoke(10f,-10f) );
+    }
+
+    @Test
+    public void cmpDouble() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("(DD)I") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.loadRegisterDouble(1);
+                    ops.loadRegisterDouble(3);
+                    ops.cmpDouble();
+                    ops.returnInt();
+                }
+            }
+        );
+
+        assertEquals( 0, m.invoke(0.0,0.0) );
+        assertEquals( 0, m.invoke(10.0,10.0) );
+        assertEquals( 0, m.invoke(-10.0,-10.0) );
+        assertEquals( -1, m.invoke(-10.0,10.0) );
+        assertEquals( 1, m.invoke(10.0,-10.0) );
+    }
+
 }

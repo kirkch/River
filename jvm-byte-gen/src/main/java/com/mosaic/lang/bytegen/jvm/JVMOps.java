@@ -16,17 +16,15 @@ import org.objectweb.asm.MethodVisitor;
 
 
 
+// lcmp
 // dcmp
 // fcmp
-// goto/goto_w
-// jsr/jsr_w
-// lcmp
-// lookupswitch
-// ret
-// tableswitch
 
-// dconst
-// fconst
+// goto/goto_w
+// jsr/jsr_w  / ret
+
+// lookupswitch
+// tableswitch
 
 
 // monitorenter
@@ -257,6 +255,29 @@ abstract class JVMOps {
      * @stack intvalue,intvalue ->
      */
     public abstract void ifIntsGTE( JVMLabel label );
+
+    /**
+     * Compares the top two values on the stack. Pushes the int result lt(-1), eq(0) or gt(1) back onto the stack.
+     *
+     * @stack longvalue,longvalue -> -1|0|1
+     */
+    public abstract void cmpLong();
+
+    /**
+     * Compares the top two values on the stack. Pushes the int result lt(-1), eq(0) or gt(1) back onto the stack. If
+     * either of the long values are NaN, then -1 will be pushed.
+     *
+     * @stack longvalue,longvalue -> -1|0|1
+     */
+    public abstract void cmpFloat();
+
+    /**
+     * Compares the top two values on the stack. Pushes the int result lt(-1), eq(0) or gt(1) back onto the stack. If
+     * either of the long values are NaN, then -1 will be pushed.
+     *
+     * @stack longvalue,longvalue -> -1|0|1
+     */
+    public abstract void cmpDouble();
 
 // METHOD OPS
 

@@ -143,6 +143,18 @@ public class JVMOps6 extends JVMOps {
         m.visitJumpInsn( Opcodes.IF_ICMPGE, label.l0 );
     }
 
+    public void cmpLong() {
+        m.visitInsn( Opcodes.LCMP );
+    }
+
+    public void cmpFloat() {
+        m.visitInsn( Opcodes.FCMPL );
+    }
+
+    public void cmpDouble() {
+        m.visitInsn( Opcodes.DCMPL );
+    }
+    
 // METHOD OPS
 
     public void invokeStatic( String ownerDesc, String methodName, String methodSignature ) {
@@ -463,7 +475,15 @@ public class JVMOps6 extends JVMOps {
 // FLOAT OPS
 
     public void pushFloat( float v ) {
-        m.visitLdcInsn( v );
+        if ( v == 0.0f ) {
+            m.visitInsn( Opcodes.FCONST_0 );
+        } else if ( v == 1.0f ) {
+            m.visitInsn( Opcodes.FCONST_1 );
+        } else if ( v == 2.0f ) {
+            m.visitInsn( Opcodes.FCONST_2 );
+        } else {
+            m.visitLdcInsn( v );
+        }
     }
 
     public void returnFloat() {
@@ -496,7 +516,13 @@ public class JVMOps6 extends JVMOps {
 // DOUBLE OPS
 
     public void pushDouble( double v ) {
-        m.visitLdcInsn( v );
+        if ( v == 0.0 ) {
+            m.visitInsn( Opcodes.DCONST_0 );
+        } else if ( v == 2.0 ) {
+            m.visitInsn( Opcodes.DCONST_1 );
+        } else {
+            m.visitLdcInsn( v );
+        }
     }
 
     public void returnDouble() {
