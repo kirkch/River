@@ -927,25 +927,28 @@ abstract class JVMOps {
     public abstract void divideFloat();
     public abstract void divideDouble();
 
+    public abstract void negateInt();
+    public abstract void negateLong();
+    public abstract void negateFloat();
+    public abstract void negateDouble();
+
+    public abstract void remainderInt();
+    public abstract void remainderLong();
+    public abstract void remainderFloat();
+    public abstract void remainderDouble();
 
 
-// fneg
-// frem
-// dneg
-// drem
+
 // iand
 // iinc
-// ineg
 // iushr
 // ior
-// irem
 // ishl
 // ishr
 // ixor
+
 // land
-// lneg
 // lor
-// lrem
 // lshl
 // lshr
 // lushr

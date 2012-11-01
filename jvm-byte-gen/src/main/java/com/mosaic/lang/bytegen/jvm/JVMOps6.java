@@ -697,4 +697,33 @@ public class JVMOps6 extends JVMOps {
         m.visitInsn( Opcodes.DDIV );
     }
 
+    public void negateInt() {
+        m.visitInsn( Opcodes.INEG );
+    }
+
+    public void negateLong() {
+        m.visitInsn( Opcodes.LNEG );
+    }
+
+    public void negateFloat() {
+        m.visitInsn( Opcodes.FNEG );
+    }
+
+    public void negateDouble() {
+        m.visitInsn( Opcodes.DNEG );
+    }
+
+    public void remainderInt() {
+        m.visitInsn( Opcodes.IREM );
+    }
+    public void remainderLong() {
+        m.visitInsn( Opcodes.LREM );
+    }
+    public void remainderFloat() {
+        m.visitInsn( Opcodes.FREM );
+    }
+    public void remainderDouble() {
+        m.visitInsn( Opcodes.DREM );
+    }
+
 }
