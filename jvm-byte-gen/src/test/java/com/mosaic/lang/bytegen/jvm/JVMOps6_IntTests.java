@@ -336,4 +336,23 @@ public class JVMOps6_IntTests {
         assertEquals( 10, m.invoke((int) 10) );
         assertEquals( 12, m.invoke((int) 12) );
     }
+
+    @Test
+    public void incInt() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("(I)I") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.incInt( 1, (byte) 1 );
+                    ops.loadRegisterInt( 1 );
+                    ops.returnInt();
+                }
+            }
+        );
+
+        assertEquals( 0, m.invoke(-1) );
+        assertEquals( 1, m.invoke(0) );
+        assertEquals( 2, m.invoke(1) );
+        assertEquals( 3, m.invoke(2) );
+    }
+
 }

@@ -937,20 +937,28 @@ abstract class JVMOps {
     public abstract void remainderFloat();
     public abstract void remainderDouble();
 
+    /**
+     * Increment the integer in register n by delta.
+     *
+     * @stack no change
+     */
+    public abstract void incInt( int registerIndex, byte delta );
+
+    public abstract void bitAndInt();
+    public abstract void bitAndLong();
+
+    public abstract void bitOrInt();
+    public abstract void bitOrLong();
+
+    public abstract void bitXorInt();
+    public abstract void bitXorLong();
 
 
-// iand
-// iinc
+
 // iushr
-// ior
+// lushr
 // ishl
 // ishr
-// ixor
-
-// land
-// lor
 // lshl
 // lshr
-// lushr
-// lxor
 }

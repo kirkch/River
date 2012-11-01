@@ -716,14 +716,45 @@ public class JVMOps6 extends JVMOps {
     public void remainderInt() {
         m.visitInsn( Opcodes.IREM );
     }
+    
     public void remainderLong() {
         m.visitInsn( Opcodes.LREM );
     }
+    
     public void remainderFloat() {
         m.visitInsn( Opcodes.FREM );
     }
+    
     public void remainderDouble() {
         m.visitInsn( Opcodes.DREM );
+    }
+
+    public void incInt( int registerIndex, byte delta ) {
+        m.visitIincInsn( registerIndex, delta );
+    }
+
+    public void bitAndInt() {
+        m.visitInsn( Opcodes.IAND );
+    }
+
+    public void bitAndLong() {
+        m.visitInsn( Opcodes.LAND );
+    }
+
+    public void bitOrInt() {
+        m.visitInsn( Opcodes.IOR );
+    }
+
+    public void bitOrLong() {
+        m.visitInsn( Opcodes.LOR );
+    }
+
+    public void bitXorInt() {
+        m.visitInsn( Opcodes.IXOR );
+    }
+
+    public void bitXorLong() {
+        m.visitInsn( Opcodes.LXOR );
     }
 
 }
