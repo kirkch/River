@@ -954,11 +954,50 @@ abstract class JVMOps {
     public abstract void bitXorLong();
 
 
+    /**
+     * Shifts value left n bits. Where only the low 5 bits (0x1F) are used.
+     *
+     * @stack value,n -> newValue
+     */
+    public abstract void bitShiftLeftInt();
 
-// iushr
-// lushr
-// ishl
-// ishr
-// lshl
-// lshr
+    /**
+     * Shifts value left n bits. Where only the low 6 bits (0x3F) are used.
+     *
+     * @stack value,n -> newValue
+     */
+    public abstract void bitShiftLeftLong();
+
+
+    /**
+     * Shifts value right n bits. Where only the low 5 bits (0x1F) are used. If value was negative then the left hand side
+     * will be filled with 1's.
+     *
+     * @stack value,n -> newValue
+     */
+    public abstract void bitShiftRightInt();
+
+    /**
+     * Shifts value right n bits. Where only the low 6 bits (0x3F) are used. If value was negative then the left hand side
+     * will be filled with 1's.
+     *
+     * @stack value,n -> newValue
+     */
+    public abstract void bitShiftRightLong();
+
+
+    /**
+     * Shifts value right n bits. Where only the low 5 bits (0x1F) are used. Always fills the left hand side with zeros.
+     *
+     * @stack value,n -> newValue
+     */
+    public abstract void bitShiftRightUnsignedInt();
+
+    /**
+     * Shifts value right n bits. Where only the low 6 bits (0x3F) are used. Always fills the left hand side with zeros.
+     *
+     * @stack value,n -> newValue
+     */
+    public abstract void bitShiftRightUnsignedLong();
+
 }

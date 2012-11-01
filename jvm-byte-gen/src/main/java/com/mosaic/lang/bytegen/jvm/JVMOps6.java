@@ -757,4 +757,28 @@ public class JVMOps6 extends JVMOps {
         m.visitInsn( Opcodes.LXOR );
     }
 
+    public void bitShiftLeftInt() {
+        m.visitInsn( Opcodes.ISHL );
+    }
+
+    public void bitShiftLeftLong() {
+        m.visitInsn( Opcodes.LSHL );
+    }
+
+    public void bitShiftRightInt() {
+        m.visitInsn( Opcodes.ISHR );
+    }
+
+    public void bitShiftRightLong() {
+        m.visitInsn( Opcodes.LSHR );
+    }
+
+    public void bitShiftRightUnsignedInt() {
+        m.visitInsn( Opcodes.IUSHR );
+    }
+
+    public void bitShiftRightUnsignedLong() {
+        m.visitInsn( Opcodes.LUSHR );
+    }
+    
 }
