@@ -15,6 +15,20 @@ import static org.junit.Assert.assertTrue;
 public class JVMOps6_LongTests {
 
     @Test
+    public void returnLongConstantM1() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("()J") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.pushLong( -1 );
+                    ops.returnLong();
+                }
+            }
+        );
+
+        assertEquals( -1L, m.invoke() );
+    }
+
+    @Test
     public void returnLongConstant0() {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
             new JVMOpsTestTools.MethodGenerator("()J") {
@@ -29,17 +43,17 @@ public class JVMOps6_LongTests {
     }
 
     @Test
-    public void returnLongConstantM1() {
+    public void returnLongConstant1() {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
             new JVMOpsTestTools.MethodGenerator("()J") {
                 public void appendMethod( MethodVisitor m ) {
-                    ops.pushLong( -1 );
+                    ops.pushLong( 1 );
                     ops.returnLong();
                 }
             }
         );
 
-        assertEquals( -1L, m.invoke() );
+        assertEquals( 1L, m.invoke() );
     }
 
     @Test

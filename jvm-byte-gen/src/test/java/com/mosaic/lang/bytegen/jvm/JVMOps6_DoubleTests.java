@@ -15,6 +15,20 @@ import static org.junit.Assert.assertTrue;
 public class JVMOps6_DoubleTests {
 
     @Test
+    public void returnDoubleConstantM1() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("()D") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.pushDouble( (double) -1 );
+                    ops.returnDouble();
+                }
+            }
+        );
+
+        assertEquals( (double) -1, m.invoke() );
+    }
+
+    @Test
     public void returnDoubleConstant0() {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
             new JVMOpsTestTools.MethodGenerator("()D") {
@@ -29,17 +43,17 @@ public class JVMOps6_DoubleTests {
     }
 
     @Test
-    public void returnDoubleConstantM1() {
+    public void returnDoubleConstant1() {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
             new JVMOpsTestTools.MethodGenerator("()D") {
                 public void appendMethod( MethodVisitor m ) {
-                    ops.pushDouble( (double) -1 );
+                    ops.pushDouble( (double) 1 );
                     ops.returnDouble();
                 }
             }
         );
 
-        assertEquals( (double) -1, m.invoke() );
+        assertEquals( (double) 1, m.invoke() );
     }
 
     @Test

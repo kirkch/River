@@ -12,6 +12,134 @@ import static org.junit.Assert.assertEquals;
 public class JVMOps_FlowControlTests {
 
     @Test
+    public void jumpTo() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("()I") {
+                public void appendMethod( MethodVisitor m ) {
+                    JVMLabel l0 = ops.newLabel();
+
+                    ops.jumpTo( l0 );
+
+                    ops.pushInt( 10 );
+                    ops.returnInt();
+
+                    ops.visitLabel( l0 );
+                    ops.pushInt( 20 );
+                    ops.returnInt();
+                }
+            }
+        );
+
+        assertEquals( 20, m.invoke() );
+    }
+
+//    @Test   //-- ASM does not support computeFrames option with JSR/RET ops
+//    public void subroutine() {
+//        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+//            new JVMOpsTestTools.MethodGenerator("()I") {
+//                public void appendMethod( MethodVisitor m ) {
+//                    JVMLabel l0 = ops.newLabel();
+//
+//                    ops.jumpToSubroutine( l0 );
+//
+//                    ops.pushInt( 1 );
+//                    ops.addInt();
+//                    ops.returnInt();
+//
+//                    ops.storeRegisterObject( 2 );
+//                    ops.visitLabel( l0 );
+//                    ops.pushInt( 2 );
+//                    ops.returnFromSubroutine( 2 );
+//                }
+//            }
+//        );
+//
+//        assertEquals( 3, m.invoke() );
+//    }
+
+    @Test
+    public void jumpLookupTable() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("(I)I") {
+                public void appendMethod( MethodVisitor m ) {
+                    JVMLabel l1  = ops.newLabel();
+                    JVMLabel l3  = ops.newLabel();
+                    JVMLabel l5  = ops.newLabel();
+                    JVMLabel l42 = ops.newLabel();
+
+                    ops.loadRegisterInt( 1 );
+                    ops.jumpLookupTable( l42, new int[] {1,3,5}, new JVMLabel[] {l1,l3,l5} );
+
+
+                    ops.visitLabel( l1 );
+                    ops.pushInt( 11 );
+                    ops.returnInt();
+
+                    ops.visitLabel( l3 );
+                    ops.pushInt( 13 );
+                    ops.returnInt();
+
+                    ops.visitLabel( l5 );
+                    ops.pushInt( 15 );
+                    ops.returnInt();
+
+                    ops.visitLabel( l42 );
+                    ops.pushInt( 99 );
+                    ops.returnInt();
+                }
+            }
+        );
+
+        assertEquals( 99, m.invoke(0) );
+        assertEquals( 11, m.invoke(1) );
+        assertEquals( 99, m.invoke(2) );
+        assertEquals( 13, m.invoke(3) );
+        assertEquals( 99, m.invoke(4) );
+        assertEquals( 15, m.invoke(5) );
+    }
+
+    @Test
+    public void jumpIndexTable() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("(I)I") {
+                public void appendMethod( MethodVisitor m ) {
+                    JVMLabel l3  = ops.newLabel();
+                    JVMLabel l4  = ops.newLabel();
+                    JVMLabel l5  = ops.newLabel();
+                    JVMLabel l42 = ops.newLabel();
+
+                    ops.loadRegisterInt( 1 );
+                    ops.jumpIndexTable( 3,5, l42, new JVMLabel[] {l3,l4,l5} );
+
+                    ops.visitLabel( l3 );
+                    ops.pushInt( 13 );
+                    ops.returnInt();
+
+                    ops.visitLabel( l4 );
+                    ops.pushInt( 14 );
+                    ops.returnInt();
+
+                    ops.visitLabel( l5 );
+                    ops.pushInt( 15 );
+                    ops.returnInt();
+
+                    ops.visitLabel( l42 );
+                    ops.pushInt( 99 );
+                    ops.returnInt();
+                }
+            }
+        );
+
+        assertEquals( 99, m.invoke(0) );
+        assertEquals( 99, m.invoke(1) );
+        assertEquals( 99, m.invoke(2) );
+        assertEquals( 13, m.invoke(3) );
+        assertEquals( 14, m.invoke(4) );
+        assertEquals( 15, m.invoke(5) );
+        assertEquals( 99, m.invoke(6) );
+    }
+
+    @Test
     public void ifEqZero() {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
             new JVMOpsTestTools.MethodGenerator("(Z)I") {

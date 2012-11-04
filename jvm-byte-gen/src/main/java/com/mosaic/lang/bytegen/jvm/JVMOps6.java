@@ -87,6 +87,18 @@ public class JVMOps6 extends JVMOps {
         m.visitLineNumber( lineNumber, l0 );
     }
 
+    public void jumpTo( JVMLabel label ) {
+        m.visitJumpInsn( Opcodes.GOTO, label.l0 );
+    }
+
+//    public void jumpToSubroutine( JVMLabel label ) {
+//        m.visitJumpInsn( Opcodes.JSR, label.l0 );
+//    }
+//
+//    public void returnFromSubroutine( int registerIndex ) {
+//        m.visitVarInsn( Opcodes.RET, registerIndex );
+//    }
+
     public void ifEqZero( JVMLabel label ) {
         m.visitJumpInsn( Opcodes.IFEQ, label.l0 );
     }
@@ -161,6 +173,18 @@ public class JVMOps6 extends JVMOps {
 
     public void cmpDouble() {
         m.visitInsn( Opcodes.DCMPL );
+    }
+
+    public void jumpLookupTable( JVMLabel defaultJumpTarget, int[] keys, JVMLabel[] jumpTargets ) {
+        Label[] labels = flattenLabels( jumpTargets );
+
+        m.visitLookupSwitchInsn( defaultJumpTarget.l0, keys, labels );
+    }
+
+    public void jumpIndexTable( int minKey, int maxKey, JVMLabel defaultJumpTarget, JVMLabel[] jumpTargets ) {
+        Label[] labels = flattenLabels( jumpTargets );
+
+        m.visitTableSwitchInsn( minKey, maxKey, defaultJumpTarget.l0, labels );
     }
     
 // METHOD OPS
@@ -526,7 +550,7 @@ public class JVMOps6 extends JVMOps {
     public void pushDouble( double v ) {
         if ( v == 0.0 ) {
             m.visitInsn( Opcodes.DCONST_0 );
-        } else if ( v == 2.0 ) {
+        } else if ( v == 1.0 ) {
             m.visitInsn( Opcodes.DCONST_1 );
         } else {
             m.visitLdcInsn( v );
@@ -814,5 +838,15 @@ public class JVMOps6 extends JVMOps {
     public void bitShiftRightUnsignedLong() {
         m.visitInsn( Opcodes.LUSHR );
     }
-    
+
+
+    private Label[] flattenLabels( JVMLabel[] jvmLabels ) {
+        int numTargets = jvmLabels.length;
+        Label[] labels = new Label[numTargets];
+        for ( int i=0; i<numTargets; i++ ) {
+            labels[i] = jvmLabels[i].l0;
+        }
+
+        return labels;
+    }
 }

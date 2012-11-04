@@ -15,6 +15,20 @@ import static org.junit.Assert.assertTrue;
 public class JVMOps6_IntTests {
 
     @Test
+    public void returnIntConstantM1() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("()I") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.pushInt( -1 );
+                    ops.returnInt();
+                }
+            }
+        );
+
+        assertEquals( -1, m.invoke() );
+    }
+
+    @Test
     public void returnIntConstant0() {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
             new JVMOpsTestTools.MethodGenerator("()I") {
@@ -28,18 +42,19 @@ public class JVMOps6_IntTests {
         assertEquals( 0, m.invoke() );
     }
 
+
     @Test
-    public void returnIntConstantM1() {
+    public void returnIntConstant1() {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
             new JVMOpsTestTools.MethodGenerator("()I") {
                 public void appendMethod( MethodVisitor m ) {
-                    ops.pushInt( -1 );
+                    ops.pushInt( 1 );
                     ops.returnInt();
                 }
             }
         );
 
-        assertEquals( -1, m.invoke() );
+        assertEquals( 1, m.invoke() );
     }
 
     @Test

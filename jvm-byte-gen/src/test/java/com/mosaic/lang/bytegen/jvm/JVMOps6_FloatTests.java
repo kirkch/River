@@ -15,6 +15,20 @@ import static org.junit.Assert.assertTrue;
 public class JVMOps6_FloatTests {
 
     @Test
+    public void returnFloatConstantM1() {
+        JVMOpsTestTools.MethodInstanceRef m = generateMethod(
+            new JVMOpsTestTools.MethodGenerator("()F") {
+                public void appendMethod( MethodVisitor m ) {
+                    ops.pushFloat( (float) -1 );
+                    ops.returnFloat();
+                }
+            }
+        );
+
+        assertEquals( (float) -1, m.invoke() );
+    }
+
+    @Test
     public void returnFloatConstant0() {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
             new JVMOpsTestTools.MethodGenerator("()F") {
@@ -29,17 +43,17 @@ public class JVMOps6_FloatTests {
     }
 
     @Test
-    public void returnFloatConstantM1() {
+    public void returnFloatConstant1() {
         JVMOpsTestTools.MethodInstanceRef m = generateMethod(
             new JVMOpsTestTools.MethodGenerator("()F") {
                 public void appendMethod( MethodVisitor m ) {
-                    ops.pushFloat( (float) -1 );
+                    ops.pushFloat( (float) 1 );
                     ops.returnFloat();
                 }
             }
         );
 
-        assertEquals( (float) -1, m.invoke() );
+        assertEquals( (float) 1, m.invoke() );
     }
 
     @Test

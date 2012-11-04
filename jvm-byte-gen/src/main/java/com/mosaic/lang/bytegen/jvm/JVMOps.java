@@ -15,16 +15,10 @@ import org.objectweb.asm.MethodVisitor;
 // nop
 
 
-// goto/goto_w
-// jsr/jsr_w  / ret
-
 // lookupswitch
 // tableswitch
 
-
-// monitorenter
-// monitorexit
-
+// try/catch/finally
 
 
 /**
@@ -153,6 +147,30 @@ abstract class JVMOps {
      * Jump commands will now be able to use this location to calculate their jump offsets.
      */
     public abstract void visitLabel( JVMLabel label, int lineNumber );
+
+
+    /**
+     * Go straight to the op location pointed to by the label.
+     *
+     * @stack nochange
+     */
+    public abstract void jumpTo( JVMLabel label );
+
+// ASM does not support computeFrames option with JSR/RET instructions
+//    /**
+//     * Go straight to the op location pointed to by the label. Pushes the address of the instruction after the jump
+//     * operand onto the stack as a return address.
+//     *
+//     * @stack -> returnAddress
+//     */
+//    public abstract void jumpToSubroutine( JVMLabel label );
+//
+//    /**
+//     * Jump to the address stored in the specified register. Intended to return to an address after a call to jumpToSubroutine.
+//     *
+//     * @stack nochange
+//     */
+//    public abstract void returnFromSubroutine( int registerIndex );
 
     /**
      * If the int on the head of the stack is zero then jump to label.
@@ -288,6 +306,29 @@ abstract class JVMOps {
      * @stack longvalue,longvalue -> -1|0|1
      */
     public abstract void cmpDouble();
+
+    /**
+     * Lookup the next jump destination in a table of key/address pairs by an int value. The index value must exactly
+     * match one of the int values else the default jump destination will be used.
+     *
+     * @param defaultBlockNbl
+     * @param keys
+     * @param handlers
+     *
+     * @stack value ->
+     */
+    public abstract void jumpLookupTable( JVMLabel defaultJumpTarget, int[] keys, JVMLabel[] jumpTargets );
+
+    /**
+     * Lookup the next jump destination from an array of jump targets where the index is value - minKey.
+     *
+     * @param defaultBlockNbl
+     * @param keys
+     * @param handlers
+     *
+     * @stack value ->
+     */
+    public abstract void jumpIndexTable( int minKey, int maxKey, JVMLabel defaultJumpTarget, JVMLabel[] jumpTargets );
 
 // METHOD OPS
 
