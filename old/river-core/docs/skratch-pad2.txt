@@ -1,0 +1,281 @@
+
+
+simple for the simple stuff
+access to the powerful stuff
+single threaded  (automates multiple threads for some stuff, access to thread control for others)
+single vm (yet can distribute itself, or pass control)
+gc (or not for other stuff)
+speed matters
+
+
+River/Punk/Acid
+Fun.
+
+
+
+base language
+single server environment
+distributed server environment
+
+Delta1
+River  - R1
+Focus
+Gin
+
+
+minimal program
+
+
+----
+1    //generates a main function that returns 1
+----
+
+
+
+include a console
+
+
+------
+
+
+First Steps
+
+
+1
+1L
+1.0
+1.0f
+1,000
+1011b
+1011 1100 b
+0xF23AA
+0122
+
+
+a = 1
+b = 1 + 1
+c = a + b
+
+
+( )
+!
++ - * / ^ %
+< <= == > >= !=
+<< >> >>>
+&& ||
+~ & |
+-- ++
+
+//
+/* */
+
+
+=
++=
+-=
+*=
+/=
+^=
+&=
+|=
+
+boolean
+byte
+
+int8
+int16
+int32
+int64
+int128
+
+uint8
+uint16
+uint32
+uint64
+uint128
+
+float32
+float64
+
+char
+
+
+'abc def'
+"abc def $a ${foo}"
+
+`2 + 6 + foo(9)`
+eval( '2 + 6 + foo(9)' )
+
+----
+vector
+matrix
+money
+day
+date
+time
+dtm
+
+
+--
+void
+null
+array     fixed vs variable    sparse vs compact
+struct    fixed vs variable vs extensible
+class     fixed vs variable vs extensible
+enum      fixed
+
+
+
+
+
+-------
+
+a = 1
+var a = 1
+
+
+------
+
+f(x) = x * 2
+foo(a:int32) : int32 = x * 2
+foo( a:T ) : T = x * 2        // T can be anything that supports *  (implied duck typing)
+foo[T:int]( a:T ) : T = x * 2
+
+f(x) = {
+  y = x * 2
+
+  y + 1
+}
+
+foo( a:Account ) : Receipt
+
+reverse( l:List[T] )
+
+/*List[A]*/    .map( f(A):B ) : List[B]
+
+
+-------
+
+immutable/nosideffects are defaults
+
+
+sideeffects f(x) = ...
+
+
+------
+
+fooNbl = a
+
+
+
+
+
+
+--
+batteries included
+
+  csv
+  xml
+  http
+
+  chart
+  pdf
+  gif
+
+
+main packaging
+test harness
+benchmarking
+
+
+warp core included
+  3d
+  movie
+  sound
+  math
+
+
+
+
+
+-- at end of app run
+
+bstma - blue sky thinking my arse
+
+- print stats/score the app
+- time blocked
+- duration
+- % of code used
+
+
+
+other
+---
+
+fork/join searches
+indexes
+graphs
+geo
+persistence
+
+
+GC
+---
+
+how to be lockless?  none blocking....  (not the same as pauseless)
+non-fragmenting
+
+an idea:
+  each entity as an island.. any data there is considered to be permanent
+  any data passed between entities is done as their own messages  (and involve copying data)
+  message processing uses scratch pads for data which can be wiped after the message is complete (the stack?)
+  deleting an entity causes its data to be explicitly unallocated
+
+  lockless lock (cas/memory barrier) for each 'entity'
+
+
+Abstracting over arity
+----------------
+
+private Table<T..> tableBuffer = new FixedWidthTable( fixedColumnWidths.length );
+
+tableBuffer.typeParams += char[]
+
+which causes Table<T..>  to become Table<char[]>
+
+or
+tableBuffer.typeParams += int
+tableBuffer.typeParams += char[]
+
+becomes Table<int,char[]>
+
+
+.. code that executes during compilation to generate new code or tweak existing code ..
+
+compile time reflection/macros
+
+
+
+
+
+
+
+--------------------
+
+
+parser -> AST -> optimiser -> RVM -> JVM
+
+
+
+
+RVM:  RI:
+'add 1 2'
+'sub 1 2'
+'push-scope'
+'pop-scope'
+'class x'
+
+
+RiverClass
+  - methods
+    - invoke
