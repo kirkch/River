@@ -3,8 +3,8 @@ package com.mosaic.river;
 import com.mosaic.lang.bytegen.jvm.DynamicLoader;
 import com.mosaic.lang.bytegen.jvm.JVMClass;
 import com.mosaic.river.compiler.River2JVMFactory;
-import com.mosaic.river.model.RiverClass;
-import com.mosaic.river.model.RiverClassFactory;
+import com.mosaic.river.compiler.model.RiverClass;
+import com.mosaic.river.compiler.model.RiverClassFactory;
 import com.mosaic.river.parser.RiverParser;
 import org.junit.Test;
 

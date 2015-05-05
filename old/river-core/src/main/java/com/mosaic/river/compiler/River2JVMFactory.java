@@ -1,7 +1,7 @@
 package com.mosaic.river.compiler;
 
 import com.mosaic.lang.bytegen.jvm.JVMClass;
-import com.mosaic.river.model.RiverClass;
+import com.mosaic.river.compiler.model.RiverClass;
 
 /**
  *

@@ -51,6 +51,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.mosaic</groupId>
+            <artifactId>lang-sandbox</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
@@ -91,7 +96,7 @@
 
           <dependency>
               <groupId>com.mosaic</groupId>
-              <artifactId>lang-mosaic</artifactId>
+              <artifactId>lang-sandbox</artifactId>
               <version>0.0.1-SNAPSHOT</version>
           </dependency>
         </dependencies>

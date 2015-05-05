@@ -1,4 +1,4 @@
-package com.mosaic.river.model;
+package com.mosaic.river.compiler.model;
 
 import com.mosaic.lang.Lockable;
 import com.mosaic.parsers.pull.TextPosition;
