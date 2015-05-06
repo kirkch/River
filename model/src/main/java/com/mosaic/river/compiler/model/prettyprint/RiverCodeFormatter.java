@@ -3,8 +3,10 @@ package com.mosaic.river.compiler.model.prettyprint;
 import com.mosaic.io.IndentingWriter;
 import com.mosaic.io.PrettyPrinter;
 import com.mosaic.river.compiler.model.RiverClass;
+import com.mosaic.river.compiler.model.RiverField;
 
 import java.io.IOException;
+import java.util.List;
 
 
 public class RiverCodeFormatter implements PrettyPrinter<RiverClass> {
@@ -23,6 +25,25 @@ public class RiverCodeFormatter implements PrettyPrinter<RiverClass> {
     private void printClass( IndentingWriter out, RiverClass rc ) throws IOException {
         out.append( rc.getName() );
         out.append( "()" );
+
+        if ( rc.hasFields() ) {
+            out.append( " {" );
+            out.newLine();
+
+            out.indent( () -> printFields(out, rc) );
+
+            out.append( "}" );
+        }
+    }
+
+    private void printFields( IndentingWriter out, RiverClass rc ) throws IOException {
+        List<RiverField> fields = rc.getFields();
+
+        for( RiverField f : fields ) {
+            out.append( f.getName() );
+            out.append( " : int32 = 1" );
+            out.newLine();
+        }
     }
 
 }

@@ -1,6 +1,5 @@
-package com.mosaic.river.compiler.model.builders;
+package com.mosaic.river.compiler.model;
 
-import com.mosaic.river.compiler.model.RiverClass;
 import com.mosaic.river.compiler.model.prettyprint.JavaCodeFormatter;
 import com.mosaic.river.compiler.model.prettyprint.RiverCodeFormatter;
 import org.junit.Test;
@@ -8,22 +7,25 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static junit.framework.Assert.*;
+import static com.mosaic.river.compiler.model.RiverAssertions.assertRiverClassEquals;
 
 
-public class RiverBuilderTest {
+public class RiverClassDeclarationTests {
 
     /**
-     * Sum()
+     * The simplest class that can be declared in River is a class with no parameters, fields
+     * or methods.
+     *
+     * <code>
+     *   Sum()
+     * </code>
      */
     @Test
     public void declareEmptyClass() {
-        RiverClassBuilder  classBuilder  = new RiverClassBuilder("Sum");
+        RiverClass c = new RiverClass("Sum");
 
         List<String> expectedRiverCode = Arrays.asList( "Sum()" );
-        List<String> expectedJavaCode  = Arrays.asList( "public class Sum() {}" );
-
-        RiverClass c = classBuilder.build();
+        List<String> expectedJavaCode  = Arrays.asList( "public class Sum {}" );
 
         assertRiverClassEquals( c, expectedRiverCode, expectedJavaCode );
     }
@@ -31,11 +33,15 @@ public class RiverBuilderTest {
 
 
 //    /**
-//     * Sum() {
-//     *   result() = 1 + 1
-//     * }
+//     * To declare a function in River, postfix a name with brackets and assign a value to it.
+//     *
+//     * <code>
+//     *   Sum() {
+//     *     result() = 1 + 1
+//     *   }
+//     * </code>
 //     */
-//    public void declareSum() {
+//    public void declareASimpleFunction() {
 //        RiverClassBuilder  classBuilder  = new RiverClassBuilder("Sum");
 //        RiverMethodBuilder methodBuilder = classBuilder.addMethod("result");
 //
@@ -50,17 +56,25 @@ public class RiverBuilderTest {
 //        statementBuilder.appendReturn();
 //
 //
-//        List<String> expected = Arrays.asList(
+//
+//        RiverClass c = classBuilder.build();
+//
+//        List<String> expectedRiverCode = Arrays.asList(
 //            "Sum() {",
-//            "  result() : int32 = {",
+//            "  result() : int32 = 1 + 1",
+//            "}"
+//        );
+//
+//        List<String> expectedJavaCode = Arrays.asList(
+//            "public class Sum {",
+//            "  public int result() {",
 //            "    return 1 + 1",
 //            "  }",
 //            "}"
 //        );
 //
-//        RiverClass c = classBuilder.build();
 //
-//        assertEquals( expected, c.prettyPrint() );
+//        assertRiverClassEquals( c, expectedRiverCode, expectedJavaCode );
 //    }
 
 //    /**
@@ -84,13 +98,6 @@ public class RiverBuilderTest {
 //        statementBuilder.appendSum();
 //        statementBuilder.appendReturn();
 //    }
-
-
-
-    private void assertRiverClassEquals( RiverClass c, List<String> expectedRiverCode, List<String> expectedJavaCode ) {
-        assertEquals( expectedRiverCode, RiverCodeFormatter.INSTANCE.toText(c) );
-        assertEquals( expectedJavaCode,  JavaCodeFormatter.INSTANCE.toText(c) );
-    }
 
 }
 
