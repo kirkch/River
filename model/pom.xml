@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.mosaic</groupId>
+        <groupId>com.mosaic.river</groupId>
         <artifactId>river</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
