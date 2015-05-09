@@ -1,0 +1,22 @@
+
+
+
+
+
+
+
+
+
+
+To add new features
+-----------------
+
+# add to the model starting from RiverClass
+# modify JavaCodeFormatter and RiverCodeFormatter to output the target language
+# enhance RiverParser to recognise the source language and create the corresponding model
+
+Test name conventsion
+-----------------
+
+# model -> target language tests are called FormatRiverFEATURETests
+# target languge -> model tets are called ParseRiverFEATURETests

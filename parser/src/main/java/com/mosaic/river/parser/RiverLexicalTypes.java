@@ -6,5 +6,7 @@ public enum RiverLexicalTypes {
     WhiteSpace,
     ClassName,
     StartOfBlock,
-    EndOfBlock
+    EndOfBlock,
+    StartOfArgList,
+    EndOfArgList
 }

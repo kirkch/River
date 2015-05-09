@@ -8,7 +8,7 @@ import java.util.List;
 import static com.mosaic.river.compiler.model.RiverAssertions.assertRiverClassEquals;
 
 
-public class RiverInt32FieldDeclarationTests {
+public class FormatRiverInt32FieldDeclarationTests {
 
     /**
      * To declare a field in River, write the name of the field and assign a value to it.  Notice

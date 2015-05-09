@@ -1,7 +1,5 @@
 package com.mosaic.river.compiler.model;
 
-import com.mosaic.river.compiler.model.prettyprint.JavaCodeFormatter;
-import com.mosaic.river.compiler.model.prettyprint.RiverCodeFormatter;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -10,7 +8,7 @@ import java.util.List;
 import static com.mosaic.river.compiler.model.RiverAssertions.assertRiverClassEquals;
 
 
-public class RiverClassDeclarationTests {
+public class FormatRiverClassDeclarationTests {
 
     /**
      * The simplest class that can be declared in River is a class with no parameters, fields
