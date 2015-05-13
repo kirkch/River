@@ -1,0 +1,7 @@
+
+
+
+
+//        public final Function1<PullParser2, Try<T>> matchFunction;
+
+//        matchFunction : f(PullParser2) -> Try<T>

@@ -8,5 +8,7 @@ public enum RiverLexicalTypes {
     StartOfBlock,
     EndOfBlock,
     StartOfArgList,
-    EndOfArgList
+    EndOfArgList,
+
+    Field
 }

@@ -31,6 +31,8 @@ public class RiverClass {
     public void addField( RiverField field ) {
         QA.notNull( field, "field" );
 
+        // todo validate the field
+
         fields.add( field );
     }
 
@@ -41,4 +43,5 @@ public class RiverClass {
     public List<RiverField> getFields() {
         return fields;
     }
+
 }
