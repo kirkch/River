@@ -3,73 +3,47 @@ package com.mosaic.river.parser;
 import com.mosaic.parser.ParseResult;
 import com.mosaic.parser.ParserStream;
 import com.mosaic.river.compiler.model.RiverClass;
-import com.mosaic.river.compiler.model.prettyprint.JavaCodeFormatter;
 import org.junit.Test;
-
-import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.Assert.*;
 
 
-public class ParseRiverClassDeclarationTests {
+public class ParseRiverClassDeclarationTests extends ParseTestUtils {
 
-    /**
-     * Account()
-     */
     @Test
     public void minimalClassDeclaration() {
-        RiverParser p = new RiverParser();
+        RiverClass rc = parseAndExpectSuccess( "Account()" );
 
-        RiverClass rc = p.parse( "Account()" ).getParsedValueNbl();
-
-        List<String> expected = Arrays.asList( "public class Account {}" );
-
-        assertEquals( expected, JavaCodeFormatter.INSTANCE.toText(rc) );
+        assertRiverClassAsJava(rc, "public class Account {}");
     }
 
     @Test
     public void classDeclarationWithEmptyConstructorAndBody() {
-        RiverParser p = new RiverParser();
+        RiverClass rc = parseAndExpectSuccess( "Account() {}" );
 
-        RiverClass rc = p.parse( "Account() {}" ).getParsedValueNbl();
-
-        List<String> expected = Arrays.asList( "public class Account {}" );
-
-        assertEquals( expected, JavaCodeFormatter.INSTANCE.toText(rc) );
+        assertRiverClassAsJava( rc, "public class Account {}" );
     }
 
     @Test
     public void classDeclarationWithEmptyConstructorAndBody_withWhiteSpaceAndNewLines() {
-        RiverParser p = new RiverParser();
-
-        RiverClass rc = p.parse(
+        RiverClass rc = parseAndExpectSuccess(
             "   Account",
             "()",
             "{",
             "    ",
             "}"
-        ).getParsedValueNbl();
+        );
 
-        List<String> expected = Arrays.asList( "public class Account {}" );
-
-        assertEquals( expected, JavaCodeFormatter.INSTANCE.toText(rc) );
+        assertRiverClassAsJava( rc, "public class Account {}" );
     }
 
     @Test
     public void minimalClassDeclaration_withWhiteSpace() {
-        RiverParser p = new RiverParser();
+        RiverClass rc = parseAndExpectSuccess( "  Account\t ( \t )  " );
 
-        RiverClass rc = p.parse( "  Account\t ( \t )  " ).getParsedValueNbl();
-
-        List<String> expected = Arrays.asList( "public class Account {}" );
-
-        assertEquals( expected, JavaCodeFormatter.INSTANCE.toText(rc) );
+        assertRiverClassAsJava( rc, "public class Account {}" );
     }
 
-    /**
-     * 22Foo
-     */
     @Test
     public void givenMalformedClassName_expectError() {
         RiverParser  p  = new RiverParser();
