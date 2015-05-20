@@ -5,3 +5,14 @@
 //        public final Function1<PullParser2, Try<T>> matchFunction;
 
 //        matchFunction : f(PullParser2) -> Try<T>
+
+
+
+
+////////////
+            if ( in.skip(TYPE_SEPARATOR_MATCHER) == 0 ) {
+                return failure( in.getCurrentPosition(), "Expected a list of args, but the starting bracket '(' was missing" );
+            }
+
+BECOMES
+            cret in.skip(TYPE_SEPARATOR_MATCHER, "Expected a list of args, but the starting bracket '(' was missing" )
