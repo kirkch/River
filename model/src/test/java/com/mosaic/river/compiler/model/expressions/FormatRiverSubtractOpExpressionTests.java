@@ -14,7 +14,7 @@ import java.util.List;
 public class FormatRiverSubtractOpExpressionTests extends RiverAssertions {
 
     @Test
-    public void declareASingleInt32FieldThatDefaultsTo1() {
+    public void parseASingleTwoConstantInt32Expression() {
         Expression exp = new BinaryOp( new ConstantInt32(1), BinaryOpEnum.SUBTRACT, new ConstantInt32(2) );
 
         List<String> expectedRiverCode = Arrays.asList( "1 - 2" );

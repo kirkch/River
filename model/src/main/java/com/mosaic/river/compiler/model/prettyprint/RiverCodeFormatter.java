@@ -72,6 +72,10 @@ public class RiverCodeFormatter implements PrettyPrinter<RiverClass> {
             public void divide() {
                 out.print( " / " );
             }
+
+            public void modulo() {
+                out.print( " % " );
+            }
         });
     }
 

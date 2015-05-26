@@ -24,4 +24,9 @@ public interface ExpressionVisitor {
      * Binary op '/'.
      */
     public void divide();
+
+    /**
+     * Binary op '%'.
+     */
+    public void modulo();
 }

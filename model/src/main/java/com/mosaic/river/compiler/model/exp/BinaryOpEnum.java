@@ -23,6 +23,12 @@ public enum BinaryOpEnum {
         public void visitWith( ExpressionVisitor visitor ) {
             visitor.divide();
         }
+    },
+
+    MODULO() {
+        public void visitWith( ExpressionVisitor visitor ) {
+            visitor.modulo();
+        }
     };
 
 //    POWER, MODULO,

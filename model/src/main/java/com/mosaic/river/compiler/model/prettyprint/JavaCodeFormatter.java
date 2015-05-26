@@ -74,6 +74,10 @@ public class JavaCodeFormatter implements PrettyPrinter<RiverClass> {
             public void divide() {
                 out.print( " / " );
             }
+
+            public void modulo() {
+                out.print( " % " );
+            }
         });
     }
 }
