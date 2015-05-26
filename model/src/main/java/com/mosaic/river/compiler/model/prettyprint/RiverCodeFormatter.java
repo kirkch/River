@@ -80,6 +80,10 @@ public class RiverCodeFormatter implements PrettyPrinter<RiverClass> {
             public void greaterThan() {
                 out.print( " > " );
             }
+
+            public void lessThan() {
+                out.print( " < " );
+            }
         });
     }
 

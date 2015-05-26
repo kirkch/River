@@ -35,6 +35,12 @@ public enum BinaryOpEnum {
         public void visitWith( ExpressionVisitor visitor ) {
             visitor.greaterThan();
         }
+    },
+
+    LESS_THAN() {
+        public void visitWith( ExpressionVisitor visitor ) {
+            visitor.lessThan();
+        }
     };
 
 //    POWER,

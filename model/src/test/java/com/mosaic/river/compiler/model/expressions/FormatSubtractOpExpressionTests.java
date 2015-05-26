@@ -11,14 +11,14 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class FormatRiverDivideOpExpressionTests extends RiverAssertions {
+public class FormatSubtractOpExpressionTests extends RiverAssertions {
 
     @Test
     public void parseASingleTwoConstantInt32Expression() {
-        Expression exp = new BinaryOp( new ConstantInt32(1), BinaryOpEnum.DIVIDE, new ConstantInt32(2) );
+        Expression exp = new BinaryOp( new ConstantInt32(1), BinaryOpEnum.SUBTRACT, new ConstantInt32(2) );
 
-        List<String> expectedRiverCode = Arrays.asList( "1 / 2" );
-        List<String> expectedJavaCode  = Arrays.asList( "1 / 2" );
+        List<String> expectedRiverCode = Arrays.asList( "1 - 2" );
+        List<String> expectedJavaCode  = Arrays.asList( "1 - 2" );
 
         assertRiverExpressionEquals( exp, expectedRiverCode, expectedJavaCode );
     }

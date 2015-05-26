@@ -34,4 +34,10 @@ public interface ExpressionVisitor {
      * Binary op '>'.
      */
     public void greaterThan();
+
+    /**
+     * Binary op '<'.
+     */
+    public void lessThan();
+
 }
