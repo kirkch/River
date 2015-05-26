@@ -2,7 +2,7 @@ package com.mosaic.river.compiler.model;
 
 import com.mosaic.lang.Lockable;
 import com.mosaic.river.compiler.model.exp.ConstantInt32;
-import com.mosaic.river.compiler.model.exp.RiverExpression;
+import com.mosaic.river.compiler.model.exp.Expression;
 
 
 /**
@@ -20,10 +20,10 @@ public class RiverField extends Lockable<RiverField> {
 
 
     private String          name;
-    private RiverExpression initialValue;
+    private Expression initialValue;
 
 
-    public RiverField( String name, RiverExpression initialValue ) {
+    public RiverField( String name, Expression initialValue ) {
         setName( name );
         setInitialValue( initialValue );
     }
@@ -46,7 +46,7 @@ public class RiverField extends Lockable<RiverField> {
      * Returns an expression that calculates the initial value.  The expression may be as simple
      * as a constant, or as complicated as calculating the meaning of life (42).
      */
-    public RiverExpression getInitialValue() {
+    public Expression getInitialValue() {
         return initialValue;
     }
 
@@ -54,7 +54,7 @@ public class RiverField extends Lockable<RiverField> {
      * Specifies an expression that calculates the initial value.  The expression may be as simple
      * as a constant, or as complicated as calculating the meaning of life (42).
      */
-    public void setInitialValue( RiverExpression initialValue ) {
+    public void setInitialValue( Expression initialValue ) {
         throwIfLocked();
 
         this.initialValue = initialValue;

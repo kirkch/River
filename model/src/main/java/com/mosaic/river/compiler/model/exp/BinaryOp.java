@@ -17,25 +17,25 @@ BinaryOp( lhs:Exp, op:BinaryOp, rhs:Exp ) implements Exp {
  */
 
 
-public class BinaryOp implements RiverExpression {
+public class BinaryOp implements Expression {
 
-    private RiverExpression lhs;
+    private Expression lhs;
     private BinaryOpEnum    op;
-    private RiverExpression rhs;
+    private Expression rhs;
 
     private RiverType       type;
 
-    public BinaryOp( RiverExpression lhs, BinaryOpEnum op, RiverExpression rhs ) {
+    public BinaryOp( Expression lhs, BinaryOpEnum op, Expression rhs ) {
         this.lhs = lhs;
         this.op  = op;
         this.rhs = rhs;
     }
 
-    public RiverExpression getLhs() {
+    public Expression getLhs() {
         return lhs;
     }
 
-    public void setLhs( RiverExpression lhs ) {
+    public void setLhs( Expression lhs ) {
         this.lhs = lhs;
     }
 
@@ -47,11 +47,11 @@ public class BinaryOp implements RiverExpression {
         this.op = op;
     }
 
-    public RiverExpression getRhs() {
+    public Expression getRhs() {
         return rhs;
     }
 
-    public void setRhs( RiverExpression rhs ) {
+    public void setRhs( Expression rhs ) {
         this.rhs = rhs;
     }
 
@@ -63,7 +63,7 @@ public class BinaryOp implements RiverExpression {
         this.type = type;
     }
 
-    public void visitWith( RiverExpressionVisitor visitor ) {
+    public void visitWith( ExpressionVisitor visitor ) {
         lhs.visitWith( visitor );
         op.visitWith( visitor );
         rhs.visitWith( visitor );

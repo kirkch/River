@@ -3,8 +3,8 @@ package com.mosaic.river.compiler.model.prettyprint;
 import com.mosaic.io.IndentingWriter;
 import com.mosaic.io.PrettyPrinter;
 import com.mosaic.river.compiler.model.RiverClass;
-import com.mosaic.river.compiler.model.exp.RiverExpression;
-import com.mosaic.river.compiler.model.exp.RiverExpressionVisitor;
+import com.mosaic.river.compiler.model.exp.Expression;
+import com.mosaic.river.compiler.model.exp.ExpressionVisitor;
 import com.mosaic.river.compiler.model.RiverField;
 
 import java.io.IOException;
@@ -53,8 +53,8 @@ public class JavaCodeFormatter implements PrettyPrinter<RiverClass> {
         }
     }
 
-    public void printExpression( IndentingWriter out, RiverExpression initialValue ) {
-        initialValue.visitWith( new RiverExpressionVisitor() {
+    public void printExpression( IndentingWriter out, Expression initialValue ) {
+        initialValue.visitWith( new ExpressionVisitor() {
             public void int32Constant( int v )  {
                 out.print( Integer.toString(v) );
             }

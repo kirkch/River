@@ -2,9 +2,8 @@ package com.mosaic.river.compiler.model;
 
 import com.mosaic.io.IndentingWriter;
 import com.mosaic.lang.functional.VoidFunction1;
-import com.mosaic.lang.functional.VoidFunction2;
 import com.mosaic.lang.system.SystemX;
-import com.mosaic.river.compiler.model.exp.RiverExpression;
+import com.mosaic.river.compiler.model.exp.Expression;
 import com.mosaic.river.compiler.model.prettyprint.JavaCodeFormatter;
 import com.mosaic.river.compiler.model.prettyprint.RiverCodeFormatter;
 import com.mosaic.utils.ListUtils;
@@ -23,7 +22,7 @@ public class RiverAssertions {
         assertEquals( ListUtils.toString(expectedJavaCode, SystemX.NEWLINE),  JavaCodeFormatter.INSTANCE.toText(c) );
     }
 
-    public static void assertRiverExpressionEquals( RiverExpression exp, List<String> expectedRiverCode, List<String> expectedJavaCode ) {
+    public static void assertRiverExpressionEquals( Expression exp, List<String> expectedRiverCode, List<String> expectedJavaCode ) {
         String actualRiver = format( out -> RiverCodeFormatter.INSTANCE.printExpression(out,exp) );
         String actualJava  = format( out -> JavaCodeFormatter.INSTANCE.printExpression(out,exp) );
 

@@ -8,7 +8,7 @@ import com.mosaic.parser.ParserStream.ParserAndAction;
 import com.mosaic.river.compiler.model.exp.ConstantInt32;
 import com.mosaic.river.compiler.model.RiverArgList;
 import com.mosaic.river.compiler.model.RiverClass;
-import com.mosaic.river.compiler.model.exp.RiverExpression;
+import com.mosaic.river.compiler.model.exp.Expression;
 import com.mosaic.river.compiler.model.RiverField;
 import com.mosaic.utils.StringUtils;
 import com.mosaic.utils.string.CharacterMatcher;
@@ -163,7 +163,7 @@ public class RiverParser {
                 return failure( in.getCurrentPosition(), "Expected '0' after the assignment operator", fieldName );
             }
 
-            RiverExpression initialValue = new ConstantInt32( 0 );
+            Expression initialValue = new ConstantInt32( 0 );
             RiverField      field        = new RiverField(fieldName, initialValue);
 
             return matched( field, from, in.getCurrentPosition() );

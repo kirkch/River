@@ -1,0 +1,94 @@
+
+- rename model classes to remove 'River'
+- add CharPosition to each part of the model (useful for pretty printing)
+
+
+
+          FORMAT            PARSE
+
++          DONE
+-
+*
+/
+%
+
+>
+>=
+<
+<=
+==
+!=
+
+[]
+.
+()
+
+
+&
+|
+<<
+>>
+>>>
+^
+~
+
+!
+||
+&&
+
+
+=
++=
+-=
+*=
+/=
+%=
+&=
+|=
+||=
+&&=
+<<=
+>>=
+>>>=
+^=
+
+? :
+?:
+
+
+
+1.    []   ()   .                           left
+2.    ++  -- + - ~ ! (cast) new             right  (unary)
+3.    * / %                                 left
+4.    + -                                   left
+5.    << >> >>>                             left
+6.    > <= < >=                             left
+7.    == !=                                 left
+8.    &                                     left
+9.    ^                                     left
+10.   |                                     left
+11.   &&                                    left
+12.   ||                                    left
+13.   ? :                                   right
+14.   = += -= *= /= <<= >>= >>>= &= ^= |=   right
+
+
+
+bit       0b 1b
+bool      true false
+char      'a'
+string    'a' "a" """a""" """|"""
+
+float     0.1f
+double    0.1d
+
+byte/ubyte      int8/uint8       12b
+short/ushort    int16/uint16     123s
+int/uint        int32/uint32     123    0x12 012
+long/ulong      int64/uint64     123l
+
+
+
+
+
+

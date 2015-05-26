@@ -2,7 +2,7 @@ package com.mosaic.river.compiler.model.exp;
 
 public enum BinaryOpEnum {
     ADD() {
-        public void visitWith( RiverExpressionVisitor visitor ) {
+        public void visitWith( ExpressionVisitor visitor ) {
             visitor.add();
         }
     };
@@ -12,5 +12,5 @@ public enum BinaryOpEnum {
 //    SHIFT_LEFT, SHIFT_RIGHT,
 //    ASSIGN;
 
-    public abstract void visitWith( RiverExpressionVisitor visitor );
+    public abstract void visitWith( ExpressionVisitor visitor );
 }
