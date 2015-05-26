@@ -29,4 +29,9 @@ public interface ExpressionVisitor {
      * Binary op '%'.
      */
     public void modulo();
+
+    /**
+     * Binary op '>'.
+     */
+    public void greaterThan();
 }

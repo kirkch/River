@@ -78,6 +78,10 @@ public class JavaCodeFormatter implements PrettyPrinter<RiverClass> {
             public void modulo() {
                 out.print( " % " );
             }
+
+            public void greaterThan() {
+                out.print( " > " );
+            }
         });
     }
 }

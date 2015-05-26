@@ -29,9 +29,15 @@ public enum BinaryOpEnum {
         public void visitWith( ExpressionVisitor visitor ) {
             visitor.modulo();
         }
+    },
+
+    GREATER_THAN() {
+        public void visitWith( ExpressionVisitor visitor ) {
+            visitor.greaterThan();
+        }
     };
 
-//    POWER, MODULO,
+//    POWER,
 //    SHIFT_LEFT, SHIFT_RIGHT,
 //    ASSIGN;
 
