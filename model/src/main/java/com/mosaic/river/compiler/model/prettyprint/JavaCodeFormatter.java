@@ -70,6 +70,10 @@ public class JavaCodeFormatter implements PrettyPrinter<RiverClass> {
             public void multiply() {
                 out.print( " * " );
             }
+
+            public void divide() {
+                out.print( " / " );
+            }
         });
     }
 }

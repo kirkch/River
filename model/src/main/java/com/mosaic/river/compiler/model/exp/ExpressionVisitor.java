@@ -19,4 +19,9 @@ public interface ExpressionVisitor {
      * Binary op '*'.
      */
     public void multiply();
+
+    /**
+     * Binary op '/'.
+     */
+    public void divide();
 }

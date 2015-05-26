@@ -68,6 +68,10 @@ public class RiverCodeFormatter implements PrettyPrinter<RiverClass> {
             public void multiply() {
                 out.print( " * " );
             }
+
+            public void divide() {
+                out.print( " / " );
+            }
         });
     }
 
