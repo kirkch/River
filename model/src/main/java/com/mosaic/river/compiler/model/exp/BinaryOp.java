@@ -1,5 +1,6 @@
 package com.mosaic.river.compiler.model.exp;
 
+import com.mosaic.io.CharPosition;
 import com.mosaic.river.compiler.model.RiverType;
 
 
@@ -19,11 +20,13 @@ BinaryOp( lhs:Exp, op:BinaryOp, rhs:Exp ) implements Exp {
 
 public class BinaryOp implements Expression {
 
-    private Expression lhs;
-    private BinaryOpEnum    op;
-    private Expression rhs;
+    private Expression   lhs;
+    private BinaryOpEnum op;
+    private Expression   rhs;
 
-    private RiverType       type;
+    private RiverType    type;
+    private CharPosition posNbl;
+
 
     public BinaryOp( Expression lhs, BinaryOpEnum op, Expression rhs ) {
         this.lhs = lhs;
@@ -67,5 +70,13 @@ public class BinaryOp implements Expression {
         lhs.visitWith( visitor );
         op.visitWith( visitor );
         rhs.visitWith( visitor );
+    }
+
+    public CharPosition getPositionNbl() {
+        return posNbl;
+    }
+
+    public void setPositionNbl( CharPosition posNbl ) {
+        this.posNbl = posNbl;
     }
 }

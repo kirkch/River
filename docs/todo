@@ -1,7 +1,4 @@
 
-- rename model classes to remove 'River'
-- add CharPosition to each part of the model (useful for pretty printing)
-
 
 
           FORMAT            PARSE

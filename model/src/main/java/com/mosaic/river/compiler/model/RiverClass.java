@@ -1,6 +1,7 @@
 package com.mosaic.river.compiler.model;
 
 
+import com.mosaic.io.CharPosition;
 import com.mosaic.lang.QA;
 
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.List;
 public class RiverClass {
 
     private String           name;
+    private CharPosition     posNbl;
     private List<RiverField> fields = new ArrayList<>();
 
 
@@ -44,4 +46,11 @@ public class RiverClass {
         return fields;
     }
 
+    public CharPosition getPositionNbl() {
+        return posNbl;
+    }
+
+    public void setPositionNbl( CharPosition posNbl ) {
+        this.posNbl = posNbl;
+    }
 }

@@ -1,5 +1,6 @@
 package com.mosaic.river.compiler.model;
 
+import com.mosaic.io.CharPosition;
 import com.mosaic.lang.Lockable;
 import com.mosaic.river.compiler.model.exp.ConstantInt32;
 import com.mosaic.river.compiler.model.exp.Expression;
@@ -19,8 +20,9 @@ public class RiverField extends Lockable<RiverField> {
     }
 
 
-    private String          name;
-    private Expression initialValue;
+    private String       name;
+    private Expression   initialValue;
+    private CharPosition posNbl;
 
 
     public RiverField( String name, Expression initialValue ) {
@@ -58,6 +60,14 @@ public class RiverField extends Lockable<RiverField> {
         throwIfLocked();
 
         this.initialValue = initialValue;
+    }
+
+    public CharPosition getPositionNbl() {
+        return posNbl;
+    }
+
+    public void setPositionNbl( CharPosition posNbl ) {
+        this.posNbl = posNbl;
     }
 
 }

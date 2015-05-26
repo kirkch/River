@@ -1,5 +1,6 @@
 package com.mosaic.river.compiler.model.exp;
 
+import com.mosaic.io.CharPosition;
 import com.mosaic.river.compiler.model.RiverType;
 
 
@@ -12,4 +13,7 @@ public interface Expression {
     public RiverType getType();
 
     public void visitWith( ExpressionVisitor visitor );
+
+    public CharPosition getPositionNbl();
+    public void setPositionNbl( CharPosition posNbl );
 }

@@ -22,6 +22,10 @@
 	</properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.mosaic</groupId>
+            <artifactId>io-sandbox</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
