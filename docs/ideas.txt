@@ -16,3 +16,47 @@
 
 BECOMES
             cret in.skip(TYPE_SEPARATOR_MATCHER, "Expected a list of args, but the starting bracket '(' was missing" )
+
+
+
+EXP :=  NUM (BOP EXP)
+
+NUM :=  UOP? V UOP?
+
+
+
+
+1 + 2 * 3 / 4
+
+
+bool
+bit
+byte  (uint8)
+
+short (int16)
+int   (int32)
+long  (int64)
+
+char   utf16
+
+float
+double
+big
+fm.n     eg    f6.2
+
+
+
+1.    []   ()   .                           left
+2.    ++  -- + - ~ ! (cast) new             right  (unary)
+3.    * / %                                 left
+4.    + -                                   left
+5.    << >> >>>                             left
+6.    > <= < >=                             left
+7.    == !=                                 left
+8.    &                                     left
+9.    ^                                     left
+10.   |                                     left
+11.   &&                                    left
+12.   ||                                    left
+13.   ? :                                   right
+14.   = += -= *= /= <<= >>= >>>= &= ^= |=   right

@@ -3,8 +3,8 @@ package com.mosaic.river.compiler.model.prettyprint;
 import com.mosaic.io.IndentingWriter;
 import com.mosaic.io.PrettyPrinter;
 import com.mosaic.river.compiler.model.RiverClass;
-import com.mosaic.river.compiler.model.RiverExpression;
-import com.mosaic.river.compiler.model.RiverExpressionVisitor;
+import com.mosaic.river.compiler.model.exp.RiverExpression;
+import com.mosaic.river.compiler.model.exp.RiverExpressionVisitor;
 import com.mosaic.river.compiler.model.RiverField;
 
 import java.io.IOException;
@@ -13,7 +13,7 @@ import java.util.List;
 
 public class RiverCodeFormatter implements PrettyPrinter<RiverClass> {
 
-    public static final PrettyPrinter<RiverClass> INSTANCE = new RiverCodeFormatter();
+    public static final RiverCodeFormatter INSTANCE = new RiverCodeFormatter();
 
     private RiverCodeFormatter() {}
 
@@ -24,7 +24,9 @@ public class RiverCodeFormatter implements PrettyPrinter<RiverClass> {
         printClass( out, rc );
     }
 
-    private void printClass( IndentingWriter out, RiverClass rc ) throws IOException {
+
+
+    public void printClass( IndentingWriter out, RiverClass rc ) throws IOException {
         out.append( rc.getName() );
         out.append( "()" );
 
@@ -38,7 +40,7 @@ public class RiverCodeFormatter implements PrettyPrinter<RiverClass> {
         }
     }
 
-    private void printFields( IndentingWriter out, RiverClass rc ) throws IOException {
+    public void printFields( IndentingWriter out, RiverClass rc ) throws IOException {
         List<RiverField> fields = rc.getFields();
 
         for( RiverField f : fields ) {
@@ -49,10 +51,14 @@ public class RiverCodeFormatter implements PrettyPrinter<RiverClass> {
         }
     }
 
-    private void printExpression( IndentingWriter out, RiverExpression initialValue ) {
+    public void printExpression( IndentingWriter out, RiverExpression initialValue ) {
         initialValue.visitWith( new RiverExpressionVisitor() {
             public void int32Constant( int v )  {
                 out.print( Integer.toString(v) );
+            }
+
+            public void add() {
+                out.print( " + " );
             }
         });
     }

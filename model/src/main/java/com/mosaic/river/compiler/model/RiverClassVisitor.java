@@ -1,5 +1,8 @@
 package com.mosaic.river.compiler.model;
 
+import com.mosaic.river.compiler.model.exp.ConstantInt32;
+
+
 public interface RiverClassVisitor {
 
     public void enterClass( String name );

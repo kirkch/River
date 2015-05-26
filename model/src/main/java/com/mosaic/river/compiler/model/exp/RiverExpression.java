@@ -1,4 +1,7 @@
-package com.mosaic.river.compiler.model;
+package com.mosaic.river.compiler.model.exp;
+
+import com.mosaic.river.compiler.model.RiverType;
+
 
 /**
  * An expression represents a value, or how to calculate a value.  For example '32' is an expression,
@@ -8,5 +11,5 @@ public interface RiverExpression {
 
     public RiverType getType();
 
-    public void visitWith( RiverExpressionVisitor riverExpressionVisitor );
+    public void visitWith( RiverExpressionVisitor visitor );
 }

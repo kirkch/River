@@ -1,0 +1,25 @@
+package com.mosaic.river.compiler.model;
+
+import com.mosaic.river.compiler.model.exp.BinaryOp;
+import com.mosaic.river.compiler.model.exp.BinaryOpEnum;
+import com.mosaic.river.compiler.model.exp.ConstantInt32;
+import com.mosaic.river.compiler.model.exp.RiverExpression;
+import org.junit.Test;
+
+import java.util.Arrays;
+import java.util.List;
+
+
+public class FormatRiverAddOpExpressionTests extends RiverAssertions {
+
+    @Test
+    public void declareASingleInt32FieldThatDefaultsTo1() {
+        RiverExpression exp = new BinaryOp( new ConstantInt32(1), BinaryOpEnum.ADD, new ConstantInt32(2) );
+
+        List<String> expectedRiverCode = Arrays.asList( "1 + 2" );
+        List<String> expectedJavaCode  = Arrays.asList( "1 + 2" );
+
+        assertRiverExpressionEquals( exp, expectedRiverCode, expectedJavaCode );
+    }
+
+}

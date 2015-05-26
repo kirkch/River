@@ -1,6 +1,8 @@
 package com.mosaic.river.compiler.model;
 
 import com.mosaic.lang.Lockable;
+import com.mosaic.river.compiler.model.exp.ConstantInt32;
+import com.mosaic.river.compiler.model.exp.RiverExpression;
 
 
 /**
@@ -13,7 +15,7 @@ public class RiverField extends Lockable<RiverField> {
     }
 
     public static RiverField newInt32Field( String name, int initialValue ) {
-        return new RiverField( name, ConstantInt32.newValue(initialValue) );
+        return new RiverField( name, ConstantInt32.newValue( initialValue ) );
     }
 
 

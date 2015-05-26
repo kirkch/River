@@ -1,4 +1,7 @@
-package com.mosaic.river.compiler.model;
+package com.mosaic.river.compiler.model.exp;
+
+import com.mosaic.river.compiler.model.RiverType;
+
 
 public class ConstantInt32 implements RiverExpression {
 
