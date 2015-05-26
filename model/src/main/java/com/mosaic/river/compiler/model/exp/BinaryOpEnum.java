@@ -5,8 +5,14 @@ public enum BinaryOpEnum {
         public void visitWith( ExpressionVisitor visitor ) {
             visitor.add();
         }
+    },
+
+    SUBTRACT() {
+        public void visitWith( ExpressionVisitor visitor ) {
+            visitor.subtract();
+        }
     };
-// , SUBTRACT,
+
 //    MULTIPLY, DIVIDE,
 //    POWER, MODULO,
 //    SHIFT_LEFT, SHIFT_RIGHT,

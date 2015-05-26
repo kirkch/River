@@ -1,5 +1,6 @@
-package com.mosaic.river.compiler.model;
+package com.mosaic.river.compiler.model.expressions;
 
+import com.mosaic.river.compiler.model.RiverAssertions;
 import com.mosaic.river.compiler.model.exp.BinaryOp;
 import com.mosaic.river.compiler.model.exp.BinaryOpEnum;
 import com.mosaic.river.compiler.model.exp.ConstantInt32;

@@ -9,4 +9,9 @@ public interface ExpressionVisitor {
      * Binary op '+'.
      */
     public void add();
+
+    /**
+     * Binary op '-'.
+     */
+    public void subtract();
 }
