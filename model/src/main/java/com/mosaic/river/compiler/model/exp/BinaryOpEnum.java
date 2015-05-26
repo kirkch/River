@@ -11,9 +11,15 @@ public enum BinaryOpEnum {
         public void visitWith( ExpressionVisitor visitor ) {
             visitor.subtract();
         }
+    },
+
+    MULTIPLY() {
+        public void visitWith( ExpressionVisitor visitor ) {
+            visitor.multiply();
+        }
     };
 
-//    MULTIPLY, DIVIDE,
+//    , DIVIDE,
 //    POWER, MODULO,
 //    SHIFT_LEFT, SHIFT_RIGHT,
 //    ASSIGN;

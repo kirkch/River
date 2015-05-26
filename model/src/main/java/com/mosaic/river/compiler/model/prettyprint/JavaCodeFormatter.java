@@ -66,6 +66,10 @@ public class JavaCodeFormatter implements PrettyPrinter<RiverClass> {
             public void subtract() {
                 out.print( " - " );
             }
+
+            public void multiply() {
+                out.print( " * " );
+            }
         });
     }
 }

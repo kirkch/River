@@ -14,4 +14,9 @@ public interface ExpressionVisitor {
      * Binary op '-'.
      */
     public void subtract();
+
+    /**
+     * Binary op '*'.
+     */
+    public void multiply();
 }

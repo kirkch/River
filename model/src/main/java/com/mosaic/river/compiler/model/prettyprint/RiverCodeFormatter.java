@@ -64,6 +64,10 @@ public class RiverCodeFormatter implements PrettyPrinter<RiverClass> {
             public void subtract() {
                 out.print( " - " );
             }
+
+            public void multiply() {
+                out.print( " * " );
+            }
         });
     }
 
