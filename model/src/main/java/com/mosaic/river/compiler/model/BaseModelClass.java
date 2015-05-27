@@ -21,7 +21,7 @@ public abstract class BaseModelClass<T extends Lockable<T>> extends Lockable<T> 
 
     public void setPosition( CharPosition from, CharPosition toExc ) {
         throwIfLocked();
-        
+
         this.fromNbl  = from;
         this.toExcNbl = toExc;
     }
