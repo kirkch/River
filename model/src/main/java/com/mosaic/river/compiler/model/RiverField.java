@@ -1,7 +1,5 @@
 package com.mosaic.river.compiler.model;
 
-import com.mosaic.io.CharPosition;
-import com.mosaic.lang.Lockable;
 import com.mosaic.river.compiler.model.exp.ConstantInt32;
 import com.mosaic.river.compiler.model.exp.Expression;
 
@@ -9,7 +7,7 @@ import com.mosaic.river.compiler.model.exp.Expression;
 /**
  * A 32 bit integer field declaration.
  */
-public class RiverField extends Lockable<RiverField> {
+public class RiverField extends BaseModelClass<RiverField> {
 
     public static RiverField newInt32Field( String name ) {
         return newInt32Field( name, 0 );
@@ -22,7 +20,6 @@ public class RiverField extends Lockable<RiverField> {
 
     private String       name;
     private Expression   initialValue;
-    private CharPosition posNbl;
 
 
     public RiverField( String name, Expression initialValue ) {
@@ -60,14 +57,6 @@ public class RiverField extends Lockable<RiverField> {
         throwIfLocked();
 
         this.initialValue = initialValue;
-    }
-
-    public CharPosition getPositionNbl() {
-        return posNbl;
-    }
-
-    public void setPositionNbl( CharPosition posNbl ) {
-        this.posNbl = posNbl;
     }
 
 }

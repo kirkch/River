@@ -1,6 +1,7 @@
 package com.mosaic.river.compiler.model.exp;
 
 import com.mosaic.io.CharPosition;
+import com.mosaic.river.compiler.model.BaseModelClass;
 import com.mosaic.river.compiler.model.RiverType;
 
 
@@ -18,7 +19,7 @@ BinaryOp( lhs:Exp, op:BinaryOp, rhs:Exp ) implements Exp {
  */
 
 
-public class BinaryOp implements Expression {
+public class BinaryOp extends BaseModelClass<BinaryOp> implements Expression {
 
     private Expression   lhs;
     private BinaryOpEnum op;

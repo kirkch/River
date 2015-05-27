@@ -1,0 +1,25 @@
+
+
+ugly code snippets from other languages:
+
+
+1) Inability to know what the current class is when using generics on extended classes (JAVA)
+
+        public abstract class BaseModelClass<T extends Lockable<T>> extends Lockable<T> implements HasCharPosition {
+        }
+
+
+2)  type check followed by cast (JAVA)
+
+        if ( parsedValue instanceof HasCharPosition ) {
+            ((HasCharPosition) parsedValue).setPosition(from, toExc);
+        }
+
+3) Generics cannot be nested making a default impl of map and flatMap impossible (JAVA)
+
+
+       interface Mappable<InnerType> {
+           <NewInnerType> This<NewInnerType> map( Function1<InnerType,NewInnerType) f );
+
+           <NewInnerType> This<NewInnerType> map( Function1<InnerType,This<NewInnerType>) f );
+       }

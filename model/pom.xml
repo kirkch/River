@@ -26,6 +26,10 @@
             <groupId>com.mosaic</groupId>
             <artifactId>io-sandbox</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.mosaic</groupId>
+            <artifactId>parsers-sandbox</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

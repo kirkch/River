@@ -18,7 +18,8 @@ import com.mosaic.utils.string.CharacterMatchers;
 @SuppressWarnings("unchecked")
 public class RiverParser {
 
-    private static Parser<RiverClass> CLASS_PARSER = new ClassParser();
+    private static Parser<RiverClass> CLASS_PARSER      = new ClassParser();
+    private static Parser<Expression> EXPRESSION_PARSER = new ExpressionParser();
 
     public ParseResult<RiverClass> parse( String...lines ) {
         return parse( StringUtils.concat( "", lines, "\n", "" ) );
@@ -39,6 +40,9 @@ public class RiverParser {
         return CLASS_PARSER.parseFrom( in );
     }
 
+    public ParseResult<Expression> parseExpression( ParserStream in ) {
+        return EXPRESSION_PARSER.parseFrom( in );
+    }
 
 
     /**
@@ -167,6 +171,17 @@ public class RiverParser {
             RiverField      field        = new RiverField(fieldName, initialValue);
 
             return matched( field, from, in.getCurrentPosition() );
+        }
+    }
+
+    /**
+     * @BNF EXP := NUM
+     */
+    private static class ExpressionParser extends Parser<Expression> {
+        private static CharacterMatcher NUM_MATCHER = CharacterMatchers.regexp( "[0-9]+" );
+
+        protected ParseResult<Expression> doParse( ParserStream in ) {
+            return in.parse(NUM_MATCHER).map( v -> new ConstantInt32(Integer.parseInt(v)) );
         }
     }
 

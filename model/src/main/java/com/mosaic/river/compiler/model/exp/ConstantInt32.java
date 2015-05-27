@@ -1,17 +1,16 @@
 package com.mosaic.river.compiler.model.exp;
 
-import com.mosaic.io.CharPosition;
+import com.mosaic.river.compiler.model.BaseModelClass;
 import com.mosaic.river.compiler.model.RiverType;
 
 
-public class ConstantInt32 implements Expression {
+public class ConstantInt32 extends BaseModelClass<ConstantInt32> implements Expression {
 
     public static ConstantInt32 newValue( int v ) {
         return new ConstantInt32( v );
     }
 
     private int          v;
-    private CharPosition posNbl;
 
 
     public ConstantInt32( int v ) {
@@ -34,11 +33,7 @@ public class ConstantInt32 implements Expression {
         riverExpressionVisitor.int32Constant( v );
     }
 
-    public CharPosition getPositionNbl() {
-        return posNbl;
-    }
-
-    public void setPositionNbl( CharPosition posNbl ) {
-        this.posNbl = posNbl;
+    public String toString() {
+        return Integer.toString( v );
     }
 }
