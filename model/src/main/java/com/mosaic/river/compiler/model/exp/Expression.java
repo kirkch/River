@@ -11,6 +11,7 @@ import com.mosaic.river.compiler.model.RiverType;
 public interface Expression extends HasCharPosition {
 
     public RiverType getType();
+    public void setType( RiverType t );
 
     public void visitWith( ExpressionVisitor visitor );
 

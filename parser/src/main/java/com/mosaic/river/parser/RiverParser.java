@@ -5,6 +5,9 @@ import com.mosaic.parser.ParseResult;
 import com.mosaic.parser.Parser;
 import com.mosaic.parser.ParserStream;
 import com.mosaic.parser.ParserStream.ParserAndAction;
+import com.mosaic.river.compiler.model.RiverType;
+import com.mosaic.river.compiler.model.exp.BinaryOp;
+import com.mosaic.river.compiler.model.exp.BinaryOpEnum;
 import com.mosaic.river.compiler.model.exp.ConstantInt32;
 import com.mosaic.river.compiler.model.RiverArgList;
 import com.mosaic.river.compiler.model.RiverClass;
@@ -178,10 +181,39 @@ public class RiverParser {
      * @BNF EXP := NUM
      */
     private static class ExpressionParser extends Parser<Expression> {
-        private static CharacterMatcher NUM_MATCHER = CharacterMatchers.regexp( "[0-9]+" );
+//        private static CharacterMatcher NUM_MATCHER = CharacterMatchers.regexp( "[-+]?[0-9]+" );
+        private static CharacterMatcher NUM_MATCHER = CharacterMatchers.integer( true );
+        private static CharacterMatcher OP_MATCHER  = CharacterMatchers.constant( "+" );
 
         protected ParseResult<Expression> doParse( ParserStream in ) {
-            return in.parse(NUM_MATCHER).map( v -> new ConstantInt32(Integer.parseInt(v)) );
+            ParseResult<Expression> lhs = in.parse(NUM_MATCHER).map( v -> new ConstantInt32(Integer.parseInt(v.replaceAll(",",""))) );
+
+            if ( !lhs.matched() ) {
+                return lhs;
+            }
+
+            return recursiveParse( lhs, in );
+        }
+
+        private ParseResult<Expression> recursiveParse( ParseResult<Expression> lhs, ParserStream in ) {
+            in.skipWhitespace();
+
+            String op = in.consume( OP_MATCHER );
+            if ( op == null ) {
+                return lhs;
+            }
+
+            in.skipWhitespace();
+
+            ParseResult<Expression> rhs = in.parse(NUM_MATCHER).map( v -> new ConstantInt32(Integer.parseInt(v)) );
+            if ( !rhs.matched() ) {
+                return lhs;
+            }
+
+            Expression exp = new BinaryOp( lhs.getParsedValueNbl(), BinaryOpEnum.ADD, rhs.getParsedValueNbl() );
+            exp.setType( RiverType.INT32 );
+
+            return recursiveParse( ParseResult.matchSucceeded( exp, lhs.getFrom(), rhs.getToExc() ), in );
         }
     }
 

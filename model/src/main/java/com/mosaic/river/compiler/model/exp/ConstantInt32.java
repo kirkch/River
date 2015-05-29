@@ -10,7 +10,7 @@ public class ConstantInt32 extends BaseModelClass<ConstantInt32> implements Expr
         return new ConstantInt32( v );
     }
 
-    private int          v;
+    private int v;
 
 
     public ConstantInt32( int v ) {
@@ -29,11 +29,15 @@ public class ConstantInt32 extends BaseModelClass<ConstantInt32> implements Expr
         return RiverType.INT32;
     }
 
+    public void setType( RiverType t ) {
+        throw new UnsupportedOperationException( "" );
+    }
+
     public void visitWith( ExpressionVisitor riverExpressionVisitor ) {
         riverExpressionVisitor.int32Constant( v );
     }
 
     public String toString() {
-        return Integer.toString( v );
+        return Integer.toString(v);
     }
 }

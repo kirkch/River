@@ -1,6 +1,7 @@
 package com.mosaic.river.compiler.model.exp;
 
 import com.mosaic.io.CharPosition;
+import com.mosaic.lang.QA;
 import com.mosaic.river.compiler.model.BaseModelClass;
 import com.mosaic.river.compiler.model.RiverType;
 
@@ -30,6 +31,10 @@ public class BinaryOp extends BaseModelClass<BinaryOp> implements Expression {
 
 
     public BinaryOp( Expression lhs, BinaryOpEnum op, Expression rhs ) {
+        QA.notNull( lhs, "lhs" );
+        QA.notNull( op, "op" );
+        QA.notNull( rhs, "rhs" );
+
         this.lhs = lhs;
         this.op  = op;
         this.rhs = rhs;
@@ -79,5 +84,9 @@ public class BinaryOp extends BaseModelClass<BinaryOp> implements Expression {
 
     public void setPositionNbl( CharPosition posNbl ) {
         this.posNbl = posNbl;
+    }
+
+    public String toString() {
+        return op.name();
     }
 }
