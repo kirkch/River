@@ -57,4 +57,17 @@ public class ExpressionBuilderTest {
         assertEquals( "(1 + 2)", result.getParsedValueNbl().toString() );
     }
 
+    @Test
+    public void givenOnePlusTwoMinux3_expectOnePlusTwoMinusThree() {
+        builder.append( v1 );
+        builder.append( BinaryOpEnum.ADD );
+        builder.append( v2 );
+        builder.append( BinaryOpEnum.SUBTRACT );
+        builder.append( v3 );
+
+        ParseResult<Expression> result = builder.build();
+        assertTrue( result.matched() );
+        assertEquals( "((1 + 2) - 3)", result.getParsedValueNbl().toString() );
+    }
+
 }
