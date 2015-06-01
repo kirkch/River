@@ -2,7 +2,6 @@ package com.mosaic.river.parser;
 
 import com.mosaic.collections.FastStack;
 import com.mosaic.io.CharPosition;
-import com.mosaic.lang.QA;
 import com.mosaic.parser.ParseResult;
 import com.mosaic.river.compiler.model.exp.BinaryOp;
 import com.mosaic.river.compiler.model.exp.BinaryOpEnum;
@@ -68,7 +67,6 @@ public class ExpressionBuilder {
             }
 
             operatorStack.push( exp );
-
         } else {
             operandStack.push( exp );
         }
@@ -93,69 +91,27 @@ public class ExpressionBuilder {
     private void mergeOps() {
         BinaryOp op = (BinaryOp) operatorStack.pop();  // todo bad typecast
 
-        while ( !operandStack.isEmpty() ) {
-            Expression arg = operandStack.pop();
-
-            if ( op.getRHS() == null ) {
-                op.setRHS( arg );
+        if ( op.getRHS() == null ) {
+            if ( operandStack.isEmpty() ) {
+                //todo
             } else {
-                QA.notNull( op.getRHS(), "rhs" );
-
-                if ( operatorStack.hasContents() ) {
-//                    todo return error
-                }
-
-                op.setLHS( arg );
+                op.setRHS( operandStack.pop() );
             }
         }
 
         if ( op.getLHS() == null ) {
-            if ( operatorStack.isEmpty() ) {
-                // todo return error
+            if ( operandStack.isEmpty() ) {
+                if ( operatorStack.isEmpty() ) {
+                    // todo
+                } else {
+                    op.setLHS( operatorStack.pop() );
+                }
             } else {
-                op.setLHS( operatorStack.pop() );
+                op.setLHS( operandStack.pop() );
             }
         }
 
-
         operatorStack.push( op );
-
-//        if ( operatorStack.isEmpty() ) {
-//            switch (operandStack.size()) {
-//                case 2:
-//                    Expression rhs = operandStack.pop();
-//                    Expression lhs = operandStack.pop();
-//
-//                    op.setLHS( lhs );
-//                    op.setRHS( rhs );
-//            }
-//        }
-
-//        while ( !operandStack.isEmpty() && !operatorStack.isEmpty() ) {
-//            BinaryOp op = (BinaryOp) operatorStack.pop();
-//
-//            if ( op.getRHS() == null ) {
-//                Expression rhs = operandStack.pop();
-//
-//                op.setRHS( rhs );
-//            }
-//
-//            if ( op.getLHS() == null ) {
-//                if ( operandStack.isEmpty() ) {
-//                    // todo error
-//                } else {
-//                    Expression lhs = operandStack.pop();
-//
-//                    op.setLHS( lhs );
-//                }
-//            }
-//
-//
-//            operandStack.push( op );
-//        }
-//
-//        Expression exp = operandStack.pop();
-//        return success( exp );
     }
 
     private ParseResult<Expression> success( Expression op ) {

@@ -17,6 +17,7 @@ public class ExpressionBuilderTest {
     private ConstantInt32     v1      = new ConstantInt32( 1 );
     private ConstantInt32     v2      = new ConstantInt32( 2 );
     private ConstantInt32     v3      = new ConstantInt32( 3 );
+    private ConstantInt32     v4      = new ConstantInt32( 4 );
 
 
     @Test
@@ -68,6 +69,21 @@ public class ExpressionBuilderTest {
         ParseResult<Expression> result = builder.build();
         assertTrue( result.matched() );
         assertEquals( "((1 + 2) - 3)", result.getParsedValueNbl().toString() );
+    }
+
+    @Test
+    public void givenOneMinusTwoPlus3Minus4() {
+        builder.append( v1 );
+        builder.append( BinaryOpEnum.SUBTRACT );
+        builder.append( v2 );
+        builder.append( BinaryOpEnum.ADD );
+        builder.append( v3 );
+        builder.append( BinaryOpEnum.SUBTRACT );
+        builder.append( v4 );
+
+        ParseResult<Expression> result = builder.build();
+        assertTrue( result.matched() );
+        assertEquals( "(((1 - 2) + 3) - 4)", result.getParsedValueNbl().toString() );
     }
 
 }
