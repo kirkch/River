@@ -3,8 +3,8 @@
 
           FORMAT            PARSE
 
-+          DONE
--          DONE
++          DONE             DONE
+-          DONE             DONE
 *          DONE
 /          DONE
 %          DONE

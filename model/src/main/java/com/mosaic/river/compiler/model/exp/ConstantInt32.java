@@ -37,6 +37,10 @@ public class ConstantInt32 extends BaseModelClass<ConstantInt32> implements Expr
         riverExpressionVisitor.int32Constant( v );
     }
 
+    public boolean isOperator() {
+        return false;
+    }
+
     public String toString() {
         return Integer.toString(v);
     }

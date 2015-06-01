@@ -46,14 +46,14 @@ public class ParseInt32ExpressionTests extends ParseTestUtils {
 
     @Test
     public void parseMaxInt32Value() {
-        String     maxValueStr = Integer.toString(Integer.MAX_VALUE);
+        String     maxValueStr = Integer.toString( Integer.MAX_VALUE );
         Expression exp         = parseExpression( maxValueStr );
 
         assertExpressionAsJava( exp, maxValueStr );
 
         assertEquals( RiverType.INT32, exp.getType() );
         assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
-        assertEquals( new CharPosition(0,maxValueStr.length(),maxValueStr.length()), exp.getToExcNbl() );
+        assertEquals( new CharPosition( 0, maxValueStr.length(), maxValueStr.length() ), exp.getToExcNbl() );
     }
 
     @Test
@@ -73,11 +73,14 @@ public class ParseInt32ExpressionTests extends ParseTestUtils {
         Expression exp = parseExpression( "  \n\t1\t " );
 
         assertEquals( RiverType.INT32, exp.getType() );
-        assertEquals( new CharPosition(1,2,4), exp.getFromNbl() );
+        assertEquals( new CharPosition( 1, 2, 4 ), exp.getFromNbl() );
         assertEquals( new CharPosition(1,3,5), exp.getToExcNbl() );
 
         assertExpressionAsJava( exp, "1" );
     }
+
+
+// ADDITION
 
     @Test
     public void parse1Plus2() {
@@ -98,7 +101,7 @@ public class ParseInt32ExpressionTests extends ParseTestUtils {
 
         assertEquals( RiverType.INT32, exp.getType() );
         assertEquals( new CharPosition(0,1,1), exp.getFromNbl() );
-        assertEquals( new CharPosition(1,4,12), exp.getToExcNbl() );
+        assertEquals( new CharPosition( 1, 4, 12 ), exp.getToExcNbl() );
     }
 
     @Test
@@ -110,6 +113,105 @@ public class ParseInt32ExpressionTests extends ParseTestUtils {
         assertEquals( RiverType.INT32, exp.getType() );
         assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
         assertEquals( new CharPosition(0,10,10), exp.getToExcNbl() );
+    }
+
+
+// SUBTRACTION
+
+    @Test
+    public void parse1Minus2() {
+        Expression exp = parseExpression( "1-2" );
+
+        assertExpressionAsJava( exp, "1 - 2" );
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,3,3), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1Plus2Minus3() {
+        Expression exp = parseExpression( " 1 + 2 \n - 3" );
+
+        assertExpressionAsJava( exp, "1 + 2 - 3" );
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,1,1), exp.getFromNbl() );
+        assertEquals( new CharPosition( 1, 4, 12 ), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse7200MinusNeg7() {
+        Expression exp = parseExpression( "7,200 - -7" );
+
+        assertExpressionAsJava( exp, "7200 - -7" );
+        assertEquals("(7200 - -7)", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,10,10), exp.getToExcNbl() );
+    }
+
+
+
+// MULTIPLICATION
+
+    @Test
+    public void parse1Mult2() {
+        Expression exp = parseExpression( "1*2" );
+
+        assertExpressionAsJava( exp, "1 * 2" );
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,3,3), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1Mult2Mult3() {
+        Expression exp = parseExpression( " 1 * 2 \n * 3" );
+
+        assertExpressionAsJava( exp, "1 * 2 * 3" );
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,1,1), exp.getFromNbl() );
+        assertEquals( new CharPosition( 1, 4, 12 ), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse7200MultNeg7() {
+        Expression exp = parseExpression( "7,200 * -7" );
+
+        assertExpressionAsJava( exp, "7200 * -7" );
+        assertEquals("(7200 * -7)", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,10,10), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1Mult2Plus1() {
+        Expression exp = parseExpression( "1 * 2 + 1" );
+
+        assertExpressionAsJava( exp, "1 * 2 + 1" );
+        assertEquals("((1 * 2) + 1)", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,9,9), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1Plus2Mult3() {
+        Expression exp = parseExpression( "1 + 2 * 3" );
+
+        assertExpressionAsJava( exp, "1 + 2 * 3" );
+        assertEquals("(1 + (2 * 3))", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,9,9), exp.getToExcNbl() );
     }
 
 }

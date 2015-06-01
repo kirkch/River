@@ -30,6 +30,10 @@ public class BinaryOp extends BaseModelClass<BinaryOp> implements Expression {
     private CharPosition posNbl;
 
 
+    public BinaryOp( BinaryOpEnum op ) {
+        this.op = op;
+    }
+
     public BinaryOp( Expression lhs, BinaryOpEnum op, Expression rhs ) {
         QA.notNull( lhs, "lhs" );
         QA.notNull( op, "op" );
@@ -40,11 +44,11 @@ public class BinaryOp extends BaseModelClass<BinaryOp> implements Expression {
         this.rhs = rhs;
     }
 
-    public Expression getLhs() {
+    public Expression getLHS() {
         return lhs;
     }
 
-    public void setLhs( Expression lhs ) {
+    public void setLHS( Expression lhs ) {
         this.lhs = lhs;
     }
 
@@ -56,11 +60,11 @@ public class BinaryOp extends BaseModelClass<BinaryOp> implements Expression {
         this.op = op;
     }
 
-    public Expression getRhs() {
+    public Expression getRHS() {
         return rhs;
     }
 
-    public void setRhs( Expression rhs ) {
+    public void setRHS( Expression rhs ) {
         this.rhs = rhs;
     }
 
@@ -78,6 +82,10 @@ public class BinaryOp extends BaseModelClass<BinaryOp> implements Expression {
         rhs.visitWith( visitor );
     }
 
+    public boolean isOperator() {
+        return true;
+    }
+
     public CharPosition getPositionNbl() {
         return posNbl;
     }
@@ -87,6 +95,6 @@ public class BinaryOp extends BaseModelClass<BinaryOp> implements Expression {
     }
 
     public String toString() {
-        return op.name();
+        return "(" + lhs + " " + op + " " + rhs + ")";
     }
 }

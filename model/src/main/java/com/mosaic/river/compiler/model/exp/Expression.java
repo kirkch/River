@@ -15,4 +15,9 @@ public interface Expression extends HasCharPosition {
 
     public void visitWith( ExpressionVisitor visitor );
 
+    /**
+     * Returns true if this node of the expression tree is an operator, such as '+' or '-'.  False
+     * implies that the node is a value, such as '42' or 'a'.
+     */
+    public boolean isOperator();
 }

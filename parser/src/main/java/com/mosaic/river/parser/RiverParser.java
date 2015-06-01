@@ -181,9 +181,8 @@ public class RiverParser {
      * @BNF EXP := NUM
      */
     private static class ExpressionParser extends Parser<Expression> {
-//        private static CharacterMatcher NUM_MATCHER = CharacterMatchers.regexp( "[-+]?[0-9]+" );
         private static CharacterMatcher NUM_MATCHER = CharacterMatchers.integer( true );
-        private static CharacterMatcher OP_MATCHER  = CharacterMatchers.constant( "+" );
+        private static CharacterMatcher OP_MATCHER  = CharacterMatchers.regexp( "[*+-]" );
 
         protected ParseResult<Expression> doParse( ParserStream in ) {
             ParseResult<Expression> lhs = in.parse(NUM_MATCHER).map( v -> new ConstantInt32(Integer.parseInt(v.replaceAll(",",""))) );
@@ -198,8 +197,8 @@ public class RiverParser {
         private ParseResult<Expression> recursiveParse( ParseResult<Expression> lhs, ParserStream in ) {
             in.skipWhitespace();
 
-            String op = in.consume( OP_MATCHER );
-            if ( op == null ) {
+            String opSymbol = in.consume( OP_MATCHER );
+            if ( opSymbol == null ) {
                 return lhs;
             }
 
@@ -210,7 +209,8 @@ public class RiverParser {
                 return lhs;
             }
 
-            Expression exp = new BinaryOp( lhs.getParsedValueNbl(), BinaryOpEnum.ADD, rhs.getParsedValueNbl() );
+            BinaryOpEnum op = BinaryOpEnum.selectFromSymbol(opSymbol);
+            Expression exp = new BinaryOp( lhs.getParsedValueNbl(), op, rhs.getParsedValueNbl() );
             exp.setType( RiverType.INT32 );
 
             return recursiveParse( ParseResult.matchSucceeded( exp, lhs.getFrom(), rhs.getToExc() ), in );
