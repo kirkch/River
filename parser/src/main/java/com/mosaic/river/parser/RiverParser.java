@@ -180,7 +180,7 @@ public class RiverParser {
      */
     private static class ExpressionParser extends Parser<Expression> {
         private static CharacterMatcher NUM_MATCHER = CharacterMatchers.integer( true );
-        private static CharacterMatcher OP_MATCHER  = CharacterMatchers.regexp( "[*+-]" );
+        private static CharacterMatcher OP_MATCHER  = CharacterMatchers.regexp( "[*/+-]" );
 
         protected ParseResult<Expression> doParse( ParserStream in ) {
             ParseResult<Expression> lhs = in.parse(NUM_MATCHER).map( v -> new ConstantInt32(Integer.parseInt(v.replaceAll(",",""))) );

@@ -41,7 +41,7 @@ public enum BinaryOpEnum {
     },
 
     DIVIDE() {
-        public int getPrecedence() {return 11;}
+        public int getPrecedence() {return 12;}
         public void visitWith( ExpressionVisitor visitor ) {
             visitor.divide();
         }
@@ -49,7 +49,7 @@ public enum BinaryOpEnum {
     },
 
     MODULO() {
-        public int getPrecedence() {return 11;}
+        public int getPrecedence() {return 12;}
         public void visitWith( ExpressionVisitor visitor ) {
             visitor.modulo();
         }
