@@ -339,4 +339,67 @@ public class ParseInt32ExpressionTests extends ParseTestUtils {
         assertEquals( new CharPosition(0,9,9), exp.getToExcNbl() );
     }
 
+
+
+// GREATER THAN
+
+    @Test
+    public void parse1GT2() {
+        Expression exp = parseExpression( "1>2" );
+
+        assertExpressionAsJava( exp, "1 > 2" );
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,3,3), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1GT2GT3() {
+        Expression exp = parseExpression( " 1 > 2 \n > 3" );
+
+        assertExpressionAsJava( exp, "1 > 2 > 3" );
+        assertEquals( "((1 > 2) > 3)", exp.toString() );
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,1,1), exp.getFromNbl() );
+        assertEquals( new CharPosition( 1, 4, 12 ), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse7200GTNeg7() {
+        Expression exp = parseExpression( "7,200 > -7" );
+
+        assertExpressionAsJava( exp, "7200 > -7" );
+        assertEquals("(7200 > -7)", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,10,10), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1GT2GT1() {
+        Expression exp = parseExpression( "1 > 2 + 3" );
+
+        assertExpressionAsJava( exp, "1 > 2 + 3" );
+        assertEquals("(1 > (2 + 3))", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,9,9), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1Plus2GT3() {
+        Expression exp = parseExpression( "1 + 2 > 3" );
+
+        assertExpressionAsJava( exp, "1 + 2 > 3" );
+        assertEquals("((1 + 2) > 3)", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,9,9), exp.getToExcNbl() );
+    }
+
 }
