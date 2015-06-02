@@ -1,7 +1,23 @@
 package com.mosaic.river.compiler.model.exp;
 
+//14.    []   ()   .                           left
+//    13.    ++  -- + - ~ ! (cast) new             right  (unary)
+//    12.    * / %                                 left
+//    11.    + -                                   left
+//    10.    << >> >>>                             left
+//    9.    > <= < >=                             left
+//    8.    == !=                                 left
+//    7.    &                                     left
+//    6.    ^                                     left
+//    5.   |                                     left
+//    4.   &&                                    left
+//    3.   ||                                    left
+//    2.   ? :                                   right
+//    1.   = += -= *= /= <<= >>= >>>= &= ^= |=   right
+
 public enum BinaryOpEnum {
     ADD() {
+        public int getPrecedence() {return 11;}
         public void visitWith( ExpressionVisitor visitor ) {
             visitor.add();
         }
@@ -9,6 +25,7 @@ public enum BinaryOpEnum {
     },
 
     SUBTRACT() {
+        public int getPrecedence() {return 11;}
         public void visitWith( ExpressionVisitor visitor ) {
             visitor.subtract();
         }
@@ -16,6 +33,7 @@ public enum BinaryOpEnum {
     },
 
     MULTIPLY() {
+        public int getPrecedence() {return 12;}
         public void visitWith( ExpressionVisitor visitor ) {
             visitor.multiply();
         }
@@ -23,6 +41,7 @@ public enum BinaryOpEnum {
     },
 
     DIVIDE() {
+        public int getPrecedence() {return 11;}
         public void visitWith( ExpressionVisitor visitor ) {
             visitor.divide();
         }
@@ -30,6 +49,7 @@ public enum BinaryOpEnum {
     },
 
     MODULO() {
+        public int getPrecedence() {return 11;}
         public void visitWith( ExpressionVisitor visitor ) {
             visitor.modulo();
         }
@@ -37,6 +57,7 @@ public enum BinaryOpEnum {
     },
 
     GREATER_THAN() {
+        public int getPrecedence() {return 9;}
         public void visitWith( ExpressionVisitor visitor ) {
             visitor.greaterThan();
         }
@@ -44,6 +65,7 @@ public enum BinaryOpEnum {
     },
 
     LESS_THAN() {
+        public int getPrecedence() {return 9;}
         public void visitWith( ExpressionVisitor visitor ) {
             visitor.lessThan();
         }
@@ -66,6 +88,7 @@ public enum BinaryOpEnum {
 //    SHIFT_LEFT, SHIFT_RIGHT,
 //    ASSIGN;
 
+    public abstract int getPrecedence();
     public abstract void visitWith( ExpressionVisitor visitor );
 
 }

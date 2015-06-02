@@ -44,12 +44,18 @@ public class BinaryOp extends BaseModelClass<BinaryOp> implements Expression {
         this.rhs = rhs;
     }
 
+    public int getPrecedence() {
+        return op.getPrecedence();
+    }
+
     public Expression getLHS() {
         return lhs;
     }
 
     public void setLHS( Expression lhs ) {
         this.lhs = lhs;
+
+        updatePositionConsidering(lhs);
     }
 
     public BinaryOpEnum getOp() {
@@ -66,6 +72,8 @@ public class BinaryOp extends BaseModelClass<BinaryOp> implements Expression {
 
     public void setRHS( Expression rhs ) {
         this.rhs = rhs;
+
+        updatePositionConsidering(rhs);
     }
 
     public RiverType getType() {

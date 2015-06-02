@@ -10,6 +10,12 @@ import com.mosaic.river.compiler.model.RiverType;
  */
 public interface Expression extends HasCharPosition {
 
+    /**
+     * Precedence is used when comparing operators to establish execution order.  The higher the
+     * value the more likely this operator is to be invoked first.
+     */
+    public int getPrecedence();
+
     public RiverType getType();
     public void setType( RiverType t );
 

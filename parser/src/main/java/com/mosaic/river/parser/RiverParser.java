@@ -5,8 +5,6 @@ import com.mosaic.parser.ParseResult;
 import com.mosaic.parser.Parser;
 import com.mosaic.parser.ParserStream;
 import com.mosaic.parser.ParserStream.ParserAndAction;
-import com.mosaic.river.compiler.model.RiverType;
-import com.mosaic.river.compiler.model.exp.BinaryOp;
 import com.mosaic.river.compiler.model.exp.BinaryOpEnum;
 import com.mosaic.river.compiler.model.exp.ConstantInt32;
 import com.mosaic.river.compiler.model.RiverArgList;
@@ -178,7 +176,7 @@ public class RiverParser {
     }
 
     /**
-     * @BNF EXP := NUM
+     * @BNF EXP := NUM [BINARY_OP EXP]
      */
     private static class ExpressionParser extends Parser<Expression> {
         private static CharacterMatcher NUM_MATCHER = CharacterMatchers.integer( true );
@@ -191,29 +189,33 @@ public class RiverParser {
                 return lhs;
             }
 
-            return recursiveParse( lhs, in );
+            ExpressionBuilder expressionBuilder = new ExpressionBuilder(lhs.getFrom());
+            expressionBuilder.append( lhs.getParsedValueNbl() );
+
+            return recursiveParse( expressionBuilder, in );
         }
 
-        private ParseResult<Expression> recursiveParse( ParseResult<Expression> lhs, ParserStream in ) {
+        private ParseResult<Expression> recursiveParse( ExpressionBuilder expressionBuilder, ParserStream in ) {
             in.skipWhitespace();
 
             String opSymbol = in.consume( OP_MATCHER );
             if ( opSymbol == null ) {
-                return lhs;
+                return expressionBuilder.build();
             }
+
+            BinaryOpEnum op = BinaryOpEnum.selectFromSymbol(opSymbol);
+            expressionBuilder.append( op );
 
             in.skipWhitespace();
 
             ParseResult<Expression> rhs = in.parse(NUM_MATCHER).map( v -> new ConstantInt32(Integer.parseInt(v)) );
             if ( !rhs.matched() ) {
-                return lhs;
+                return rhs;
             }
 
-            BinaryOpEnum op = BinaryOpEnum.selectFromSymbol(opSymbol);
-            Expression exp = new BinaryOp( lhs.getParsedValueNbl(), op, rhs.getParsedValueNbl() );
-            exp.setType( RiverType.INT32 );
+            expressionBuilder.append( rhs.getParsedValueNbl() );
 
-            return recursiveParse( ParseResult.matchSucceeded( exp, lhs.getFrom(), rhs.getToExc() ), in );
+            return recursiveParse( expressionBuilder, in );
         }
     }
 

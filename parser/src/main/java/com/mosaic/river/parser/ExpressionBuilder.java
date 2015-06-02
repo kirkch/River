@@ -3,6 +3,7 @@ package com.mosaic.river.parser;
 import com.mosaic.collections.FastStack;
 import com.mosaic.io.CharPosition;
 import com.mosaic.parser.ParseResult;
+import com.mosaic.river.compiler.model.RiverType;
 import com.mosaic.river.compiler.model.exp.BinaryOp;
 import com.mosaic.river.compiler.model.exp.BinaryOpEnum;
 import com.mosaic.river.compiler.model.exp.Expression;
@@ -18,14 +19,16 @@ import com.mosaic.river.compiler.model.exp.Expression;
 public class ExpressionBuilder {
 
     // DESIGN
-    // This class uses two stacks to manage precedence.  As operands are appended, they get
-    // pushed onto the operand stack.  Before an operator is pushed, its precedence is
-    // compared with the operator at the top of the operator stack.  If the operator being
-    // pushed has lower precedence, then it will not be pushed until the higher precedence op
-    // has consumed its values from the operand stack creating a new subtree.  This new subtree
-    // is then pushed on to the operator stack.  However if the operator being pushed has higher
-    // precedence then it goes straight onto the operator stack and where it waits.  Thus precedence
-    // is a decision between pushing straight away or building a subtree.
+    // This class uses two stacks to manage precedence.  An expression is broken into tokens and
+    // appended to this builder, which places operators onto one stack and operands on to another.
+    //
+    // The goal is to match operators to their arguments, when and how this occurs depends on the
+    // operators relative precedence and associativity.  As each operator is appended to the
+    // operator stack, it is compared with the previous operator.  If the previous operator was
+    // of higher (or equal depending on associativity) then we need to ensure that this operator
+    // is executed before the new one.  We do this by allowing the previous op to consume its args
+    // off of the operand stack before it itself is placed onto the operand stack as an argument
+    // for the new operator that is about to be pushed.
     //
     // Example:  1*2+3
     //
@@ -62,8 +65,8 @@ public class ExpressionBuilder {
 
     public void append( Expression exp ) {
         if ( exp.isOperator() ) {
-            if ( operatorStack.hasContents() ) {
-                mergeOps();
+            if ( previousOperatorIsToRunBefore(exp) ) {
+                consumeNextOp();
             }
 
             operatorStack.push( exp );
@@ -84,34 +87,36 @@ public class ExpressionBuilder {
             }
         }
 
-        mergeOps();
-        return success( operatorStack.pop() );
+        while ( operatorStack.hasContents() ) {
+            consumeNextOp();
+        }
+
+        return success( operandStack.pop() );
     }
 
-    private void mergeOps() {
-        BinaryOp op = (BinaryOp) operatorStack.pop();  // todo bad typecast
+    private void consumeNextOp() {
+        Expression op = operatorStack.pop();
 
-        if ( op.getRHS() == null ) {
-            if ( operandStack.isEmpty() ) {
-                //todo
-            } else {
-                op.setRHS( operandStack.pop() );
-            }
+        if ( op instanceof BinaryOp ) {
+            BinaryOp binaryOp = (BinaryOp) op;
+
+            binaryOp.setRHS( operandStack.pop() );
+            binaryOp.setLHS( operandStack.pop() );
+            binaryOp.setType( RiverType.INT32 );
+
+            operandStack.push( binaryOp );
+        } else {
+            throw new UnsupportedOperationException( op.getClass().toString() );
+        }
+    }
+
+    private boolean previousOperatorIsToRunBefore( Expression nextOp ) {
+        if ( operatorStack.isEmpty() ) {
+            return false;
         }
 
-        if ( op.getLHS() == null ) {
-            if ( operandStack.isEmpty() ) {
-                if ( operatorStack.isEmpty() ) {
-                    // todo
-                } else {
-                    op.setLHS( operatorStack.pop() );
-                }
-            } else {
-                op.setLHS( operandStack.pop() );
-            }
-        }
-
-        operatorStack.push( op );
+        Expression prevOp = operatorStack.peek();
+        return prevOp.getPrecedence() >= nextOp.getPrecedence();
     }
 
     private ParseResult<Expression> success( Expression op ) {

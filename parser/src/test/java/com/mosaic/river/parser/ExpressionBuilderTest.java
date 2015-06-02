@@ -59,7 +59,7 @@ public class ExpressionBuilderTest {
     }
 
     @Test
-    public void givenOnePlusTwoMinux3_expectOnePlusTwoMinusThree() {
+    public void givenOnePlusTwoMinus3_expectOnePlusTwoMinusThree() {
         builder.append( v1 );
         builder.append( BinaryOpEnum.ADD );
         builder.append( v2 );
@@ -84,6 +84,32 @@ public class ExpressionBuilderTest {
         ParseResult<Expression> result = builder.build();
         assertTrue( result.matched() );
         assertEquals( "(((1 - 2) + 3) - 4)", result.getParsedValueNbl().toString() );
+    }
+
+    @Test
+    public void givenOneTimesTwoAdd3() {
+        builder.append( v1 );
+        builder.append( BinaryOpEnum.MULTIPLY );
+        builder.append( v2 );
+        builder.append( BinaryOpEnum.ADD);
+        builder.append( v3 );
+
+        ParseResult<Expression> result = builder.build();
+        assertTrue( result.matched() );
+        assertEquals( "((1 * 2) + 3)", result.getParsedValueNbl().toString() );
+    }
+
+    @Test
+    public void givenOnePlusTwoTimes3() {
+        builder.append( v1 );
+        builder.append( BinaryOpEnum.ADD);
+        builder.append( v2 );
+        builder.append( BinaryOpEnum.MULTIPLY );
+        builder.append( v3 );
+
+        ParseResult<Expression> result = builder.build();
+        assertTrue( result.matched() );
+        assertEquals( "(1 + (2 * 3))", result.getParsedValueNbl().toString() );
     }
 
 }

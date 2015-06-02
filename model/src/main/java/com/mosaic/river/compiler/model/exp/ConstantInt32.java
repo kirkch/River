@@ -17,6 +17,10 @@ public class ConstantInt32 extends BaseModelClass<ConstantInt32> implements Expr
         this.v    = v;
     }
 
+    public int getPrecedence() {
+        return 100;
+    }
+
     public int getValue() {
         return v;
     }
