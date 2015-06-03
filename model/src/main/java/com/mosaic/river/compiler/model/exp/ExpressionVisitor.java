@@ -60,4 +60,9 @@ public interface ExpressionVisitor {
      */
     public void notEqualTo();
 
+    /**
+     * Binary op '&'.
+     */
+    public void bitAnd();
+
 }

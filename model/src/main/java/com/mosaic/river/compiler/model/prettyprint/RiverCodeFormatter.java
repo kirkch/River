@@ -100,6 +100,10 @@ public class RiverCodeFormatter implements PrettyPrinter<RiverClass> {
             public void notEqualTo() {
                 out.print( " != " );
             }
+
+            public void bitAnd() {
+                out.print( " & " );
+            }
         });
     }
 

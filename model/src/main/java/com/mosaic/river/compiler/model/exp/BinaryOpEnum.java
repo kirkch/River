@@ -102,6 +102,14 @@ public enum BinaryOpEnum {
             visitor.notEqualTo();
         }
         public String toString() { return "!="; }
+    },
+
+    BIT_AND() {
+        public int getPrecedence() {return 7;}
+        public void visitWith( ExpressionVisitor visitor ) {
+            visitor.bitAnd();
+        }
+        public String toString() { return "&"; }
     };
 
 
