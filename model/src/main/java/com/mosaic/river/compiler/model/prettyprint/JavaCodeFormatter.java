@@ -83,8 +83,16 @@ public class JavaCodeFormatter implements PrettyPrinter<RiverClass> {
                 out.print( " > " );
             }
 
+            public void gte() {
+                out.print( " >= " );
+            }
+
             public void lessThan() {
                 out.print( " < " );
+            }
+
+            public void lte() {
+                out.print( " <= " );
             }
         });
     }

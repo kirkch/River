@@ -64,12 +64,28 @@ public enum BinaryOpEnum {
         public String toString() { return ">"; }
     },
 
+    GTE() {
+        public int getPrecedence() {return 9;}
+        public void visitWith( ExpressionVisitor visitor ) {
+            visitor.gte();
+        }
+        public String toString() { return ">="; }
+    },
+
     LESS_THAN() {
         public int getPrecedence() {return 9;}
         public void visitWith( ExpressionVisitor visitor ) {
             visitor.lessThan();
         }
         public String toString() { return "<"; }
+    },
+
+    LTE() {
+        public int getPrecedence() {return 9;}
+        public void visitWith( ExpressionVisitor visitor ) {
+            visitor.lte();
+        }
+        public String toString() { return "<="; }
     };
 
 

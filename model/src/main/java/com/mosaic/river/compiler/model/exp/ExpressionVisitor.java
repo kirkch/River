@@ -36,8 +36,18 @@ public interface ExpressionVisitor {
     public void greaterThan();
 
     /**
+     * Binary op '>='.
+     */
+    public void gte();
+
+    /**
      * Binary op '<'.
      */
     public void lessThan();
+
+    /**
+     * Binary op '<='.
+     */
+    public void lte();
 
 }
