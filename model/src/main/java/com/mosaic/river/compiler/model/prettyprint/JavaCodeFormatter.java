@@ -94,6 +94,14 @@ public class JavaCodeFormatter implements PrettyPrinter<RiverClass> {
             public void lte() {
                 out.print( " <= " );
             }
+
+            public void equalTo() {
+                out.print( " == " );
+            }
+
+            public void notEqualTo() {
+                out.print( " != " );
+            }
         });
     }
 }

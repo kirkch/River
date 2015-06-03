@@ -86,6 +86,22 @@ public enum BinaryOpEnum {
             visitor.lte();
         }
         public String toString() { return "<="; }
+    },
+
+    EQUALS_TO() {
+        public int getPrecedence() {return 8;}
+        public void visitWith( ExpressionVisitor visitor ) {
+            visitor.equalTo();
+        }
+        public String toString() { return "=="; }
+    },
+
+    NOT_EQUAL_TO() {
+        public int getPrecedence() {return 8;}
+        public void visitWith( ExpressionVisitor visitor ) {
+            visitor.notEqualTo();
+        }
+        public String toString() { return "!="; }
     };
 
 

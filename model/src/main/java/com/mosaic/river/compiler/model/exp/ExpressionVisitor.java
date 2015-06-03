@@ -50,4 +50,14 @@ public interface ExpressionVisitor {
      */
     public void lte();
 
+    /**
+     * Binary op '=='.
+     */
+    public void equalTo();
+
+    /**
+     * Binary op '!='.
+     */
+    public void notEqualTo();
+
 }
