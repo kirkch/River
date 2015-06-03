@@ -56,6 +56,30 @@ public enum BinaryOpEnum {
         public String toString() { return "%"; }
     },
 
+    LEFT_BITSHIFT() {
+        public int getPrecedence() {return 10;}
+        public void visitWith( ExpressionVisitor visitor ) {
+            visitor.leftBitShift();
+        }
+        public String toString() { return "<<"; }
+    },
+
+    RIGHT_BITSHIFT() {
+        public int getPrecedence() {return 10;}
+        public void visitWith( ExpressionVisitor visitor ) {
+            visitor.rightBitShift();
+        }
+        public String toString() { return ">>"; }
+    },
+
+    ZEROFILL_RIGHT_BITSHIFT() {
+        public int getPrecedence() {return 10;}
+        public void visitWith( ExpressionVisitor visitor ) {
+            visitor.zeroFillRightBitShift();
+        }
+        public String toString() { return ">>>"; }
+    },
+
     GREATER_THAN() {
         public int getPrecedence() {return 9;}
         public void visitWith( ExpressionVisitor visitor ) {

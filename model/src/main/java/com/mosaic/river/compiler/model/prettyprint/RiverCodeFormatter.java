@@ -77,6 +77,18 @@ public class RiverCodeFormatter implements PrettyPrinter<RiverClass> {
                 out.print( " % " );
             }
 
+            public void leftBitShift() {
+                out.print( " << " );
+            }
+
+            public void rightBitShift() {
+                out.print( " >> " );
+            }
+
+            public void zeroFillRightBitShift() {
+                out.print( " >>> " );
+            }
+
             public void greaterThan() {
                 out.print( " > " );
             }

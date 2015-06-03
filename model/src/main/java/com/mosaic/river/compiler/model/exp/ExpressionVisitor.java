@@ -31,6 +31,21 @@ public interface ExpressionVisitor {
     public void modulo();
 
     /**
+     * Binary op '<<'.
+     */
+    public void leftBitShift();
+
+    /**
+     * Binary op '>>'.
+     */
+    public void rightBitShift();
+
+    /**
+     * Binary op '>>>'.
+     */
+    public void zeroFillRightBitShift();
+
+    /**
      * Binary op '>'.
      */
     public void greaterThan();
