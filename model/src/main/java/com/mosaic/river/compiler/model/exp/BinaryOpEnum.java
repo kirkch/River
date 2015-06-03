@@ -110,6 +110,14 @@ public enum BinaryOpEnum {
             visitor.bitAnd();
         }
         public String toString() { return "&"; }
+    },
+
+    BIT_OR() {
+        public int getPrecedence() {return 7;}
+        public void visitWith( ExpressionVisitor visitor ) {
+            visitor.bitOr();
+        }
+        public String toString() { return "&"; }
     };
 
 

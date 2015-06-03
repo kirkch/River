@@ -104,6 +104,10 @@ public class RiverCodeFormatter implements PrettyPrinter<RiverClass> {
             public void bitAnd() {
                 out.print( " & " );
             }
+
+            public void bitOr() {
+                out.print( " | " );
+            }
         });
     }
 

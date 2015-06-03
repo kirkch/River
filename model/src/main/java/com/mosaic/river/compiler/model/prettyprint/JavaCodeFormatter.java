@@ -106,6 +106,10 @@ public class JavaCodeFormatter implements PrettyPrinter<RiverClass> {
             public void bitAnd() {
                 out.print( " & " );
             }
+
+            public void bitOr() {
+                out.print( " | " );
+            }
         });
     }
 }

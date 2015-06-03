@@ -65,4 +65,9 @@ public interface ExpressionVisitor {
      */
     public void bitAnd();
 
+    /**
+     * Binary op '|'.
+     */
+    public void bitOr();
+
 }
