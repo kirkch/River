@@ -6,6 +6,11 @@ public interface ExpressionVisitor {
     public void int32Constant( int v );
 
     /**
+     * Binary op '~'.
+     */
+    public void twosComplement();
+
+    /**
      * Binary op '+'.
      */
     public void add();
@@ -84,5 +89,20 @@ public interface ExpressionVisitor {
      * Binary op '|'.
      */
     public void bitOr();
+
+    /**
+     * Binary op '^'.
+     */
+    public void bitwiseExclusiveOr();
+
+    /**
+     * Binary op '&&'.
+     */
+    public void booleanAnd();
+
+    /**
+     * Binary op '||'.
+     */
+    public void booleanOr();
 
 }

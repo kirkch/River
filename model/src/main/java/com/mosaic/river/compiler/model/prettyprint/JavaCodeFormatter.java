@@ -59,6 +59,10 @@ public class JavaCodeFormatter implements PrettyPrinter<RiverClass> {
                 out.print( Integer.toString(v) );
             }
 
+            public void twosComplement() {
+                out.print( " ~" );
+            }
+
             public void add() {
                 out.print( " + " );
             }
@@ -121,6 +125,18 @@ public class JavaCodeFormatter implements PrettyPrinter<RiverClass> {
 
             public void bitOr() {
                 out.print( " | " );
+            }
+
+            public void bitwiseExclusiveOr() {
+                out.print( " ^ " );
+            }
+
+            public void booleanAnd() {
+                out.print( " && " );
+            }
+
+            public void booleanOr() {
+                out.print( " || " );
             }
         });
     }

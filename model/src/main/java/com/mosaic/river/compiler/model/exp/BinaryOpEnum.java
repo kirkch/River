@@ -16,20 +16,12 @@ package com.mosaic.river.compiler.model.exp;
 //    1.   = += -= *= /= <<= >>= >>>= &= ^= |=   right
 
 public enum BinaryOpEnum {
-    ADD() {
-        public int getPrecedence() {return 11;}
+    TWOS_COMPLEMENT() {
+        public int getPrecedence() {return 13;}
         public void visitWith( ExpressionVisitor visitor ) {
-            visitor.add();
+            visitor.twosComplement();
         }
-        public String toString() { return "+"; }
-    },
-
-    SUBTRACT() {
-        public int getPrecedence() {return 11;}
-        public void visitWith( ExpressionVisitor visitor ) {
-            visitor.subtract();
-        }
-        public String toString() { return "-"; }
+        public String toString() { return "~"; }
     },
 
     MULTIPLY() {
@@ -54,6 +46,22 @@ public enum BinaryOpEnum {
             visitor.modulo();
         }
         public String toString() { return "%"; }
+    },
+
+    ADD() {
+        public int getPrecedence() {return 11;}
+        public void visitWith( ExpressionVisitor visitor ) {
+            visitor.add();
+        }
+        public String toString() { return "+"; }
+    },
+
+    SUBTRACT() {
+        public int getPrecedence() {return 11;}
+        public void visitWith( ExpressionVisitor visitor ) {
+            visitor.subtract();
+        }
+        public String toString() { return "-"; }
     },
 
     LEFT_BITSHIFT() {
@@ -142,6 +150,30 @@ public enum BinaryOpEnum {
             visitor.bitOr();
         }
         public String toString() { return "&"; }
+    },
+
+    BITWISE_EXCLUSIVE_OR() {
+        public int getPrecedence() {return 6;}
+        public void visitWith( ExpressionVisitor visitor ) {
+            visitor.bitwiseExclusiveOr();
+        }
+        public String toString() { return "^"; }
+    },
+
+    BOOLEAN_AND() {
+        public int getPrecedence() {return 4;}
+        public void visitWith( ExpressionVisitor visitor ) {
+            visitor.booleanAnd();
+        }
+        public String toString() { return "&&"; }
+    },
+
+    BOOLEAN_OR() {
+        public int getPrecedence() {return 3;}
+        public void visitWith( ExpressionVisitor visitor ) {
+            visitor.booleanOr();
+        }
+        public String toString() { return "||"; }
     };
 
 
