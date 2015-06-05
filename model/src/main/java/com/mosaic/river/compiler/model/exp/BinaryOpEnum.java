@@ -149,7 +149,7 @@ public enum BinaryOpEnum {
         public void visitWith( ExpressionVisitor visitor ) {
             visitor.bitOr();
         }
-        public String toString() { return "&"; }
+        public String toString() { return "|"; }
     },
 
     BITWISE_EXCLUSIVE_OR() {

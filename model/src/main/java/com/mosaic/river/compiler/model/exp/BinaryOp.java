@@ -26,7 +26,6 @@ public class BinaryOp extends BaseModelClass<BinaryOp> implements Expression {
     private BinaryOpEnum op;
     private Expression   rhs;
 
-    private RiverType    type;
     private CharPosition posNbl;
 
 
@@ -74,14 +73,6 @@ public class BinaryOp extends BaseModelClass<BinaryOp> implements Expression {
         this.rhs = rhs;
 
         updatePositionConsidering(rhs);
-    }
-
-    public RiverType getType() {
-        return type;
-    }
-
-    public void setType( RiverType type ) {
-        this.type = type;
     }
 
     public void visitWith( ExpressionVisitor visitor ) {

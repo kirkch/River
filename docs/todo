@@ -11,28 +11,28 @@
 
 >          DONE             DONE
 <          DONE             DONE
->=         DONE
-<=         DONE
-==         DONE
-!=         DONE
+>=         DONE             DONE
+<=         DONE             DONE
+==         DONE             DONE
+!=         DONE             DONE
 
 []
 .
 ()
 
 
-&          DONE
-|          DONE
-<<         DONE
->>         DONE
->>>        DONE
-^          DONE
+&          DONE             DONE
+|          DONE             DONE
+<<         DONE             DONE
+>>         DONE             DONE
+>>>        DONE             DONE
+^          DONE             DONE
 
 ~
 !
 
-||         DONE
-&&         DONE
+||         DONE             DONE
+&&         DONE             DONE
 
 =
 +=
@@ -88,8 +88,6 @@ functionRef
 objectRef
 nullable/notNullable
 functionCalls
-
-
 
 
 

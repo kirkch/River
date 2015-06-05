@@ -86,11 +86,11 @@ public class ParseInt32ExpressionTests extends ParseTestUtils {
     public void parse1Plus2() {
         Expression exp = parseExpression( "1+2" );
 
+        assertExpressionAsJava( exp, "1 + 2" );
+
         assertEquals( RiverType.INT32, exp.getType() );
         assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
         assertEquals( new CharPosition(0,3,3), exp.getToExcNbl() );
-
-        assertExpressionAsJava( exp, "1 + 2" );
     }
 
     @Test
@@ -459,6 +459,762 @@ public class ParseInt32ExpressionTests extends ParseTestUtils {
 
         assertExpressionAsJava( exp, "1 + 2 < 3" );
         assertEquals("((1 + 2) < 3)", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,9,9), exp.getToExcNbl() );
+    }
+
+
+
+// GREATER THAN
+
+    @Test
+    public void parse1GTE2() {
+        Expression exp = parseExpression( "1>=2" );
+
+        assertExpressionAsJava( exp, "1 >= 2" );
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,4,4), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1GTE2GTE3() {
+        Expression exp = parseExpression( " 1 >= 2 \n >= 3" );
+
+        assertExpressionAsJava( exp, "1 >= 2 >= 3" );
+        assertEquals( "((1 >= 2) >= 3)", exp.toString() );
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,1,1), exp.getFromNbl() );
+        assertEquals( new CharPosition( 1, 5, 14 ), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse7200GTENeg7() {
+        Expression exp = parseExpression( "7,200 >= -7" );
+
+        assertExpressionAsJava( exp, "7200 >= -7" );
+        assertEquals("(7200 >= -7)", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,11,11), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1GTE2Add1() {
+        Expression exp = parseExpression( "1 >= 2 + 3" );
+
+        assertExpressionAsJava( exp, "1 >= 2 + 3" );
+        assertEquals("(1 >= (2 + 3))", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,10,10), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1Plus2GTE3() {
+        Expression exp = parseExpression( "1 + 2 >= 3" );
+
+        assertExpressionAsJava( exp, "1 + 2 >= 3" );
+        assertEquals("((1 + 2) >= 3)", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,10,10), exp.getToExcNbl() );
+    }
+
+
+
+// LESS THAN OR EQUAL TO
+
+    @Test
+    public void parse1LTE2() {
+        Expression exp = parseExpression( "1<=2" );
+
+        assertExpressionAsJava( exp, "1 <= 2" );
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,4,4), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1LTE2LTE3() {
+        Expression exp = parseExpression( " 1 <= 2 \n <= 3" );
+
+        assertExpressionAsJava( exp, "1 <= 2 <= 3" );
+        assertEquals( "((1 <= 2) <= 3)", exp.toString() );
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,1,1), exp.getFromNbl() );
+        assertEquals( new CharPosition( 1, 5, 14 ), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse7200LTENeg7() {
+        Expression exp = parseExpression( "7,200 <= -7" );
+
+        assertExpressionAsJava( exp, "7200 <= -7" );
+        assertEquals("(7200 <= -7)", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,11,11), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1LTE2Add1() {
+        Expression exp = parseExpression( "1 <= 2 + 3" );
+
+        assertExpressionAsJava( exp, "1 <= 2 + 3" );
+        assertEquals("(1 <= (2 + 3))", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,10,10), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1Plus2LTE3() {
+        Expression exp = parseExpression( "1 + 2 <= 3" );
+
+        assertExpressionAsJava( exp, "1 + 2 <= 3" );
+        assertEquals("((1 + 2) <= 3)", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,10,10), exp.getToExcNbl() );
+    }
+
+
+
+// IS EQUAL TO
+
+    @Test
+    public void parse1Eq2() {
+        Expression exp = parseExpression( "1==2" );
+
+        assertExpressionAsJava( exp, "1 == 2" );
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,4,4), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1Eq2Eq3() {
+        Expression exp = parseExpression( " 1 == 2 \n == 3" );
+
+        assertExpressionAsJava( exp, "1 == 2 == 3" );
+        assertEquals( "((1 == 2) == 3)", exp.toString() );
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,1,1), exp.getFromNbl() );
+        assertEquals( new CharPosition( 1, 5, 14 ), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse7200EqNeg7() {
+        Expression exp = parseExpression( "7,200 == -7" );
+
+        assertExpressionAsJava( exp, "7200 == -7" );
+        assertEquals("(7200 == -7)", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,11,11), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1Eq2Add1() {
+        Expression exp = parseExpression( "1 == 2 + 3" );
+
+        assertExpressionAsJava( exp, "1 == 2 + 3" );
+        assertEquals("(1 == (2 + 3))", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,10,10), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1Plus2Eq3() {
+        Expression exp = parseExpression( "1 + 2 == 3" );
+
+        assertExpressionAsJava( exp, "1 + 2 == 3" );
+        assertEquals("((1 + 2) == 3)", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,10,10), exp.getToExcNbl() );
+    }
+
+
+
+// NOT EQUAL TO
+
+    @Test
+    public void parse1NotEq2() {
+        Expression exp = parseExpression( "1!=2" );
+
+        assertExpressionAsJava( exp, "1 != 2" );
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,4,4), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1NEq2NEq3() {
+        Expression exp = parseExpression( " 1 != 2 \n != 3" );
+
+        assertExpressionAsJava( exp, "1 != 2 != 3" );
+        assertEquals( "((1 != 2) != 3)", exp.toString() );
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,1,1), exp.getFromNbl() );
+        assertEquals( new CharPosition( 1, 5, 14 ), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse7200NEqNeg7() {
+        Expression exp = parseExpression( "7,200 != -7" );
+
+        assertExpressionAsJava( exp, "7200 != -7" );
+        assertEquals("(7200 != -7)", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,11,11), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1NEq2Add1() {
+        Expression exp = parseExpression( "1 != 2 + 3" );
+
+        assertExpressionAsJava( exp, "1 != 2 + 3" );
+        assertEquals("(1 != (2 + 3))", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,10,10), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1Plus2NEq3() {
+        Expression exp = parseExpression( "1 + 2 != 3" );
+
+        assertExpressionAsJava( exp, "1 + 2 != 3" );
+        assertEquals("((1 + 2) != 3)", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,10,10), exp.getToExcNbl() );
+    }
+
+
+
+// BITSHIFT LEFT
+
+    @Test
+    public void parse1BitshiftLeft2() {
+        Expression exp = parseExpression( "1<<2" );
+
+        assertExpressionAsJava( exp, "1 << 2" );
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,4,4), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1BitshiftLeft2BitshiftLeft3() {
+        Expression exp = parseExpression( " 1 << 2 \n << 3" );
+
+        assertExpressionAsJava( exp, "1 << 2 << 3" );
+        assertEquals( "((1 << 2) << 3)", exp.toString() );
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,1,1), exp.getFromNbl() );
+        assertEquals( new CharPosition( 1, 5, 14 ), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse7200BitshiftLeftNeg7() {
+        Expression exp = parseExpression( "7,200 << -7" );
+
+        assertExpressionAsJava( exp, "7200 << -7" );
+        assertEquals("(7200 << -7)", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,11,11), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1BitshiftLeft2Add1() {
+        Expression exp = parseExpression( "1 << 2 + 3" );
+
+        assertExpressionAsJava( exp, "1 << 2 + 3" );
+        assertEquals("(1 << (2 + 3))", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,10,10), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1Plus2BitshiftLeft3() {
+        Expression exp = parseExpression( "1 + 2 << 3" );
+
+        assertExpressionAsJava( exp, "1 + 2 << 3" );
+        assertEquals("((1 + 2) << 3)", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,10,10), exp.getToExcNbl() );
+    }
+
+
+
+// BITSHIFT RIGHT
+
+    @Test
+    public void parse1BitshiftRight2() {
+        Expression exp = parseExpression( "1>>2" );
+
+        assertExpressionAsJava( exp, "1 >> 2" );
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,4,4), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1BitshiftRight2BitshiftRight3() {
+        Expression exp = parseExpression( " 1 >> 2 \n >> 3" );
+
+        assertExpressionAsJava( exp, "1 >> 2 >> 3" );
+        assertEquals( "((1 >> 2) >> 3)", exp.toString() );
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,1,1), exp.getFromNbl() );
+        assertEquals( new CharPosition( 1, 5, 14 ), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse7200RightBitshiftNeg7() {
+        Expression exp = parseExpression( "7,200 >> -7" );
+
+        assertExpressionAsJava( exp, "7200 >> -7" );
+        assertEquals("(7200 >> -7)", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,11,11), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1RightBitshift2Add1() {
+        Expression exp = parseExpression( "1 >> 2 + 3" );
+
+        assertExpressionAsJava( exp, "1 >> 2 + 3" );
+        assertEquals("(1 >> (2 + 3))", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,10,10), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1Plus2RightBitshift3() {
+        Expression exp = parseExpression( "1 + 2 >> 3" );
+
+        assertExpressionAsJava( exp, "1 + 2 >> 3" );
+        assertEquals("((1 + 2) >> 3)", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,10,10), exp.getToExcNbl() );
+    }
+
+
+
+// NOT EQUAL TO
+
+    @Test
+    public void parse1ZeroFilledRightShift2() {
+        Expression exp = parseExpression( "1>>>2" );
+
+        assertExpressionAsJava( exp, "1 >>> 2" );
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,5,5), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1ZeroFilledRightShift2ZeroFilledRightShift3() {
+        Expression exp = parseExpression( " 1 >>> 2 \n >>> 3" );
+
+        assertExpressionAsJava( exp, "1 >>> 2 >>> 3" );
+        assertEquals( "((1 >>> 2) >>> 3)", exp.toString() );
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,1,1), exp.getFromNbl() );
+        assertEquals( new CharPosition( 1, 6, 16 ), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse7200ZeroFilledRightShiftNeg7() {
+        Expression exp = parseExpression( "7,200 >>> -7" );
+
+        assertExpressionAsJava( exp, "7200 >>> -7" );
+        assertEquals("(7200 >>> -7)", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,12,12), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1ZeroFilledRightShift2Add1() {
+        Expression exp = parseExpression( "1 >>> 2 + 3" );
+
+        assertExpressionAsJava( exp, "1 >>> 2 + 3" );
+        assertEquals("(1 >>> (2 + 3))", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,11,11), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1Plus2ZeroFilledRightShift3() {
+        Expression exp = parseExpression( "1 + 2 >>> 3" );
+
+        assertExpressionAsJava( exp, "1 + 2 >>> 3" );
+        assertEquals("((1 + 2) >>> 3)", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,11,11), exp.getToExcNbl() );
+    }
+
+
+
+// BITWISE AND
+
+    @Test
+    public void parse1BitwiseAnd2() {
+        Expression exp = parseExpression( "1&2" );
+
+        assertExpressionAsJava( exp, "1 & 2" );
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,3,3), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1BitwiseAnd2BitwiseAnd3() {
+        Expression exp = parseExpression( " 1 & 2 \n & 3" );
+
+        assertExpressionAsJava( exp, "1 & 2 & 3" );
+        assertEquals( "((1 & 2) & 3)", exp.toString() );
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,1,1), exp.getFromNbl() );
+        assertEquals( new CharPosition( 1, 4, 12 ), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse7200BitwiseAndNeg7() {
+        Expression exp = parseExpression( "7,200 & -7" );
+
+        assertExpressionAsJava( exp, "7200 & -7" );
+        assertEquals("(7200 & -7)", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,10,10), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1BitwiseAnd2Plus1() {
+        Expression exp = parseExpression( "1 & 2 + 3" );
+
+        assertExpressionAsJava( exp, "1 & 2 + 3" );
+        assertEquals("(1 & (2 + 3))", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,9,9), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1Plus2BitwiseAnd3() {
+        Expression exp = parseExpression( "1 + 2 & 3" );
+
+        assertExpressionAsJava( exp, "1 + 2 & 3" );
+        assertEquals("((1 + 2) & 3)", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,9,9), exp.getToExcNbl() );
+    }
+
+
+
+// BITWISE OR
+
+    @Test
+    public void parse1BitwiseOr2() {
+        Expression exp = parseExpression( "1|2" );
+
+        assertExpressionAsJava( exp, "1 | 2" );
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,3,3), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1BitwiseOr2BitwiseOr3() {
+        Expression exp = parseExpression( " 1 | 2 \n | 3" );
+
+        assertExpressionAsJava( exp, "1 | 2 | 3" );
+        assertEquals( "((1 | 2) | 3)", exp.toString() );
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,1,1), exp.getFromNbl() );
+        assertEquals( new CharPosition( 1, 4, 12 ), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse7200BitwiseOrNeg7() {
+        Expression exp = parseExpression( "7,200 | -7" );
+
+        assertExpressionAsJava( exp, "7200 | -7" );
+        assertEquals("(7200 | -7)", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,10,10), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1BitwiseOr2Plus1() {
+        Expression exp = parseExpression( "1 | 2 + 3" );
+
+        assertExpressionAsJava( exp, "1 | 2 + 3" );
+        assertEquals("(1 | (2 + 3))", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,9,9), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1Plus2BitwiseOr3() {
+        Expression exp = parseExpression( "1 + 2 | 3" );
+
+        assertExpressionAsJava( exp, "1 + 2 | 3" );
+        assertEquals("((1 + 2) | 3)", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,9,9), exp.getToExcNbl() );
+    }
+
+
+
+// BITSHIFT RIGHT
+
+    @Test
+    public void parse1BooleanOr2() {
+        Expression exp = parseExpression( "1||2" );
+
+        assertExpressionAsJava( exp, "1 || 2" );
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,4,4), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1BooleanOr2BooleanOr3() {
+        Expression exp = parseExpression( " 1 || 2 \n || 3" );
+
+        assertExpressionAsJava( exp, "1 || 2 || 3" );
+        assertEquals( "((1 || 2) || 3)", exp.toString() );
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,1,1), exp.getFromNbl() );
+        assertEquals( new CharPosition( 1, 5, 14 ), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse7200BooleanOrNeg7() {
+        Expression exp = parseExpression( "7,200 || -7" );
+
+        assertExpressionAsJava( exp, "7200 || -7" );
+        assertEquals("(7200 || -7)", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,11,11), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1BooleanOr2Add1() {
+        Expression exp = parseExpression( "1 || 2 + 3" );
+
+        assertExpressionAsJava( exp, "1 || 2 + 3" );
+        assertEquals("(1 || (2 + 3))", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,10,10), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1Plus2BooleanOr3() {
+        Expression exp = parseExpression( "1 + 2 || 3" );
+
+        assertExpressionAsJava( exp, "1 + 2 || 3" );
+        assertEquals("((1 + 2) || 3)", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,10,10), exp.getToExcNbl() );
+    }
+
+
+
+// BOOLEAN AND
+
+    @Test
+    public void parse1BooleanAnd2() {
+        Expression exp = parseExpression( "1&&2" );
+
+        assertExpressionAsJava( exp, "1 && 2" );
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,4,4), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1BooleanAnd2BooleanAnd3() {
+        Expression exp = parseExpression( " 1 && 2 \n && 3" );
+
+        assertExpressionAsJava( exp, "1 && 2 && 3" );
+        assertEquals( "((1 && 2) && 3)", exp.toString() );
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,1,1), exp.getFromNbl() );
+        assertEquals( new CharPosition( 1, 5, 14 ), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse7200BooleanAndNeg7() {
+        Expression exp = parseExpression( "7,200 && -7" );
+
+        assertExpressionAsJava( exp, "7200 && -7" );
+        assertEquals("(7200 && -7)", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,11,11), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1BooleanAnd2Add1() {
+        Expression exp = parseExpression( "1 && 2 + 3" );
+
+        assertExpressionAsJava( exp, "1 && 2 + 3" );
+        assertEquals("(1 && (2 + 3))", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,10,10), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1Plus2BooleanAnd3() {
+        Expression exp = parseExpression( "1 + 2 && 3" );
+
+        assertExpressionAsJava( exp, "1 + 2 && 3" );
+        assertEquals("((1 + 2) && 3)", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,10,10), exp.getToExcNbl() );
+    }
+
+
+
+// BITWISE EXCLUSIVE OR
+
+    @Test
+    public void parse1BitwiseXOr2() {
+        Expression exp = parseExpression( "1^2" );
+
+        assertExpressionAsJava( exp, "1 ^ 2" );
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,3,3), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1BitwiseXOr2BitwiseXOr3() {
+        Expression exp = parseExpression( " 1 ^ 2 \n ^ 3" );
+
+        assertExpressionAsJava( exp, "1 ^ 2 ^ 3" );
+        assertEquals( "((1 ^ 2) ^ 3)", exp.toString() );
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,1,1), exp.getFromNbl() );
+        assertEquals( new CharPosition( 1, 4, 12 ), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse7200BitwiseXOrNeg7() {
+        Expression exp = parseExpression( "7,200 ^ -7" );
+
+        assertExpressionAsJava( exp, "7200 ^ -7" );
+        assertEquals("(7200 ^ -7)", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,10,10), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1BitwiseXOr2Plus1() {
+        Expression exp = parseExpression( "1 ^ 2 + 3" );
+
+        assertExpressionAsJava( exp, "1 ^ 2 + 3" );
+        assertEquals("(1 ^ (2 + 3))", exp.toString());
+
+        assertEquals( RiverType.INT32, exp.getType() );
+        assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );
+        assertEquals( new CharPosition(0,9,9), exp.getToExcNbl() );
+    }
+
+    @Test
+    public void parse1Plus2BitwiseXOr3() {
+        Expression exp = parseExpression( "1 + 2 ^ 3" );
+
+        assertExpressionAsJava( exp, "1 + 2 ^ 3" );
+        assertEquals("((1 + 2) ^ 3)", exp.toString());
 
         assertEquals( RiverType.INT32, exp.getType() );
         assertEquals( new CharPosition(0,0,0), exp.getFromNbl() );

@@ -8,8 +8,20 @@ import com.mosaic.river.compiler.model.exp.Expression;
 
 public abstract class BaseModelClass<T extends Lockable<T>> extends Lockable<T> implements HasCharPosition {
 
+    private RiverType    type;
+
     private CharPosition fromNbl;
     private CharPosition toExcNbl;
+
+
+    public RiverType getType() {
+        return type;
+    }
+
+    public void setType( RiverType type ) {
+        this.type = type;
+    }
+
 
 
     public CharPosition getFromNbl() {
@@ -18,6 +30,10 @@ public abstract class BaseModelClass<T extends Lockable<T>> extends Lockable<T> 
 
     public CharPosition getToExcNbl() {
         return toExcNbl;
+    }
+
+    public void setPositionFrom( Expression exp ) {
+        setPosition( exp.getFromNbl(), exp.getToExcNbl() );
     }
 
     public void setPosition( CharPosition from, CharPosition toExc ) {
